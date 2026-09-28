@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Chat Bot — 30s teaser</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#CFE2EF;        /* page ground               */
+  --panel:#E6F0F8;      /* raised strips             */
+  --card:#F7FBFE;       /* chat surfaces             */
+  --rule:#A7C3D7;       /* hairline separators       */
+  --ink:#10222F;        /* primary text              */
+  --dim:#456579;        /* utility text              */
+  --body:#3A5E76;       /* secondary copy            */
+  --amber:#8A5102;      /* accent / reply-time chip  */
+  --ok:#1E6B45;         /* resolved green            */
+  --caller:#1C6B67;     /* customer accent           */
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#7FA3BC;overflow:hidden}
+body{font-family:Archivo,system-ui,sans-serif}
+
+#fit{width:100vw;height:100vh;position:relative;overflow:hidden}
+#stage{
+  width:1920px;height:1080px;overflow:hidden;
+  background:var(--sky);color:var(--ink);
+  position:absolute;left:50%;top:50%;   /* centred by the transform itself */
+}
+#stage::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:60;
+  background:
+    radial-gradient(120% 80% at 50% 42%,transparent 42%,rgba(28,74,105,.20) 100%),
+    repeating-linear-gradient(0deg,rgba(16,34,47,.022) 0 1px,transparent 1px 3px);
+}
+
+.mono{font-family:"DM Mono",ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase}
+.disp{font-family:Archivo,sans-serif;font-variation-settings:"wdth" 78,"wght" 800;
+      text-transform:uppercase;letter-spacing:-.005em;line-height:.94}
+
+/* ── header strip ───────────────────────────────────────────────────── */
+#head{
+  position:absolute;top:0;left:0;right:0;height:96px;z-index:30;
+  display:flex;align-items:center;gap:28px;padding:0 64px;
+  border-bottom:1px solid var(--rule);background:var(--panel);
+  box-shadow:0 1px 0 rgba(255,255,255,.7) inset;opacity:0;
+}
+#dot{width:13px;height:13px;border-radius:50%;background:var(--ok);flex:none;
+     box-shadow:0 0 12px var(--ok)}
+#dotLabel{font-size:14px;color:var(--dim)}
+#headName{margin-left:auto;font-size:15px;color:var(--dim);font-variant-numeric:tabular-nums}
+#tc{font-size:15px;color:var(--dim);min-width:132px;text-align:right;font-variant-numeric:tabular-nums}
+
+/* ── scenes ─────────────────────────────────────────────────────────── */
+.scene{position:absolute;inset:0;z-index:20;opacity:0;pointer-events:none}
+
+/* S1 cold open */
+#s1{display:grid;place-items:center}
+#s1in{text-align:center}
+#waitDots{display:flex;gap:12px;justify-content:center}
+#waitDots i{width:14px;height:14px;border-radius:50%;background:var(--ink)}
+#waitNum{margin-top:36px;font-size:16px;color:var(--dim)}
+
+/* hero conversation — travels into the wall */
+#hero{position:absolute;left:0;top:0;width:1180px;z-index:24;
+      transform-origin:0 0;opacity:0}
+#heroCard{
+  background:var(--card);border:1px solid var(--rule);border-radius:8px;
+  box-shadow:0 8px 30px rgba(16,52,78,.14);padding:34px 42px 40px;
+}
+#heroTop{display:flex;justify-content:space-between;align-items:center;
+         font-size:14px;color:var(--dim);padding-bottom:24px;
+         border-bottom:1px solid var(--rule)}
+.msg{display:flex;margin-top:26px;opacity:0}
+.msg.bot{justify-content:flex-end}
+.bubble{
+  max-width:800px;padding:22px 28px;font-size:31px;line-height:1.36;border-radius:16px;
+  font-variation-settings:"wdth" 98,"wght" 500;min-height:78px;
+}
+.msg.cust .bubble{background:#fff;border:1px solid var(--rule);color:var(--ink);
+                  border-bottom-left-radius:5px}
+.msg.bot  .bubble{background:var(--ink);color:#E8F3FB;border-bottom-right-radius:5px}
+.meta{font-size:13px;color:var(--dim);margin-top:10px}
+.msg.bot .metarow{text-align:right}
+#chip{
+  display:inline-block;margin-left:14px;padding:4px 12px;border:1px solid var(--amber);
+  color:var(--amber);border-radius:20px;font-size:12px;vertical-align:1px;opacity:0
+}
+#typing{margin-top:26px;opacity:0;display:flex;justify-content:flex-end}
+#typing .bubble{display:flex;gap:9px;align-items:center;min-height:0;padding:20px 26px}
+#typing i{width:10px;height:10px;border-radius:50%;background:#E8F3FB;display:block}
+
+/* the wall */
+#wall{position:absolute;inset:0;z-index:22}
+.wc{
+  position:absolute;background:var(--card);border:1px solid var(--rule);border-radius:6px;
+  padding:18px 20px;box-shadow:0 2px 10px rgba(16,52,78,.10);opacity:0
+}
+.wc .nm{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--dim)}
+.wc .nm i{width:7px;height:7px;border-radius:50%;background:var(--caller);flex:none}
+.wc .bar{height:11px;border-radius:6px;background:#fff;border:1px solid var(--rule);margin-top:12px}
+.wc .bar.b2{background:var(--ink);border-color:var(--ink);margin-left:auto}
+.wc .ft{margin-top:14px;height:18px;display:flex;align-items:center;gap:7px}
+.wc .ft i{width:7px;height:7px;border-radius:50%;background:var(--dim)}
+.wc .ok{display:none;font-size:11px;color:var(--ok);letter-spacing:.12em;
+        font-family:"DM Mono",monospace;text-transform:uppercase}
+.wc.done .ft i{display:none}
+.wc.done .ok{display:block}
+#caption{
+  position:absolute;left:50%;bottom:52px;transform:translateX(-50%);
+  z-index:26;opacity:0;white-space:nowrap;
+  font-size:32px;color:var(--ink);font-variation-settings:"wdth" 90,"wght" 600;
+  background:var(--panel);border:1px solid var(--rule);border-radius:40px;
+  padding:18px 44px;box-shadow:0 6px 22px rgba(16,52,78,.16)
+}
+
+/* S4 strips */
+#s4{display:grid;place-items:center;padding:0 64px}
+#chans{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;width:100%;max-width:1792px}
+.ch{background:var(--panel);padding:52px 44px 44px;opacity:0;transform:translateY(26px);
+    box-shadow:0 2px 12px rgba(16,52,78,.10)}
+.ch .n{font-size:13px;color:var(--dim)}
+.ch .t{margin-top:22px;font-size:60px;font-variation-settings:"wdth" 74,"wght" 900;
+       text-transform:uppercase;line-height:.94}
+.ch .d{margin-top:20px;font-size:24px;color:var(--body);line-height:1.42;
+       font-variation-settings:"wdth" 100,"wght" 400}
+.ch .bars{display:flex;gap:5px;margin-top:38px;height:34px;align-items:flex-end}
+.ch .bars i{flex:1;background:var(--rule);display:block}
+
+/* S5 readouts + lockup */
+#s5{display:grid;place-items:center;padding:0 96px}
+#s5in{width:100%;max-width:1728px}
+#stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule);
+       border-bottom:1px solid var(--rule)}
+.stat{padding:44px 0;opacity:0}
+.stat .v{font-size:96px;font-variation-settings:"wdth" 68,"wght" 900;color:var(--ink);
+         font-family:"DM Mono",monospace;letter-spacing:-.03em;line-height:1}
+.stat .v em{font-style:normal;font-size:38px;color:var(--dim);margin-left:8px}
+.stat .k{margin-top:18px;font-size:14px;color:var(--dim)}
+#lock{margin-top:76px;display:flex;align-items:flex-end;justify-content:space-between;opacity:0}
+#brand{font-size:112px;font-variation-settings:"wdth" 66,"wght" 900;line-height:.9}
+#tag{margin-top:26px;font-size:29px;color:var(--body);font-variation-settings:"wdth" 100,"wght" 400}
+#cta{text-align:right;font-size:15px;color:var(--dim);line-height:2.1}
+#cta b{display:block;font-family:Archivo;font-size:31px;color:var(--amber);letter-spacing:0;
+       text-transform:none;font-variation-settings:"wdth" 100,"wght" 600;margin-top:10px}
+
+/* ── sound-consent cover ────────────────────────────────────────────── */
+#cover{
+  position:absolute;inset:0;z-index:80;display:grid;place-items:center;
+  background:var(--sky);transition:opacity .45s
+}
+#cover.gone{opacity:0;pointer-events:none}
+#coverBtn{display:grid;place-items:center;gap:26px;background:none;border:none;cursor:pointer;
+          color:var(--ink);font-family:Archivo,sans-serif}
+#coverBtn:focus-visible{outline:2px solid var(--amber);outline-offset:8px}
+#coverRing{width:112px;height:112px;border-radius:50%;border:2px solid var(--ink);
+           display:grid;place-items:center}
+#coverRing svg{width:34px;height:34px;fill:var(--ink);margin-left:5px}
+#coverTxt{font-size:16px;letter-spacing:.14em}
+#coverSub{font-size:12px;color:var(--dim);letter-spacing:.12em}
+
+/* ── controls ───────────────────────────────────────────────────────── */
+#ctl{position:fixed;left:20px;bottom:20px;z-index:99;display:flex;gap:10px;align-items:center;
+     opacity:0;transition:opacity .25s}
+body.show #ctl{opacity:1}
+#ctl button{
+  font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  background:#E6F0F8;color:#3A5E76;border:1px solid #A7C3D7;padding:11px 18px;
+  border-radius:2px;cursor:pointer
+}
+#ctl button:hover{color:var(--amber);border-color:var(--amber)}
+#ctl button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+#ctl span{font-family:"DM Mono",monospace;font-size:11px;color:#D8E7F1;letter-spacing:.1em}
+</style>
+</head>
+<body>
+
+<div id="fit"><div id="stage">
+
+  <div id="head">
+    <span id="dot"></span>
+    <span id="dotLabel" class="mono">bot online</span>
+    <span id="headName" class="mono">inbox — live</span>
+    <span id="tc" class="mono">00:00.000</span>
+  </div>
+
+  <!-- S1 -->
+  <section class="scene" id="s1">
+    <div id="s1in">
+      <div id="waitDots"><i></i><i></i><i></i></div>
+      <div id="waitNum" class="mono">customers typing — 1</div>
+    </div>
+  </section>
+
+  <!-- hero conversation -->
+  <div id="hero"><div id="heroCard">
+    <div id="heroTop" class="mono">
+      <span>order #48291 — maya k.</span><span>bot &middot; online</span>
+    </div>
+    <div class="msg cust" id="m1">
+      <div>
+        <div class="bubble" id="b1"></div>
+        <div class="meta mono" id="m1meta"></div>
+      </div>
+    </div>
+    <div id="typing"><div class="bubble"><i></i><i></i><i></i></div></div>
+    <div class="msg bot" id="m2">
+      <div>
+        <div class="bubble" id="b2"></div>
+        <div class="meta mono metarow"><span id="m2meta"></span><span id="chip"></span></div>
+      </div>
+    </div>
+    <div class="msg cust" id="m3">
+      <div>
+        <div class="bubble" id="b3"></div>
+        <div class="meta mono" id="m3meta"></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- the wall -->
+  <div id="wall"></div>
+  <div id="caption"></div>
+
+  <!-- S4 -->
+  <section class="scene" id="s4"><div id="chans"></div></section>
+
+  <!-- S5 -->
+  <section class="scene" id="s5"><div id="s5in">
+    <div id="stats"></div>
+    <div id="lock">
+      <div>
+        <h1 id="brand" class="disp"></h1>
+        <p id="tag"></p>
+      </div>
+      <div id="cta" class="mono"><span></span><b></b></div>
+    </div>
+  </div></section>
+
+  <div id="cover">
+    <button id="coverBtn" type="button" aria-label="Play teaser with sound">
+      <span id="coverRing"><svg viewBox="0 0 24 24"><path d="M6 3.5v17l14-8.5z"/></svg></span>
+      <span id="coverTxt" class="mono">play with sound</span>
+      <span id="coverSub" class="mono">30 seconds &middot; chat sounds on</span>
+    </button>
+  </div>
+
+</div></div>
+
+<div id="ctl">
+  <button id="replay" type="button">Replay</button>
+  <span id="hint">R replay &middot; M mute &middot; controls hide while idle</span>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════
+   EDIT EVERYTHING HERE.
+   ══════════════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  brand:   "AI Chat Bot",
+  tagline: "Every chat. Answered at once.",
+  ctaLine: "See it on your site",
+  ctaUrl:  "yoursite.com/demo",
+
+  cust1:  "My order says delivered, but nothing's here.",
+  reply:  "Checked it \u2014 the driver marked the wrong entrance. It's at reception now. Want the photo?",
+  cust2:  "Found it. Thanks!",
+  replySeconds: "1.2",            // shown in the amber chip
+
+  liveCount: 142,                 // wall counter target
+
+  caption: "Every one of these. At the same time.",
+
+  channels: [
+    { n:"thread 01", t:"Support", d:"Answers before the customer refreshes the page." },
+    { n:"thread 02", t:"Orders",  d:"Tracks, changes and refunds \u2014 inside the chat." },
+    { n:"thread 03", t:"Leads",   d:"Qualifies visitors while they're still browsing." }
+  ],
+  stats: [
+    { v:"1.2", u:"s", k:"median first reply" },
+    { v:"89",  u:"%", k:"resolved without a human" },
+    { v:"24/7",u:"",  k:"never queues, never closes" }
+  ],
+
+  sound: { enabled:true }         // message pops + key ticks (no speech: it's a text bot)
+};
+/* ════════════════════════════════════════════════════════════════════ */
+
+const DUR = 30000;
+const $  = s => document.querySelector(s);
+
+/* ── fit ───────────────────────────────────────────────────────────── */
+function fit(){
+  const s = Math.min(innerWidth/1920, innerHeight/1080);
+  $('#stage').style.transform = `translate(-50%,-50%) scale(${s})`;
+}
+addEventListener('resize', fit); fit();
+
+/* ── static content ────────────────────────────────────────────────── */
+$('#brand').textContent = CONFIG.brand;
+$('#tag').textContent   = CONFIG.tagline;
+$('#cta span').textContent = CONFIG.ctaLine;
+$('#cta b').textContent    = CONFIG.ctaUrl;
+$('#caption').textContent  = CONFIG.caption;
+$('#m1meta').textContent = "maya \u00B7 just now";
+$('#m2meta').textContent = "bot \u00B7 just now";
+$('#chip').textContent   = `answered in ${CONFIG.replySeconds} s`;
+$('#m3meta').textContent = "seen \u2713\u2713";
+
+$('#chans').innerHTML = CONFIG.channels.map(c => `
+  <div class="ch">
+    <div class="n mono">${c.n}</div>
+    <div class="t">${c.t}</div>
+    <div class="d">${c.d}</div>
+    <div class="bars">${'<i></i>'.repeat(22)}</div>
+  </div>`).join('');
+
+$('#stats').innerHTML = CONFIG.stats.map(s => `
+  <div class="stat">
+    <div class="v">${s.v}${s.u ? `<em>${s.u}</em>` : ''}</div>
+    <div class="k mono">${s.k}</div>
+  </div>`).join('');
+
+/* ── the wall: 6x4 grid, deterministic layout, hero lands in cell (1,1) ─ */
+const G = { x0:64, y0:132, cols:6, rows:4, gap:14 };
+G.cw = (1920 - 2*G.x0 - (G.cols-1)*G.gap) / G.cols;     // 287
+G.chh = (1080 - G.y0 - 64 - (G.rows-1)*G.gap) / G.rows; // ~211
+const HERO = { x:370, y:170, w:1180, cell:{ c:1, r:1 } };
+const cellX = c => G.x0 + c*(G.cw+G.gap);
+const cellY = r => G.y0 + r*(G.chh+G.gap);
+HERO.scale = G.cw / HERO.w;
+
+function rnd(seed){ return () => (seed = seed*16807 % 2147483647) / 2147483647; }
+const r = rnd(4242);
+const cards = [];
+{
+  const frag = [];
+  let k = 0;
+  for (let row=0; row<G.rows; row++) for (let col=0; col<G.cols; col++){
+    k++;
+    const hero = (col===HERO.cell.c && row===HERO.cell.r);
+    const w1 = 45+Math.floor(r()*40), w2 = 35+Math.floor(r()*45);
+    frag.push(`
+      <div class="wc${hero?' hero':''}" data-i="${k}"
+           style="left:${cellX(col)}px;top:${cellY(row)}px;width:${G.cw}px;height:${G.chh}px">
+        <div class="nm mono"><i></i>chat ${String(k).padStart(2,'0')}</div>
+        <div class="bar" style="width:${w1}%"></div>
+        <div class="bar b2" style="width:${w2}%"></div>
+        <div class="ft">
+          <i></i><i></i><i></i>
+          <span class="ok">resolved \u2713</span>
+        </div>
+      </div>`);
+  }
+  $('#wall').innerHTML = frag.join('');
+  document.querySelectorAll('.wc').forEach((el,i) => {
+    cards.push({
+      el, dots:[...el.querySelectorAll('.ft i')],
+      phase: r()*Math.PI*2,
+      resolveT: 13.2 + (i%7)*0.55 + Math.floor(i/7)*0.35 + r()*0.4,
+      inT: 11.5 + r()*0.9
+    });
+  });
+}
+
+/* ── helpers ───────────────────────────────────────────────────────── */
+const clamp = (v,a=0,b=1) => Math.min(b, Math.max(a,v));
+const seg   = (t,a,b) => clamp((t-a)/(b-a));
+const ease  = x => x<.5 ? 4*x*x*x : 1-Math.pow(-2*x+2,3)/2;
+const out   = x => 1-Math.pow(1-x,3);
+const lerp  = (a,b,p) => a+(b-a)*p;
+const set   = (el,o,y=0) => { el.style.opacity=o; if(y!==null) el.style.transform=`translateY(${y}px)`; };
+function typeInto(el, text, p){ el.textContent = text.slice(0, Math.floor(text.length*clamp(p))); }
+
+/* ── timeline ──────────────────────────────────────────────────────── */
+const chEls   = [...document.querySelectorAll('.ch')];
+const statEls = [...document.querySelectorAll('.stat')];
+const barEls  = chEls.map(c => [...c.querySelectorAll('.bars i')]);
+const waitEls = [...document.querySelectorAll('#waitDots i')];
+
+function frame(t){
+  const T = t/1000;
+
+  const ms = Math.floor(t)%1000, ss = Math.floor(t/1000)%60, mm = Math.floor(t/60000);
+  $('#tc').textContent =
+    `${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}.${String(ms).padStart(3,'0')}`;
+  $('#head').style.opacity = seg(T,1.2,2.0);
+
+  /* header counter: waiting → live wall count */
+  if (T < 11.2){
+    $('#headName').textContent = 'inbox \u2014 live';
+  } else {
+    const n = Math.round(lerp(1, CONFIG.liveCount, ease(seg(T,11.4,15.6))));
+    $('#headName').textContent = `live conversations \u2014 ${String(n).padStart(3,'0')}`;
+  }
+
+  /* S1 cold open: three customers start typing */
+  const s1 = seg(T,0,0.5) * (1-seg(T,2.3,2.9));
+  $('#s1').style.opacity = s1;
+  waitEls.forEach((d,i) => d.style.opacity = 0.25 + 0.75*Math.abs(Math.sin(T*3.2 + i*0.9)));
+  $('#waitNum').textContent =
+    `customers typing \u2014 ${Math.min(7, 1+Math.floor(T*3))}`;
+
+  /* hero conversation */
+  const heroIn = seg(T,2.6,3.2);
+  const pull   = ease(seg(T,10.8,12.5));                 // the pull-back
+  const hx = lerp(HERO.x, cellX(HERO.cell.c), pull);
+  const hy = lerp(HERO.y, cellY(HERO.cell.r), pull);
+  const hs = lerp(1, HERO.scale, pull);
+  const hero = $('#hero');
+  hero.style.transform = `translate(${hx}px,${hy}px) scale(${hs})`;
+  hero.style.opacity = heroIn * (1 - seg(pull,0.8,1));   // crossfade into its cell
+
+  set($('#m1'), seg(T,3.1,3.5), (1-out(seg(T,3.1,3.6)))*14);
+  typeInto($('#b1'), CONFIG.cust1, seg(T,3.3,5.4));
+  $('#m1meta').style.opacity = seg(T,5.4,5.7);
+
+  $('#typing').style.opacity = seg(T,5.7,6.0) * (1-seg(T,6.6,6.8));
+  [...document.querySelectorAll('#typing i')].forEach((d,i) =>
+    d.style.opacity = 0.25 + 0.75*Math.abs(Math.sin(T*5.5 + i*0.8)));
+
+  set($('#m2'), seg(T,6.8,7.2), (1-out(seg(T,6.8,7.3)))*14);
+  typeInto($('#b2'), CONFIG.reply, seg(T,6.9,9.0));
+  $('#m2meta').style.opacity = seg(T,9.0,9.3);
+  $('#chip').style.opacity   = seg(T,9.2,9.5);
+
+  set($('#m3'), seg(T,9.7,10.1), (1-out(seg(T,9.7,10.2)))*14);
+  typeInto($('#b3'), CONFIG.cust2, seg(T,9.8,10.4));
+  $('#m3meta').style.opacity = seg(T,10.4,10.7);
+
+  /* the wall */
+  const wallOut = seg(T,18.2,18.9);
+  cards.forEach(c => {
+    const on = seg(T, c.inT, c.inT+0.5) * (1-wallOut);
+    c.el.style.opacity = on;
+    if (T >= c.resolveT) c.el.classList.add('done');
+    else {
+      c.el.classList.remove('done');
+      c.dots.forEach((d,i) => d.style.opacity = 0.2 + 0.8*Math.abs(Math.sin(T*4.4 + c.phase + i*0.7)));
+    }
+  });
+  $('#caption').style.opacity = seg(T,13.4,14.0) * (1-seg(T,17.4,18.0));
+
+  /* S4 strips */
+  const inCh = seg(T,19.3,19.9) * (1-seg(T,23.9,24.5));
+  $('#s4').style.opacity = inCh;
+  chEls.forEach((el,i) => {
+    const p = seg(T, 19.5+i*0.26, 20.3+i*0.26);
+    set(el, p, (1-out(p))*26);
+    barEls[i].forEach((b,j) => {
+      const h = 6 + Math.abs(Math.sin(T*2.6 + j*0.5 + i*1.3))*28*p;
+      b.style.height = `${h}px`;
+      b.style.background = j < 16 ? 'var(--rule)' : 'var(--ok)';
+    });
+  });
+
+  /* S5 stats + lockup */
+  $('#s5').style.opacity = seg(T,24.3,24.9);
+  statEls.forEach((el,i) => {
+    const p = seg(T, 24.6+i*0.22, 25.4+i*0.22);
+    set(el, p, (1-out(p))*20);
+  });
+  set($('#lock'), seg(T,26.4,27.2), (1-out(seg(T,26.4,27.4)))*24);
+}
+
+/* ── audio: chat sound design (no speech — it's a text bot) ────────── */
+let muted = false, AC = null;
+function ctx(){
+  if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)();
+  if (AC.state === 'suspended') AC.resume();
+  return AC;
+}
+function tone(at, dur, freqs, vol, type='sine'){
+  if (muted || !CONFIG.sound.enabled) return;
+  const c = ctx(), g = c.createGain(), t0 = c.currentTime + at;
+  g.connect(c.destination);
+  g.gain.setValueAtTime(0, t0);
+  g.gain.linearRampToValueAtTime(vol, t0 + 0.015);
+  g.gain.exponentialRampToValueAtTime(0.0005, t0 + dur);
+  freqs.forEach(f => {
+    const o = c.createOscillator();
+    o.type = type; o.frequency.value = f;
+    o.connect(g); o.start(t0); o.stop(t0 + dur);
+  });
+}
+const pop  = up => tone(0, 0.14, up ? [680, 1020] : [420, 630], 0.05);
+const tick = () => tone(0, 0.025, [1900], 0.012, 'square');
+
+let cues = [];
+function addTicks(t0, t1, step){
+  for (let t=t0; t<t1; t+=step) cues.push({ t, fn:tick });
+}
+function armCues(){
+  cues = [
+    { t: 3150, fn: () => pop(false) },          // customer message lands
+    { t: 6850, fn: () => pop(true)  },          // bot reply lands
+    { t: 9750, fn: () => pop(false) },          // customer thanks
+    { t:11000, fn: () => tone(0, 0.6, [392, 494, 587], 0.03) },  // pull-back chord
+    { t:29000, fn: () => tone(0, 0.5, [523, 784], 0.035) }       // closing chime
+  ];
+  addTicks(3350, 5350, 95);                     // customer typing
+  addTicks(9850, 10350, 95);
+  // resolve pings across the wall, sparse so it doesn't chatter
+  [13400, 14150, 14900, 15600, 16300].forEach(t =>
+    cues.push({ t, fn: () => tone(0, 0.12, [880], 0.02) }));
+  cues.sort((a,b) => a.t - b.t);
+}
+function stopAudio(){ /* tones are one-shot; nothing persistent to stop */ }
+function setMute(m){
+  muted = m;
+  $('#hint').textContent =
+    `R replay \u00B7 M ${m ? 'unmute' : 'mute'} \u00B7 controls hide while idle`;
+}
+addEventListener('keydown', e => { if (e.key==='m'||e.key==='M') setMute(!muted); });
+
+/* ── run loop ──────────────────────────────────────────────────────── */
+let start = null, raf = null;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function loop(ts){
+  if (start === null) start = ts;
+  const t = ts - start;
+  while (cues.length && t >= cues[0].t) cues.shift().fn();
+  frame(Math.min(t, DUR));
+  if (t < DUR + 1200) raf = requestAnimationFrame(loop);
+}
+function play(){
+  cancelAnimationFrame(raf);
+  stopAudio(); armCues();
+  cards.forEach(c => c.el.classList.remove('done'));
+  start = null; raf = requestAnimationFrame(loop);
+}
+
+$('#replay').addEventListener('click', play);
+addEventListener('keydown', e => { if (e.key==='r'||e.key==='R') play(); });
+
+let idle;
+function wake(){
+  document.body.classList.add('show');
+  clearTimeout(idle);
+  idle = setTimeout(() => document.body.classList.remove('show'), 2200);
+}
+addEventListener('mousemove', wake);
+wake();
+
+const cover = $('#cover');
+if (reduce){
+  cover.classList.add('gone');
+  frame(DUR);
+} else {
+  frame(0);
+  $('#coverBtn').addEventListener('click', () => {
+    ctx();
+    cover.classList.add('gone');
+    setTimeout(play, 380);
+  }, { once:true });
+}
+</script>
+</body>
+</html>

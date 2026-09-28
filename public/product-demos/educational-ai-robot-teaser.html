@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Educational AI Robot — 30s teaser</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#CFE2EF; --panel:#E6F0F8; --card:#F7FBFE; --rule:#A7C3D7;
+  --ink:#10222F; --dim:#456579; --body:#3A5E76;
+  --amber:#8A5102; --ok:#1E6B45; --caller:#1C6B67; --signal:#C6371F;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#7FA3BC;overflow:hidden}
+body{font-family:Archivo,system-ui,sans-serif}
+#fit{width:100vw;height:100vh;position:relative;overflow:hidden}
+#stage{width:1920px;height:1080px;overflow:hidden;background:var(--sky);color:var(--ink);
+       position:absolute;left:50%;top:50%}
+#stage::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:60;
+  background:radial-gradient(120% 80% at 50% 42%,transparent 42%,rgba(28,74,105,.20) 100%),
+  repeating-linear-gradient(0deg,rgba(16,34,47,.022) 0 1px,transparent 1px 3px)}
+.mono{font-family:"DM Mono",ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase}
+.disp{font-family:Archivo,sans-serif;font-variation-settings:"wdth" 78,"wght" 800;
+      text-transform:uppercase;letter-spacing:-.005em;line-height:.94}
+#head{position:absolute;top:0;left:0;right:0;height:96px;z-index:30;display:flex;align-items:center;
+  gap:28px;padding:0 64px;border-bottom:1px solid var(--rule);background:var(--panel);
+  box-shadow:0 1px 0 rgba(255,255,255,.7) inset;opacity:0}
+#dot{width:13px;height:13px;border-radius:50%;background:var(--ok);flex:none;box-shadow:0 0 12px var(--ok)}
+#dotLabel{font-size:14px;color:var(--dim)}
+#headName{margin-left:auto;font-size:15px;color:var(--dim);font-variant-numeric:tabular-nums}
+#tc{font-size:15px;color:var(--dim);min-width:132px;text-align:right;font-variant-numeric:tabular-nums}
+.scene{position:absolute;inset:0;z-index:20;opacity:0;pointer-events:none}
+#caption{position:absolute;left:50%;bottom:52px;transform:translateX(-50%);z-index:36;opacity:0;
+  white-space:nowrap;font-size:32px;color:var(--ink);font-variation-settings:"wdth" 90,"wght" 600;
+  background:var(--panel);border:1px solid var(--rule);border-radius:40px;padding:18px 44px;
+  box-shadow:0 6px 22px rgba(16,52,78,.16)}
+#s4{display:grid;place-items:center;padding:0 64px}
+#chans{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;width:100%;max-width:1792px}
+.ch{background:var(--panel);padding:52px 44px 44px;opacity:0;transform:translateY(26px);
+    box-shadow:0 2px 12px rgba(16,52,78,.10)}
+.ch .n{font-size:13px;color:var(--dim)}
+.ch .t{margin-top:22px;font-size:60px;font-variation-settings:"wdth" 74,"wght" 900;
+       text-transform:uppercase;line-height:.94}
+.ch .d{margin-top:20px;font-size:24px;color:var(--body);line-height:1.42;
+       font-variation-settings:"wdth" 100,"wght" 400}
+.ch .bars{display:flex;gap:5px;margin-top:38px;height:34px;align-items:flex-end}
+.ch .bars i{flex:1;background:var(--rule);display:block}
+#s5{display:grid;place-items:center;padding:0 96px}
+#s5in{width:100%;max-width:1728px}
+#stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule);
+       border-bottom:1px solid var(--rule)}
+.stat{padding:44px 0;opacity:0}
+.stat .v{font-size:96px;font-variation-settings:"wdth" 68,"wght" 900;color:var(--ink);
+         font-family:"DM Mono",monospace;letter-spacing:-.03em;line-height:1}
+.stat .v em{font-style:normal;font-size:38px;color:var(--dim);margin-left:8px}
+.stat .k{margin-top:18px;font-size:14px;color:var(--dim)}
+#lock{margin-top:76px;display:flex;align-items:flex-end;justify-content:space-between;opacity:0}
+#brand{font-size:104px;font-variation-settings:"wdth" 66,"wght" 900;line-height:.9}
+#tag{margin-top:26px;font-size:29px;color:var(--body);font-variation-settings:"wdth" 100,"wght" 400}
+#cta{text-align:right;font-size:15px;color:var(--dim);line-height:2.1}
+#cta b{display:block;font-family:Archivo;font-size:31px;color:var(--amber);letter-spacing:0;
+       text-transform:none;font-variation-settings:"wdth" 100,"wght" 600;margin-top:10px}
+#cover{position:absolute;inset:0;z-index:80;display:grid;place-items:center;background:var(--sky);
+       transition:opacity .45s}
+#cover.gone{opacity:0;pointer-events:none}
+#coverBtn{display:grid;place-items:center;gap:26px;background:none;border:none;cursor:pointer;
+          color:var(--ink);font-family:Archivo,sans-serif}
+#coverBtn:focus-visible{outline:2px solid var(--amber);outline-offset:8px}
+#coverRing{width:112px;height:112px;border-radius:50%;border:2px solid var(--ink);
+           display:grid;place-items:center}
+#coverRing svg{width:34px;height:34px;fill:var(--ink);margin-left:5px}
+#coverTxt{font-size:16px;letter-spacing:.14em}
+#coverSub{font-size:12px;color:var(--dim);letter-spacing:.12em}
+#ctl{position:fixed;left:20px;bottom:20px;z-index:99;display:flex;gap:10px;align-items:center;
+     opacity:0;transition:opacity .25s}
+body.show #ctl{opacity:1}
+#ctl button{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  background:#E6F0F8;color:#3A5E76;border:1px solid #A7C3D7;padding:11px 18px;border-radius:2px;cursor:pointer}
+#ctl button:hover{color:var(--amber);border-color:var(--amber)}
+#ctl button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+#ctl span{font-family:"DM Mono",monospace;font-size:11px;color:#D8E7F1;letter-spacing:.1em}
+
+#mid{position:absolute;inset:0;z-index:22;opacity:0}
+#bootTxt{position:absolute;left:0;right:0;top:760px;text-align:center;font-size:15px;color:var(--dim)}
+#face{position:absolute;left:150px;top:210px;width:470px}
+.eye{transform-box:fill-box;transform-origin:center}
+#dial{position:absolute;left:225px;top:700px;width:320px}
+#dialCap{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--dim)}
+#quiz{position:absolute;left:760px;top:210px;width:1050px;background:var(--card);
+  border:1px solid var(--rule);border-radius:8px;box-shadow:0 8px 30px rgba(16,52,78,.14);
+  padding:46px 54px 50px;opacity:0}
+#qq{font-size:88px;font-variation-settings:"wdth" 78,"wght" 800}
+#chips{display:flex;gap:22px;margin-top:40px}
+.chip{font-family:Archivo;font-size:44px;font-variation-settings:"wdth" 90,"wght" 700;
+  padding:22px 46px;border-radius:14px;border:2px solid var(--rule);background:#fff;color:var(--ink)}
+.chip.sel{border-color:var(--ink)}
+.chip.bad{border-color:var(--signal);color:var(--signal)}
+.chip.good{border-color:var(--ok);color:var(--ok);background:#EFF8F2}
+#explain{margin-top:38px;font-size:33px;line-height:1.4;color:var(--body);min-height:96px;
+  font-variation-settings:"wdth" 98,"wght" 500}
+#streak{margin-top:22px;font-size:14px;color:var(--amber);opacity:0}
+.star{position:absolute;font-size:40px;color:var(--amber);opacity:0}
+
+</style>
+</head>
+<body>
+<div id="fit"><div id="stage">
+  <div id="head">
+    <span id="dot"></span><span id="dotLabel" class="mono"></span>
+    <span id="headName" class="mono"></span><span id="tc" class="mono">00:00.000</span>
+  </div>
+
+  <div id="mid">
+    <div id="bootTxt" class="mono">waking up</div>
+    <svg id="face" viewBox="0 0 400 400">
+      <line x1="200" y1="28" x2="200" y2="62" stroke="var(--ink)" stroke-width="8"/>
+      <circle cx="200" cy="22" r="10" fill="var(--amber)"/>
+      <rect x="40" y="62" rx="58" width="320" height="276" fill="var(--ink)"/>
+      <circle class="eye" cx="148" cy="180" r="27" fill="#CFE2EF"/>
+      <circle class="eye" cx="252" cy="180" r="27" fill="#CFE2EF"/>
+      <path id="mouth" d="M148 262 Q200 262 252 262" stroke="#CFE2EF" stroke-width="11"
+            fill="none" stroke-linecap="round"/>
+    </svg>
+    <div id="dial">
+      <svg viewBox="0 0 320 150">
+        <path d="M30 132 A130 130 0 0 1 290 132" fill="none" stroke="var(--rule)" stroke-width="3"/>
+        <line id="needle" x1="160" y1="134" x2="160" y2="34" stroke="var(--ink)" stroke-width="4"/>
+        <circle cx="160" cy="134" r="7" fill="var(--ink)"/>
+      </svg>
+      <div id="dialCap" class="mono"><span>slower</span><span>pace</span><span>faster</span></div>
+    </div>
+    <div id="quiz">
+      <div id="qq"></div>
+      <div id="chips"><button class="chip" id="c1" type="button"></button>
+                      <button class="chip" id="c2" type="button"></button></div>
+      <div id="explain"></div>
+      <div id="streak" class="mono"></div>
+    </div>
+    <span class="star" style="left:1520px;top:340px">✦</span>
+    <span class="star" style="left:1580px;top:300px">✦</span>
+    <span class="star" style="left:1640px;top:355px">✦</span>
+  </div>
+
+  <div id="caption"></div>
+  <section class="scene" id="s4"><div id="chans"></div></section>
+  <section class="scene" id="s5"><div id="s5in">
+    <div id="stats"></div>
+    <div id="lock">
+      <div><h1 id="brand" class="disp"></h1><p id="tag"></p></div>
+      <div id="cta" class="mono"><span></span><b></b></div>
+    </div>
+  </div></section>
+  <div id="cover">
+    <button id="coverBtn" type="button" aria-label="Play teaser with sound">
+      <span id="coverRing"><svg viewBox="0 0 24 24"><path d="M6 3.5v17l14-8.5z"/></svg></span>
+      <span id="coverTxt" class="mono">play with sound</span>
+      <span id="coverSub" class="mono">30 seconds &middot; sound on</span>
+    </button>
+  </div>
+</div></div>
+<div id="ctl">
+  <button id="replay" type="button">Replay</button>
+  <span id="hint">R replay &middot; M mute &middot; controls hide while idle</span>
+</div>
+<script>
+const CONFIG = {
+  brand:"Educational AI Robot", tagline:"A patient teacher. Every time.",
+  ctaLine:"Meet the robot", ctaUrl:"yoursite.com/robot",
+  caption:"Never impatient. Never bored.",
+  headLeft:"robot online", headRight:"lesson — multiplication",
+  barHi:"var(--amber)",
+  q1:"7 × 8 = ?", a1:"54", b1:"56",
+  explain:"Let's count by 8s — 8, 16, 24, 32, 40, 48… 56!",
+  q2:"9 × 6 = ?", a2:"54", b2:"52",
+  channels:[
+    { n:"subject 01", t:"Math",    d:"Adapts every question to your child's pace." },
+    { n:"subject 02", t:"Reading", d:"Listens, corrects, and celebrates out loud." },
+    { n:"subject 03", t:"Coding",  d:"From first loop to first game." }
+  ],
+  stats:[
+    { v:"1:1",  u:"",  k:"attention, always" },
+    { v:"40",   u:"+", k:"subjects and games" },
+    { v:"5–14", u:"", k:"ages, one robot" }
+  ]
+};
+const DUR = 30000;
+const $ = s => document.querySelector(s);
+function fit(){
+  const s = Math.min(innerWidth/1920, innerHeight/1080);
+  $('#stage').style.transform = `translate(-50%,-50%) scale(${s})`;
+}
+addEventListener('resize', fit); fit();
+
+$('#brand').textContent = CONFIG.brand;
+$('#tag').textContent = CONFIG.tagline;
+$('#cta span').textContent = CONFIG.ctaLine;
+$('#cta b').textContent = CONFIG.ctaUrl;
+$('#caption').textContent = CONFIG.caption;
+$('#dotLabel').textContent = CONFIG.headLeft;
+$('#headName').textContent = CONFIG.headRight;
+$('#chans').innerHTML = CONFIG.channels.map(c => `
+  <div class="ch"><div class="n mono">${c.n}</div><div class="t">${c.t}</div>
+  <div class="d">${c.d}</div><div class="bars">${'<i></i>'.repeat(22)}</div></div>`).join('');
+$('#stats').innerHTML = CONFIG.stats.map(s => `
+  <div class="stat"><div class="v">${s.v}${s.u?`<em>${s.u}</em>`:''}</div>
+  <div class="k mono">${s.k}</div></div>`).join('');
+
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const seg=(t,a,b)=>clamp((t-a)/(b-a));
+const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const out=x=>1-Math.pow(1-x,3);
+const lerp=(a,b,p)=>a+(b-a)*p;
+const set=(el,o,y=0)=>{el.style.opacity=o;if(y!==null)el.style.transform=`translateY(${y}px)`};
+function typeInto(el,text,p){el.textContent=text.slice(0,Math.floor(text.length*clamp(p)))}
+function rnd(seed){return()=>(seed=seed*16807%2147483647)/2147483647}
+
+
+const eyes=[...document.querySelectorAll('.eye')];
+const stars=[...document.querySelectorAll('.star')];
+let pace=0;
+
+
+const chEls=[...document.querySelectorAll('.ch')];
+const statEls=[...document.querySelectorAll('.stat')];
+const barEls=chEls.map(c=>[...c.querySelectorAll('.bars i')]);
+
+
+function frameMid(T){
+  $('#mid').style.opacity=seg(T,0.2,0.9)*(1-seg(T,18.3,19.0));
+  $('#bootTxt').style.opacity=seg(T,0.4,0.9)*(1-seg(T,2.2,2.7));
+
+  // eyes: open, then blink at fixed beats
+  const openP=out(seg(T,0.8,1.3));
+  const blink=t0=>clamp(Math.abs((T-t0)*7),0,1);
+  const ey=Math.max(0.06,openP*Math.min(blink(2.3),blink(6.9),blink(13.6)));
+  eyes.forEach(e=>e.style.transform=`scaleY(${ey})`);
+
+  // mood drives the mouth: flat -> concerned on the miss -> happy on the win
+  let mood=0;
+  if(T>=5.0&&T<10.8)mood=-0.6;
+  if((T>=11.0&&T<13.2)||T>=14.9)mood=1;
+  $('#mouth').setAttribute('d',
+    `M148 ${262-mood*10} Q200 ${262+mood*28} 252 ${262-mood*10}`);
+
+  // quiz card: question 1 then question 2
+  $('#quiz').style.opacity=seg(T,3.0,3.5);
+  const q2=T>=13.2;
+  $('#qq').textContent=q2?CONFIG.q2:CONFIG.q1;
+  const c1=$('#c1'),c2=$('#c2');
+  if(!q2){
+    c1.textContent=CONFIG.a1+(T>=5.0?'  ✗':'');
+    c2.textContent=CONFIG.b1+(T>=11.0?'  ✓':'');
+    c1.className='chip'+(T>=4.6&&T<5.0?' sel':T>=5.0?' bad':'');
+    c2.className='chip'+(T>=10.6&&T<11.0?' sel':T>=11.0?' good':'');
+    typeInto($('#explain'),CONFIG.explain,seg(T,6.2,9.6));
+  }else{
+    c1.textContent=CONFIG.a2+(T>=14.9?'  ✓':'');
+    c2.textContent=CONFIG.b2;
+    c1.className='chip'+(T>=14.6&&T<14.9?' sel':T>=14.9?' good':'');
+    c2.className='chip';
+    $('#explain').textContent='';
+  }
+  $('#streak').style.opacity=seg(T,12.2,12.6)*(1-seg(T,13.0,13.2))+seg(T,15.4,15.8);
+  $('#streak').textContent=T<13.2?'nice — moving a little faster':'streak ✦ 2 — level up';
+
+  // stars pop on the first win
+  stars.forEach((s,i)=>{
+    const p=seg(T,11.0+i*0.14,11.6+i*0.14),f=1-seg(T,12.4,13.0);
+    s.style.opacity=p*f;
+    s.style.transform=`translateY(${-34*out(p)}px) scale(${0.5+out(p)})`;
+  });
+
+  // the pace dial: eases down after the miss, up after each win
+  const pT=T<5?0:T<10.8?-0.75:T<14.6?0.3:0.85;
+  pace+=(pT-pace)*0.07;
+  $('#needle').setAttribute('transform',`rotate(${pace*52} 160 134)`);
+
+  $('#caption').style.opacity=seg(T,16.2,16.8)*(1-seg(T,18.2,18.7));
+}
+
+
+function frame(t){
+  const T=t/1000;
+  const ms=Math.floor(t)%1000, ss=Math.floor(t/1000)%60, mm=Math.floor(t/60000);
+  $('#tc').textContent=`${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}.${String(ms).padStart(3,'0')}`;
+  $('#head').style.opacity=seg(T,1.2,2.0);
+  frameMid(T);
+  const inCh=seg(T,19.3,19.9)*(1-seg(T,23.9,24.5));
+  $('#s4').style.opacity=inCh;
+  chEls.forEach((el,i)=>{
+    const p=seg(T,19.5+i*0.26,20.3+i*0.26);
+    set(el,p,(1-out(p))*26);
+    barEls[i].forEach((b,j)=>{
+      b.style.height=`${6+Math.abs(Math.sin(T*2.6+j*0.5+i*1.3))*28*p}px`;
+      b.style.background=j<16?'var(--rule)':CONFIG.barHi;
+    });
+  });
+  $('#s5').style.opacity=seg(T,24.3,24.9);
+  statEls.forEach((el,i)=>{const p=seg(T,24.6+i*0.22,25.4+i*0.22);set(el,p,(1-out(p))*20)});
+  set($('#lock'),seg(T,26.4,27.2),(1-out(seg(T,26.4,27.4)))*24);
+}
+
+let muted=false, AC=null;
+function ctx(){
+  if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();
+  if(AC.state==='suspended')AC.resume();
+  return AC;
+}
+function tone(at,dur,freqs,vol,type='sine'){
+  if(muted)return;
+  const c=ctx(),g=c.createGain(),t0=c.currentTime+at;
+  g.connect(c.destination);
+  g.gain.setValueAtTime(0,t0);
+  g.gain.linearRampToValueAtTime(vol,t0+0.015);
+  g.gain.exponentialRampToValueAtTime(0.0005,t0+dur);
+  freqs.forEach(f=>{const o=c.createOscillator();o.type=type;o.frequency.value=f;
+    o.connect(g);o.start(t0);o.stop(t0+dur)});
+}
+let cues=[];
+
+function armProductCues(){
+  cues.push(
+    {t:800,  fn:()=>tone(0,0.22,[660,880],0.035)},        // boot chirp
+    {t:4600, fn:()=>tone(0,0.06,[900],0.03)},             // tap
+    {t:5000, fn:()=>tone(0,0.3,[220,196],0.035)},         // gentle miss
+    {t:10600,fn:()=>tone(0,0.06,[900],0.03)},
+    {t:11000,fn:()=>tone(0,0.4,[523,659,784],0.045)},     // win chime
+    {t:11150,fn:()=>tone(0,0.1,[1568],0.02)},
+    {t:11300,fn:()=>tone(0,0.1,[1760],0.02)},
+    {t:14900,fn:()=>tone(0,0.35,[587,740,880],0.045)}     // second win
+  );
+}
+
+function armCues(){cues=[];armProductCues();cues.push({t:29000,fn:()=>tone(0,0.5,[523,784],0.035)});cues.sort((a,b)=>a.t-b.t)}
+function setMute(m){muted=m;
+  $('#hint').textContent=`R replay \u00B7 M ${m?'unmute':'mute'} \u00B7 controls hide while idle`}
+addEventListener('keydown',e=>{if(e.key==='m'||e.key==='M')setMute(!muted)});
+
+let start=null,raf=null;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function loop(ts){
+  if(start===null)start=ts;
+  const t=ts-start;
+  while(cues.length&&t>=cues[0].t)cues.shift().fn();
+  frame(Math.min(t,DUR));
+  if(t<DUR+1200)raf=requestAnimationFrame(loop);
+}
+function play(){cancelAnimationFrame(raf);armCues();start=null;raf=requestAnimationFrame(loop)}
+$('#replay').addEventListener('click',play);
+addEventListener('keydown',e=>{if(e.key==='r'||e.key==='R')play()});
+let idle;
+function wake(){document.body.classList.add('show');clearTimeout(idle);
+  idle=setTimeout(()=>document.body.classList.remove('show'),2200)}
+addEventListener('mousemove',wake);wake();
+const cover=$('#cover');
+if(reduce){cover.classList.add('gone');frame(DUR)}
+else{
+  frame(0);
+  $('#coverBtn').addEventListener('click',()=>{ctx();cover.classList.add('gone');
+    setTimeout(play,380)},{once:true});
+}
+</script>
+</body>
+</html>

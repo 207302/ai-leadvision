@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Voice Chat Bot — 30s teaser</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#CFE2EF;        /* console body — light blue */
+  --panel:#E6F0F8;      /* raised strips             */
+  --rule:#A7C3D7;       /* hairline separators       */
+  --ink:#10222F;        /* primary text              */
+  --dim:#456579;        /* utility text              */
+  --body:#3A5E76;       /* secondary copy            */
+  --face:#EDE4D2;       /* VU meter face (kept warm) */
+  --amber:#8A5102;      /* on-air lamp / AI turn     */
+  --signal:#C6371F;     /* record light              */
+  --caller:#1C6B67;     /* caller turn               */
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#7FA3BC;overflow:hidden}
+body{display:grid;place-items:center;font-family:Archivo,system-ui,sans-serif}
+
+/* ── stage: fixed 1920x1080, scaled to fit any screen ───────────────── */
+#fit{width:100vw;height:100vh;position:relative;overflow:hidden}
+#stage{
+  width:1920px;height:1080px;overflow:hidden;
+  background:var(--sky);color:var(--ink);
+  /* Centred by the transform itself: grid/flex alignment silently falls back
+     to start when the unscaled 1920px box overflows the viewport, which shoved
+     the stage off-centre at every size except exactly 1920x1080. */
+  position:absolute;left:50%;top:50%;
+}
+#stage::after{ /* console grain + vignette */
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:60;
+  background:
+    radial-gradient(120% 80% at 50% 42%,transparent 42%,rgba(28,74,105,.20) 100%),
+    repeating-linear-gradient(0deg,rgba(16,34,47,.022) 0 1px,transparent 1px 3px);
+}
+
+.mono{font-family:"DM Mono",ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase}
+.disp{font-family:Archivo,sans-serif;font-variation-settings:"wdth" 78,"wght" 800;
+      text-transform:uppercase;letter-spacing:-.005em;line-height:.94}
+
+/* ── header strip ───────────────────────────────────────────────────── */
+#head{
+  position:absolute;top:0;left:0;right:0;height:96px;z-index:30;
+  display:flex;align-items:center;gap:28px;padding:0 64px;
+  border-bottom:1px solid var(--rule);background:var(--panel);
+  box-shadow:0 1px 0 rgba(255,255,255,.7) inset;
+  opacity:0;
+}
+#lamp{width:13px;height:13px;border-radius:50%;background:#A7C3D7;flex:none;transition:none}
+#lampLabel{font-size:14px;color:var(--dim)}
+#headName{margin-left:auto;font-size:15px;color:var(--dim)}
+#tc{font-size:15px;color:var(--dim);min-width:132px;text-align:right;font-variant-numeric:tabular-nums}
+
+/* ── VU meter ───────────────────────────────────────────────────────── */
+#vu{position:absolute;top:168px;right:64px;width:300px;z-index:25;opacity:0}
+#vuFace{
+  position:relative;height:172px;background:var(--face);border-radius:3px;
+  box-shadow:inset 0 -22px 34px rgba(126,104,70,.22),0 3px 10px rgba(16,52,78,.28);
+  overflow:hidden;
+}
+#vuFace svg{position:absolute;inset:0;width:100%;height:100%}
+#vuCap{
+  display:flex;justify-content:space-between;margin-top:12px;
+  font-size:12px;color:var(--dim)
+}
+
+/* ── scene layers ───────────────────────────────────────────────────── */
+.scene{position:absolute;inset:0;z-index:20;opacity:0;pointer-events:none}
+
+/* S1 cold open */
+#s1{display:grid;place-items:center}
+#s1 .dot{width:16px;height:16px;border-radius:50%;background:var(--signal)}
+#s1 .cue{margin-top:34px;font-size:15px;color:var(--dim)}
+
+/* S2/S3 conversation */
+#conv{position:absolute;left:64px;top:200px;width:1180px}
+.turn{margin-bottom:20px;opacity:0}
+.turn .who{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--dim);margin-bottom:22px}
+.turn .who i{width:10px;height:10px;border-radius:50%;background:currentColor;font-style:normal}
+.turn canvas{display:block;width:1180px;height:132px}
+.turn .said{
+  margin-top:26px;font-size:47px;line-height:1.24;max-width:1080px;
+  font-variation-settings:"wdth" 96,"wght" 500;color:var(--ink)
+}
+#t1 .who{color:var(--caller)} #t2 .who{color:var(--amber)}
+
+/* the gap */
+#gap{position:absolute;left:64px;top:556px;width:1180px;opacity:0}
+#gapRule{height:1px;background:var(--rule);position:relative}
+#gapRule span{
+  position:absolute;top:-11px;left:0;height:21px;width:2px;background:var(--amber)
+}
+#gapNum{margin-top:26px;display:flex;align-items:baseline;gap:16px}
+#gapMs{font-size:78px;font-variation-settings:"wdth" 70,"wght" 900;color:var(--amber);
+       font-family:"DM Mono",monospace;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+#gapLbl{font-size:15px;color:var(--dim)}
+
+/* S4 channels */
+#s4{display:grid;place-items:center;padding:0 64px}
+#chans{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;width:100%;max-width:1792px}
+.ch{background:var(--panel);padding:52px 44px 44px;opacity:0;transform:translateY(26px);
+    box-shadow:0 2px 12px rgba(16,52,78,.10)}
+.ch .n{font-size:13px;color:var(--dim)}
+.ch .t{margin-top:22px;font-size:60px;font-variation-settings:"wdth" 74,"wght" 900;
+       text-transform:uppercase;line-height:.94}
+.ch .d{margin-top:20px;font-size:24px;color:var(--body);line-height:1.42;
+       font-variation-settings:"wdth" 100,"wght" 400}
+.ch .bars{display:flex;gap:5px;margin-top:38px;height:34px;align-items:flex-end}
+.ch .bars i{flex:1;background:var(--rule);display:block}
+
+/* S5 readouts + lockup */
+#s5{display:grid;place-items:center;padding:0 96px}
+#s5in{width:100%;max-width:1728px}
+#stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule);
+       border-bottom:1px solid var(--rule)}
+.stat{padding:44px 0;opacity:0}
+.stat .v{font-size:96px;font-variation-settings:"wdth" 68,"wght" 900;color:var(--ink);
+         font-family:"DM Mono",monospace;letter-spacing:-.03em;line-height:1}
+.stat .v em{font-style:normal;font-size:38px;color:var(--dim);margin-left:8px}
+.stat .k{margin-top:18px;font-size:14px;color:var(--dim)}
+#lock{margin-top:76px;display:flex;align-items:flex-end;justify-content:space-between;opacity:0}
+#brand{font-size:112px;font-variation-settings:"wdth" 66,"wght" 900;line-height:.9}
+#tag{margin-top:26px;font-size:29px;color:var(--body);font-variation-settings:"wdth" 100,"wght" 400}
+#cta{text-align:right;font-size:15px;color:var(--dim);line-height:2.1}
+#cta b{display:block;font-family:Archivo;font-size:31px;color:var(--amber);letter-spacing:0;
+       text-transform:none;font-variation-settings:"wdth" 100,"wght" 600;margin-top:10px}
+
+/* ── sound-consent cover (browsers block audio without a gesture) ───── */
+#cover{
+  position:absolute;inset:0;z-index:80;display:grid;place-items:center;
+  background:var(--sky);transition:opacity .45s
+}
+#cover.gone{opacity:0;pointer-events:none}
+#coverBtn{
+  display:grid;place-items:center;gap:26px;background:none;border:none;cursor:pointer;
+  color:var(--ink);font-family:Archivo,sans-serif
+}
+#coverBtn:focus-visible{outline:2px solid var(--amber);outline-offset:8px}
+#coverRing{
+  width:112px;height:112px;border-radius:50%;border:2px solid var(--ink);
+  display:grid;place-items:center
+}
+#coverRing svg{width:34px;height:34px;fill:var(--ink);margin-left:5px}
+#coverTxt{font-size:16px;letter-spacing:.14em}
+#coverSub{font-size:12px;color:var(--dim);letter-spacing:.12em}
+
+/* ── controls (hidden while recording) ──────────────────────────────── */
+#ctl{
+  position:fixed;left:20px;bottom:20px;z-index:99;display:flex;gap:10px;align-items:center;
+  opacity:0;transition:opacity .25s
+}
+body.show #ctl{opacity:1}
+#ctl button{
+  font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  background:#E6F0F8;color:#3A5E76;border:1px solid #A7C3D7;padding:11px 18px;
+  border-radius:2px;cursor:pointer
+}
+#ctl button:hover{color:var(--amber);border-color:var(--amber)}
+#ctl button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+#ctl span{font-family:"DM Mono",monospace;font-size:11px;color:#D8E7F1;letter-spacing:.1em}
+</style>
+</head>
+<body>
+
+<div id="fit"><div id="stage">
+
+  <div id="head">
+    <span id="lamp"></span>
+    <span id="lampLabel" class="mono">standby</span>
+    <span id="headName" class="mono">channel 01 — live</span>
+    <span id="tc" class="mono">00:00.000</span>
+  </div>
+
+  <div id="vu">
+    <div id="vuFace">
+      <svg viewBox="0 0 300 172" preserveAspectRatio="none">
+        <path d="M28 150 A128 128 0 0 1 272 150" fill="none" stroke="#8C7A5E" stroke-width="1.5"/>
+        <path d="M196 44 A128 128 0 0 1 272 150" fill="none" stroke="#C0442F" stroke-width="4"/>
+        <g id="ticks" stroke="#8C7A5E" stroke-width="1.5"></g>
+        <text x="150" y="128" text-anchor="middle" fill="#8C7A5E"
+              font-family="DM Mono, monospace" font-size="11" letter-spacing="2.5">VU</text>
+        <line id="needle" x1="150" y1="152" x2="150" y2="40" stroke="#16120E" stroke-width="2.5"/>
+        <circle cx="150" cy="152" r="7" fill="#16120E"/>
+      </svg>
+    </div>
+    <div id="vuCap" class="mono"><span>-20</span><span id="vuState">idle</span><span>+3</span></div>
+  </div>
+
+  <!-- S1 -->
+  <section class="scene" id="s1">
+    <div style="text-align:center">
+      <div class="dot" style="margin:0 auto"></div>
+      <div class="cue mono">incoming call</div>
+    </div>
+  </section>
+
+  <!-- S2 + S3 -->
+  <section class="scene" id="s23">
+    <div id="conv">
+      <div class="turn" id="t1">
+        <div class="who mono"><i></i>caller</div>
+        <canvas id="w1" width="2360" height="264"></canvas>
+        <p class="said" id="say1"></p>
+      </div>
+      <div class="turn" id="t2">
+        <div class="who mono"><i></i>ai voice chat bot</div>
+        <canvas id="w2" width="2360" height="264"></canvas>
+        <p class="said" id="say2"></p>
+      </div>
+    </div>
+    <div id="gap">
+      <div id="gapRule"><span></span></div>
+      <div id="gapNum">
+        <span id="gapMs">000</span>
+        <span id="gapLbl" class="mono">milliseconds to answer</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- S4 -->
+  <section class="scene" id="s4"><div id="chans"></div></section>
+
+  <!-- S5 -->
+  <section class="scene" id="s5"><div id="s5in">
+    <div id="stats"></div>
+    <div id="lock">
+      <div>
+        <h1 id="brand" class="disp"></h1>
+        <p id="tag"></p>
+      </div>
+      <div id="cta" class="mono"><span></span><b></b></div>
+    </div>
+  </div></section>
+
+  <div id="cover">
+    <button id="coverBtn" type="button" aria-label="Play teaser with sound">
+      <span id="coverRing"><svg viewBox="0 0 24 24"><path d="M6 3.5v17l14-8.5z"/></svg></span>
+      <span id="coverTxt" class="mono">play with sound</span>
+      <span id="coverSub" class="mono">30 seconds &middot; voices on</span>
+    </button>
+  </div>
+
+</div></div>
+
+<div id="ctl">
+  <button id="replay" type="button">Replay</button>
+  <span id="hint">R replay &middot; M mute &middot; controls hide while idle</span>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════
+   EDIT EVERYTHING HERE. Nothing below this block needs touching.
+   ══════════════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  brand:   "AI Voice Chat Bot",
+  tagline: "Answers the phone. Every time.",
+  ctaLine: "Hear it for yourself",
+  ctaUrl:  "yoursite.com/demo",
+
+  caller:  "Hi — I need to move my delivery to Friday.",
+  reply:   "Done. Friday, 9 to 11am. Want a text reminder?",
+  latency: 240,                       // ms shown in the gap
+
+  channels: [
+    { n:"ch 01", t:"Support",  d:"Handles the calls your team never gets to." },
+    { n:"ch 02", t:"Bookings", d:"Takes the slot, sends the confirmation." },
+    { n:"ch 03", t:"Orders",   d:"Checks status without a human in the loop." }
+  ],
+  stats: [
+    { v:"240", u:"ms", k:"average time to answer" },
+    { v:"32",  u:"",   k:"languages, same voice" },
+    { v:"24/7",u:"",   k:"never queues, never closes" }
+  ],
+
+  voice: {
+    enabled:      true,
+    speakTagline: true,          // AI voice reads the tagline at the lockup
+    callerRate:   1.05,          // speech speed, 1 = normal
+    aiRate:       1.0,
+    // Preferred system voices, first match wins. Names differ per OS/browser —
+    // run  speechSynthesis.getVoices().map(v=>v.name)  in the console to list yours.
+    callerPrefs:  ["Google UK English Female","Samantha","Microsoft Zira","Karen"],
+    aiPrefs:      ["Google UK English Male","Daniel","Microsoft David","Alex"],
+    // Path to a pre-recorded voice track (mp3/wav). When set, it plays from 0:00
+    // in place of browser speech — drop in studio VO here for the final cut.
+    audioSrc:     ""
+  }
+};
+/* ════════════════════════════════════════════════════════════════════ */
+
+const DUR = 30000;                    // total runtime, ms
+const $  = s => document.querySelector(s);
+
+/* ── fit stage to viewport ─────────────────────────────────────────── */
+function fit(){
+  const s = Math.min(innerWidth/1920, innerHeight/1080);
+  $('#stage').style.transform = `translate(-50%,-50%) scale(${s})`;
+}
+addEventListener('resize', fit); fit();
+
+/* ── build static content from CONFIG ──────────────────────────────── */
+$('#brand').textContent = CONFIG.brand;
+$('#tag').textContent   = CONFIG.tagline;
+$('#cta span').textContent = CONFIG.ctaLine;
+$('#cta b').textContent    = CONFIG.ctaUrl;
+
+$('#chans').innerHTML = CONFIG.channels.map(c => `
+  <div class="ch">
+    <div class="n mono">${c.n}</div>
+    <div class="t">${c.t}</div>
+    <div class="d">${c.d}</div>
+    <div class="bars">${'<i></i>'.repeat(22)}</div>
+  </div>`).join('');
+
+$('#stats').innerHTML = CONFIG.stats.map(s => `
+  <div class="stat">
+    <div class="v">${s.v}${s.u ? `<em>${s.u}</em>` : ''}</div>
+    <div class="k mono">${s.k}</div>
+  </div>`).join('');
+
+/* VU face ticks */
+$('#ticks').innerHTML = Array.from({length:11}, (_,i) => {
+  const a = (-Math.PI*0.72) + i*(Math.PI*1.44/10), R=128, r=i%5===0?15:8;
+  const cx=150, cy=152;
+  return `<line x1="${cx+Math.sin(a)*R}" y1="${cy-Math.cos(a)*R}"
+                x2="${cx+Math.sin(a)*(R-r)}" y2="${cy-Math.cos(a)*(R-r)}"/>`;
+}).join('');
+
+/* ── speech-like waveform generation ───────────────────────────────── */
+function rng(seed){ return () => (seed = seed*16807 % 2147483647) / 2147483647; }
+
+function makeWave(n, seed){
+  const r = rng(seed), out = new Float32Array(n);
+  const sylLen = Math.round(n / 13);              // ~13 syllables across
+  const amps = Array.from({length:15}, () => 0.35 + r()*0.65);
+  for (let i=0; i<n; i++){
+    const s   = Math.floor(i/sylLen);
+    const p   = (i % sylLen) / sylLen;
+    const env = Math.pow(Math.sin(Math.PI*p), 0.55) * (amps[s % amps.length]);
+    const fade= Math.min(1, i/(n*0.05), (n-i)/(n*0.08));
+    out[i] = env * fade * (Math.sin(i*0.62)*0.55 + Math.sin(i*0.21)*0.28 + (r()-0.5)*0.42);
+  }
+  return out;
+}
+
+const WAVES = { w1: makeWave(2360, 12345), w2: makeWave(2360, 98765) };
+
+function drawWave(id, progress, color){
+  const cv = document.getElementById(id), ctx = cv.getContext('2d');
+  const data = WAVES[id], W = cv.width, H = cv.height, mid = H/2;
+  ctx.clearRect(0,0,W,H);
+  ctx.strokeStyle = 'rgba(92,124,145,.38)';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(0,mid); ctx.lineTo(W,mid); ctx.stroke();
+
+  const upto = Math.floor(W * progress);
+  ctx.strokeStyle = color; ctx.lineWidth = 2.4;
+  ctx.beginPath();
+  for (let x=0; x<upto; x++){
+    const y = mid - data[x]*mid*0.94;
+    x ? ctx.lineTo(x,y) : ctx.moveTo(x,y);
+  }
+  ctx.stroke();
+
+  if (upto > 2 && progress < 1){        // write head
+    ctx.fillStyle = color;
+    ctx.fillRect(upto-1, mid - mid*0.94, 2.4, mid*1.88);
+  }
+}
+
+function ampAt(id, progress){
+  const d = WAVES[id], i = Math.floor(d.length*progress);
+  let m = 0;
+  for (let k=Math.max(0,i-26); k<Math.min(d.length,i+26); k++) m = Math.max(m, Math.abs(d[k]));
+  return m;
+}
+
+/* ── easing + helpers ──────────────────────────────────────────────── */
+const clamp = (v,a=0,b=1) => Math.min(b, Math.max(a,v));
+const seg   = (t,a,b) => clamp((t-a)/(b-a));
+const ease  = x => x<.5 ? 4*x*x*x : 1-Math.pow(-2*x+2,3)/2;
+const out   = x => 1-Math.pow(1-x,3);
+const set   = (el,o,y=0) => { el.style.opacity=o; if(y!==null) el.style.transform=`translateY(${y}px)`; };
+
+function typeInto(el, text, p){
+  const n = Math.floor(text.length * clamp(p));
+  el.textContent = text.slice(0,n);
+}
+
+/* ── timeline ──────────────────────────────────────────────────────── */
+const chEls   = [...document.querySelectorAll('.ch')];
+const statEls = [...document.querySelectorAll('.stat')];
+const barEls  = chEls.map(c => [...c.querySelectorAll('.bars i')]);
+
+let needleV = 0;                       // needle inertia
+
+function frame(t){
+  const T = t/1000;
+
+  /* timecode + header */
+  const ms = Math.floor(t)%1000, ss = Math.floor(t/1000)%60, mm = Math.floor(t/60000);
+  $('#tc').textContent =
+    `${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}.${String(ms).padStart(3,'0')}`;
+  $('#head').style.opacity = seg(T,1.4,2.2);
+  $('#vu').style.opacity   = seg(T,1.8,2.6);
+
+  /* ── S1 cold open ── */
+  const s1 = seg(T,0,0.5) * (1-seg(T,2.6,3.3));
+  $('#s1').style.opacity = s1;
+  $('#s1 .dot').style.opacity = 0.35 + 0.65*Math.abs(Math.sin(T*3.4));
+
+  /* ── S2/S3 conversation ── */
+  const inConv = seg(T,3.0,3.6) * (1-seg(T,19.0,19.7));
+  $('#s23').style.opacity = inConv;
+
+  const p1 = seg(T,3.6,8.6);                       // caller waveform writes
+  set($('#t1'), seg(T,3.4,4.0), (1-out(seg(T,3.4,4.2)))*18);
+  drawWave('w1', p1, '#1C6B67');
+  typeInto($('#say1'), CONFIG.caller, seg(T,4.4,8.4));
+
+  const gapP = seg(T,8.9,12.1);                    // the gap
+  $('#gap').style.opacity = seg(T,8.9,9.3) * (1-seg(T,12.6,13.2));
+  $('#gapMs').textContent = String(Math.round(CONFIG.latency*ease(gapP))).padStart(3,'0');
+  $('#gapRule span').style.left = `${ease(gapP)*100}%`;
+
+  const p2 = seg(T,13.0,18.2);                     // AI waveform writes
+  set($('#t2'), seg(T,12.7,13.3), (1-out(seg(T,12.7,13.5)))*18);
+  drawWave('w2', p2, '#8A5102');
+  typeInto($('#say2'), CONFIG.reply, seg(T,13.6,17.9));
+
+  /* ── on-air lamp: turn-taking is the product ── */
+  let lampC = '#A7C3D7', lampT = 'standby', vuT = 'idle', amp = 0;
+  if (T >= 3.4 && T < 8.8){
+    lampC = 'var(--caller)'; lampT = 'caller speaking'; vuT = 'in';
+    amp = ampAt('w1', p1);
+  } else if (T >= 8.8 && T < 12.6){
+    lampC = '#8FA24A'; lampT = 'thinking'; vuT = 'hold'; amp = 0.06;
+  } else if (T >= 12.7 && T < 18.6){
+    lampC = 'var(--amber)'; lampT = 'on air — ai'; vuT = 'out';
+    amp = ampAt('w2', p2);
+  } else if (T >= 19.0){
+    lampC = 'var(--amber)'; lampT = 'on air'; vuT = 'live';
+    amp = 0.28 + 0.2*Math.sin(T*4.1);
+  }
+  const lamp = $('#lamp');
+  lamp.style.background = lampC;
+  lamp.style.boxShadow  = lampC === '#A7C3D7' ? 'none' : `0 0 14px ${lampC}, 0 0 4px ${lampC}`;
+  $('#lampLabel').textContent = lampT;
+  $('#vuState').textContent   = vuT;
+
+  /* needle with inertia — the signature element */
+  needleV += (amp - needleV) * 0.16;
+  const ang = (-52 + needleV*104);
+  $('#needle').setAttribute('transform', `rotate(${ang} 150 152)`);
+
+  /* ── S4 channels ── */
+  const inCh = seg(T,19.4,20.0) * (1-seg(T,24.2,24.8));
+  $('#s4').style.opacity = inCh;
+  chEls.forEach((el,i) => {
+    const p = seg(T, 19.6+i*0.26, 20.4+i*0.26);
+    set(el, p, (1-out(p))*26);
+    barEls[i].forEach((b,j) => {
+      const h = 6 + Math.abs(Math.sin(T*2.6 + j*0.5 + i*1.3))*28*p;
+      b.style.height = `${h}px`;
+      b.style.background = j < 16 ? 'var(--rule)' : 'var(--signal)';
+    });
+  });
+
+  /* ── S5 stats + lockup ── */
+  const inS5 = seg(T,24.6,25.2);
+  $('#s5').style.opacity = inS5;
+  statEls.forEach((el,i) => {
+    const p = seg(T, 24.9+i*0.22, 25.7+i*0.22);
+    set(el, p, (1-out(p))*20);
+  });
+  set($('#lock'), seg(T,26.6,27.4), (1-out(seg(T,26.6,27.6)))*24);
+}
+
+/* ── audio: browser speech + call-tone sound design ────────────────── */
+let muted = false, AC = null, audioEl = null;
+const VOICES = { caller:null, ai:null };
+const hasTTS = 'speechSynthesis' in window;
+
+function pickVoices(){
+  if (!hasTTS) return;
+  const all = speechSynthesis.getVoices().filter(v => v.lang.toLowerCase().startsWith('en'));
+  if (!all.length) return;
+  const find = prefs => all.find(v => prefs.some(nm => v.name.includes(nm)));
+  VOICES.caller = find(CONFIG.voice.callerPrefs) || all[0];
+  VOICES.ai     = find(CONFIG.voice.aiPrefs)
+                  || all.find(v => v !== VOICES.caller) || all[0];
+}
+if (hasTTS){ pickVoices(); speechSynthesis.onvoiceschanged = pickVoices; }
+
+function say(text, who, rate){
+  if (muted || !hasTTS || !CONFIG.voice.enabled) return;
+  const u = new SpeechSynthesisUtterance(text);
+  if (VOICES[who]) u.voice = VOICES[who];
+  u.rate  = rate;
+  u.pitch = who === 'caller' ? 1.06 : 0.98;   // two distinct characters
+  speechSynthesis.speak(u);
+}
+
+function ctx(){
+  if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)();
+  if (AC.state === 'suspended') AC.resume();
+  return AC;
+}
+function tone(at, dur, freqs, vol){        // scheduled on the audio clock
+  if (muted) return;
+  const c = ctx(), g = c.createGain(), t0 = c.currentTime + at;
+  g.connect(c.destination);
+  g.gain.setValueAtTime(0, t0);
+  g.gain.linearRampToValueAtTime(vol, t0 + 0.04);
+  g.gain.setValueAtTime(vol, t0 + dur - 0.07);
+  g.gain.linearRampToValueAtTime(0, t0 + dur);
+  freqs.forEach(f => {
+    const o = c.createOscillator();
+    o.type = 'sine'; o.frequency.value = f;
+    o.connect(g); o.start(t0); o.stop(t0 + dur);
+  });
+}
+
+/* timeline-locked cues, re-armed on every play */
+let cues = [];
+function armCues(){
+  const usingFile = !!CONFIG.voice.audioSrc;
+  cues = [
+    { t:  150, fn: () => tone(0, 0.9, [440, 480], 0.045) },   // ringback x2
+    { t: 1550, fn: () => tone(0, 0.9, [440, 480], 0.045) },
+    { t: 3050, fn: () => tone(0, 0.14, [880], 0.05) },        // pickup blip
+    { t:12650, fn: () => tone(0, 0.12, [660, 990], 0.04) }    // AI on-air blip
+  ];
+  if (!usingFile){
+    cues.push(
+      { t: 4300, fn: () => say(CONFIG.caller, 'caller', CONFIG.voice.callerRate) },
+      { t:13450, fn: () => say(CONFIG.reply,  'ai',     CONFIG.voice.aiRate) });
+    if (CONFIG.voice.speakTagline)
+      cues.push({ t:26900, fn: () => say(CONFIG.tagline, 'ai', 0.95) });
+  }
+  cues.sort((a,b) => a.t - b.t);
+}
+
+function stopAudio(){
+  if (hasTTS) speechSynthesis.cancel();
+  if (audioEl){ audioEl.pause(); audioEl.currentTime = 0; }
+}
+function setMute(m){
+  muted = m;
+  if (m) stopAudio();
+  if (audioEl) audioEl.muted = m;
+  $('#hint').textContent =
+    `R replay · M ${m ? 'unmute' : 'mute'} · controls hide while idle`;
+}
+addEventListener('keydown', e => {
+  if (e.key === 'm' || e.key === 'M') setMute(!muted);
+});
+
+/* ── run loop ──────────────────────────────────────────────────────── */
+let start = null, raf = null;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function loop(ts){
+  if (start === null) start = ts;
+  const t = ts - start;
+  while (cues.length && t >= cues[0].t) cues.shift().fn();
+  frame(Math.min(t, DUR));
+  if (t < DUR + 1200) raf = requestAnimationFrame(loop);
+}
+function play(){
+  cancelAnimationFrame(raf);
+  stopAudio();
+  armCues();
+  if (CONFIG.voice.audioSrc && !muted){
+    if (!audioEl){ audioEl = new Audio(CONFIG.voice.audioSrc); audioEl.preload = 'auto'; }
+    audioEl.currentTime = 0;
+    audioEl.play().catch(()=>{});
+  }
+  start = null; raf = requestAnimationFrame(loop);
+}
+
+$('#replay').addEventListener('click', play);
+addEventListener('keydown', e => { if (e.key === 'r' || e.key === 'R') play(); });
+
+/* controls fade out so the recording stays clean */
+let idle;
+function wake(){
+  document.body.classList.add('show');
+  clearTimeout(idle);
+  idle = setTimeout(() => document.body.classList.remove('show'), 2200);
+}
+addEventListener('mousemove', wake);
+wake();
+
+const cover = $('#cover');
+if (reduce){
+  cover.classList.add('gone');
+  frame(DUR);                                  // static final frame, no audio
+} else {
+  frame(0);                                    // hold first frame under cover
+  $('#coverBtn').addEventListener('click', () => {
+    ctx();                                     // unlock audio inside the gesture
+    cover.classList.add('gone');
+    setTimeout(play, 380);                     // let the fade finish first
+  }, { once:true });
+}
+</script>
+</body>
+</html>

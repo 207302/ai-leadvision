@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Video Analytics — 30s teaser</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#CFE2EF; --panel:#E6F0F8; --card:#F7FBFE; --rule:#A7C3D7;
+  --ink:#10222F; --dim:#456579; --body:#3A5E76;
+  --amber:#8A5102; --ok:#1E6B45; --caller:#1C6B67; --signal:#C6371F;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#7FA3BC;overflow:hidden}
+body{font-family:Archivo,system-ui,sans-serif}
+#fit{width:100vw;height:100vh;position:relative;overflow:hidden}
+#stage{width:1920px;height:1080px;overflow:hidden;background:var(--sky);color:var(--ink);
+       position:absolute;left:50%;top:50%}
+#stage::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:60;
+  background:radial-gradient(120% 80% at 50% 42%,transparent 42%,rgba(28,74,105,.20) 100%),
+  repeating-linear-gradient(0deg,rgba(16,34,47,.022) 0 1px,transparent 1px 3px)}
+.mono{font-family:"DM Mono",ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase}
+.disp{font-family:Archivo,sans-serif;font-variation-settings:"wdth" 78,"wght" 800;
+      text-transform:uppercase;letter-spacing:-.005em;line-height:.94}
+#head{position:absolute;top:0;left:0;right:0;height:96px;z-index:30;display:flex;align-items:center;
+  gap:28px;padding:0 64px;border-bottom:1px solid var(--rule);background:var(--panel);
+  box-shadow:0 1px 0 rgba(255,255,255,.7) inset;opacity:0}
+#dot{width:13px;height:13px;border-radius:50%;background:var(--ok);flex:none;box-shadow:0 0 12px var(--ok)}
+#dotLabel{font-size:14px;color:var(--dim)}
+#headName{margin-left:auto;font-size:15px;color:var(--dim);font-variant-numeric:tabular-nums}
+#tc{font-size:15px;color:var(--dim);min-width:132px;text-align:right;font-variant-numeric:tabular-nums}
+.scene{position:absolute;inset:0;z-index:20;opacity:0;pointer-events:none}
+#caption{position:absolute;left:50%;bottom:52px;transform:translateX(-50%);z-index:36;opacity:0;
+  white-space:nowrap;font-size:32px;color:var(--ink);font-variation-settings:"wdth" 90,"wght" 600;
+  background:var(--panel);border:1px solid var(--rule);border-radius:40px;padding:18px 44px;
+  box-shadow:0 6px 22px rgba(16,52,78,.16)}
+#s4{display:grid;place-items:center;padding:0 64px}
+#chans{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;width:100%;max-width:1792px}
+.ch{background:var(--panel);padding:52px 44px 44px;opacity:0;transform:translateY(26px);
+    box-shadow:0 2px 12px rgba(16,52,78,.10)}
+.ch .n{font-size:13px;color:var(--dim)}
+.ch .t{margin-top:22px;font-size:60px;font-variation-settings:"wdth" 74,"wght" 900;
+       text-transform:uppercase;line-height:.94}
+.ch .d{margin-top:20px;font-size:24px;color:var(--body);line-height:1.42;
+       font-variation-settings:"wdth" 100,"wght" 400}
+.ch .bars{display:flex;gap:5px;margin-top:38px;height:34px;align-items:flex-end}
+.ch .bars i{flex:1;background:var(--rule);display:block}
+#s5{display:grid;place-items:center;padding:0 96px}
+#s5in{width:100%;max-width:1728px}
+#stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule);
+       border-bottom:1px solid var(--rule)}
+.stat{padding:44px 0;opacity:0}
+.stat .v{font-size:96px;font-variation-settings:"wdth" 68,"wght" 900;color:var(--ink);
+         font-family:"DM Mono",monospace;letter-spacing:-.03em;line-height:1}
+.stat .v em{font-style:normal;font-size:38px;color:var(--dim);margin-left:8px}
+.stat .k{margin-top:18px;font-size:14px;color:var(--dim)}
+#lock{margin-top:76px;display:flex;align-items:flex-end;justify-content:space-between;opacity:0}
+#brand{font-size:104px;font-variation-settings:"wdth" 66,"wght" 900;line-height:.9}
+#tag{margin-top:26px;font-size:29px;color:var(--body);font-variation-settings:"wdth" 100,"wght" 400}
+#cta{text-align:right;font-size:15px;color:var(--dim);line-height:2.1}
+#cta b{display:block;font-family:Archivo;font-size:31px;color:var(--amber);letter-spacing:0;
+       text-transform:none;font-variation-settings:"wdth" 100,"wght" 600;margin-top:10px}
+#cover{position:absolute;inset:0;z-index:80;display:grid;place-items:center;background:var(--sky);
+       transition:opacity .45s}
+#cover.gone{opacity:0;pointer-events:none}
+#coverBtn{display:grid;place-items:center;gap:26px;background:none;border:none;cursor:pointer;
+          color:var(--ink);font-family:Archivo,sans-serif}
+#coverBtn:focus-visible{outline:2px solid var(--amber);outline-offset:8px}
+#coverRing{width:112px;height:112px;border-radius:50%;border:2px solid var(--ink);
+           display:grid;place-items:center}
+#coverRing svg{width:34px;height:34px;fill:var(--ink);margin-left:5px}
+#coverTxt{font-size:16px;letter-spacing:.14em}
+#coverSub{font-size:12px;color:var(--dim);letter-spacing:.12em}
+#ctl{position:fixed;left:20px;bottom:20px;z-index:99;display:flex;gap:10px;align-items:center;
+     opacity:0;transition:opacity .25s}
+body.show #ctl{opacity:1}
+#ctl button{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  background:#E6F0F8;color:#3A5E76;border:1px solid #A7C3D7;padding:11px 18px;border-radius:2px;cursor:pointer}
+#ctl button:hover{color:var(--amber);border-color:var(--amber)}
+#ctl button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+#ctl span{font-family:"DM Mono",monospace;font-size:11px;color:#D8E7F1;letter-spacing:.1em}
+
+#s1{display:grid;place-items:center}
+#s1big{font-size:17px;color:var(--dim)}
+#grid{position:absolute;inset:0;z-index:22}
+.cam{position:absolute;background:var(--ink);border-radius:6px;overflow:hidden;opacity:0;
+  box-shadow:0 2px 12px rgba(16,52,78,.18)}
+.cam::after{content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,rgba(207,226,239,.05) 0 2px,transparent 2px 5px)}
+.cam .lb{position:absolute;left:14px;top:12px;font-size:11px;color:#9FBDD2;z-index:3}
+.cam .tcc{position:absolute;right:14px;top:12px;font-size:11px;color:#9FBDD2;z-index:3;
+  font-variant-numeric:tabular-nums}
+.cam .blob{position:absolute;width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle,rgba(207,226,239,.16),transparent 65%)}
+.cam.alert{outline:4px solid var(--signal)}
+.cam .flag{position:absolute;left:14px;bottom:12px;font-size:11px;color:#7FD6A8;z-index:3;opacity:0}
+#zone{position:absolute;inset:0;z-index:2}
+#mk{position:absolute;width:14px;height:14px;background:#EAF4FB;border-radius:3px;z-index:3;
+    box-shadow:0 0 12px rgba(234,244,251,.9)}
+#tbox{position:absolute;width:64px;height:64px;border:3px solid var(--signal);border-radius:6px;
+      z-index:4;opacity:0}
+#acard{position:absolute;right:24px;top:300px;width:288px;z-index:45;opacity:0;
+  background:var(--card);border:1px solid var(--rule);border-radius:8px;
+  box-shadow:0 10px 34px rgba(16,52,78,.22);padding:26px 28px}
+#acard .h{font-size:12px;color:var(--signal)}
+#acard .l1{margin-top:14px;font-size:24px;font-variation-settings:"wdth" 84,"wght" 700}
+#acard .l2{margin-top:8px;font-size:15px;color:var(--body);line-height:1.4}
+#acard .l3{margin-top:18px;font-size:12px;color:var(--ok);line-height:1.9}
+
+</style>
+</head>
+<body>
+<div id="fit"><div id="stage">
+  <div id="head">
+    <span id="dot"></span><span id="dotLabel" class="mono"></span>
+    <span id="headName" class="mono"></span><span id="tc" class="mono">00:00.000</span>
+  </div>
+
+  <section class="scene" id="s1"><div style="text-align:center">
+    <div id="s1big" class="mono">cameras online — 0</div>
+  </div></section>
+  <div id="grid"></div>
+  <div id="acard">
+    <div class="h mono">restricted zone — dock b</div>
+    <div class="l1">Person detected</div>
+    <div class="l2">After hours · zone 3 · moving east</div>
+    <div class="l3 mono">alert sent ✓<br>guard notified ✓</div>
+  </div>
+
+  <div id="caption"></div>
+  <section class="scene" id="s4"><div id="chans"></div></section>
+  <section class="scene" id="s5"><div id="s5in">
+    <div id="stats"></div>
+    <div id="lock">
+      <div><h1 id="brand" class="disp"></h1><p id="tag"></p></div>
+      <div id="cta" class="mono"><span></span><b></b></div>
+    </div>
+  </div></section>
+  <div id="cover">
+    <button id="coverBtn" type="button" aria-label="Play teaser with sound">
+      <span id="coverRing"><svg viewBox="0 0 24 24"><path d="M6 3.5v17l14-8.5z"/></svg></span>
+      <span id="coverTxt" class="mono">play with sound</span>
+      <span id="coverSub" class="mono">30 seconds &middot; sound on</span>
+    </button>
+  </div>
+</div></div>
+<div id="ctl">
+  <button id="replay" type="button">Replay</button>
+  <span id="hint">R replay &middot; M mute &middot; controls hide while idle</span>
+</div>
+<script>
+const CONFIG = {
+  brand:"AI Video Analytics", tagline:"Every camera. Actually watched.",
+  ctaLine:"Protect your site", ctaUrl:"yoursite.com/surveillance",
+  caption:"Flagged in under two seconds.",
+  headLeft:"node 01 — online", headRight:"streams — 48 · events — 0",
+  barHi:"var(--signal)",
+  channels:[
+    { n:"watch 01", t:"Perimeter", d:"Zones, lines and after-hours intrusion." },
+    { n:"watch 02", t:"Safety",    d:"PPE and unsafe acts, flagged live." },
+    { n:"watch 03", t:"Traffic",   d:"Counts, queues and dwell times." }
+  ],
+  stats:[
+    { v:"48", u:"",     k:"streams per node" },
+    { v:"<2", u:"s",    k:"event to alert" },
+    { v:"30", u:"days", k:"searchable history" }
+  ]
+};
+const DUR = 30000;
+const $ = s => document.querySelector(s);
+function fit(){
+  const s = Math.min(innerWidth/1920, innerHeight/1080);
+  $('#stage').style.transform = `translate(-50%,-50%) scale(${s})`;
+}
+addEventListener('resize', fit); fit();
+
+$('#brand').textContent = CONFIG.brand;
+$('#tag').textContent = CONFIG.tagline;
+$('#cta span').textContent = CONFIG.ctaLine;
+$('#cta b').textContent = CONFIG.ctaUrl;
+$('#caption').textContent = CONFIG.caption;
+$('#dotLabel').textContent = CONFIG.headLeft;
+$('#headName').textContent = CONFIG.headRight;
+$('#chans').innerHTML = CONFIG.channels.map(c => `
+  <div class="ch"><div class="n mono">${c.n}</div><div class="t">${c.t}</div>
+  <div class="d">${c.d}</div><div class="bars">${'<i></i>'.repeat(22)}</div></div>`).join('');
+$('#stats').innerHTML = CONFIG.stats.map(s => `
+  <div class="stat"><div class="v">${s.v}${s.u?`<em>${s.u}</em>`:''}</div>
+  <div class="k mono">${s.k}</div></div>`).join('');
+
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const seg=(t,a,b)=>clamp((t-a)/(b-a));
+const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const out=x=>1-Math.pow(1-x,3);
+const lerp=(a,b,p)=>a+(b-a)*p;
+const set=(el,o,y=0)=>{el.style.opacity=o;if(y!==null)el.style.transform=`translateY(${y}px)`};
+function typeInto(el,text,p){el.textContent=text.slice(0,Math.floor(text.length*clamp(p)))}
+function rnd(seed){return()=>(seed=seed*16807%2147483647)/2147483647}
+
+
+const GC={x0:64,y0:132,cols:4,rows:3,gap:14};
+GC.tw=Math.floor((1792-(GC.cols-1)*GC.gap)/GC.cols);
+GC.th=Math.floor((1080-GC.y0-64-(GC.rows-1)*GC.gap)/GC.rows);
+const NAMES=['gate a','yard n','lobby','dock a','line 2','car park','dock b','gate b',
+             'roof','store','line 5','yard s'];
+const EV=6;                                     // dock b is the event tile
+const r9=rnd(2026), phases=[];
+{
+  const frag=[];
+  for(let i=0;i<12;i++){
+    const c=i%4,row=Math.floor(i/4);
+    const x=GC.x0+c*(GC.tw+GC.gap), y=GC.y0+row*(GC.th+GC.gap);
+    phases.push({bx:20+r9()*200,by:20+r9()*80,sp:0.13+r9()*0.2,ph:r9()*6.3});
+    frag.push(`<div class="cam" id="cam${i}"
+      style="left:${x}px;top:${y}px;width:${GC.tw}px;height:${GC.th}px">
+      <span class="lb mono">cam ${String(i+1).padStart(2,'0')} — ${NAMES[i]}</span>
+      <span class="tcc mono" id="ct${i}"></span>
+      <i class="blob" id="bl${i}"></i>
+      ${i===EV?`<svg id="zone" viewBox="0 0 ${GC.tw} ${GC.th}">
+        <polygon points="90,${GC.th-30} 170,90 340,86 400,${GC.th-34}"
+          fill="rgba(138,81,2,.14)" stroke="var(--amber)" stroke-width="3"
+          stroke-dasharray="10 8" opacity="0" id="zpoly"/></svg>
+        <div id="mk"></div><div id="tbox"></div>
+        <span class="flag mono" id="evflag">flagged ✓ · clip saved</span>`:''}
+    </div>`);
+  }
+  $('#grid').innerHTML=frag.join('');
+}
+const camEls=Array.from({length:12},(_,i)=>document.getElementById('cam'+i));
+const blEls=Array.from({length:12},(_,i)=>document.getElementById('bl'+i));
+const ctEls=Array.from({length:12},(_,i)=>document.getElementById('ct'+i));
+const evTile=camEls[EV];
+const EVX=GC.x0+(EV%4)*(GC.tw+GC.gap), EVY=GC.y0+Math.floor(EV/4)*(GC.th+GC.gap);
+const ZS=2.9, CX=960-GC.tw*ZS/2, CY=(GC.y0+(1080-64))/2-GC.th*ZS/2;
+
+
+const chEls=[...document.querySelectorAll('.ch')];
+const statEls=[...document.querySelectorAll('.stat')];
+const barEls=chEls.map(c=>[...c.querySelectorAll('.bars i')]);
+
+
+function frameMid(T){
+  $('#s1').style.opacity=seg(T,0,0.5)*(1-seg(T,2.4,3.0));
+  $('#s1big').textContent=`cameras online — ${Math.min(48,Math.floor(T*22))}`;
+
+  const gridOut=1-seg(T,18.3,18.9);
+  const zc=ease(seg(T,10.8,11.8))*(1-ease(seg(T,13.9,14.9)));  // zoom in, hold, back
+
+  for(let i=0;i<12;i++){
+    const p=phases[i];
+    const on=seg(T,2.8+i*0.07,3.4+i*0.07)*gridOut;
+    camEls[i].style.opacity = i===EV ? on : on*(1-0.72*zc);
+    blEls[i].style.transform=
+      `translate(${p.bx+Math.sin(T*p.sp+p.ph)*70}px,${p.by+Math.cos(T*p.sp*1.3+p.ph)*34}px)`;
+    const s=Math.floor(T)+i*7;
+    ctEls[i].textContent=`00:${String(12+i%3).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+  }
+
+  // event tile escalates: zone, marker crossing, alert, zoom
+  $('#zpoly').setAttribute('opacity',seg(T,8.2,8.6)*gridOut);
+  const mp=seg(T,8.6,13.8);
+  const mx=lerp(60,GC.tw-70,mp), my=GC.th*0.62+Math.sin(mp*9)*10;
+  $('#mk').style.transform=`translate(${mx}px,${my}px)`;
+  $('#mk').style.opacity=(mp>0&&mp<1?1:0)*gridOut;
+  const alert=T>=9.2&&T<14.9;
+  evTile.classList.toggle('alert',alert);
+  $('#tbox').style.opacity=zc;
+  $('#tbox').style.transform=`translate(${mx-25}px,${my-25}px)`;
+  $('#evflag').style.opacity=seg(T,15.0,15.4)*gridOut;
+
+  const ex=lerp(EVX,CX,zc), eyy=lerp(EVY,CY,zc), es=lerp(1,ZS,zc);
+  evTile.style.transformOrigin='0 0';
+  evTile.style.transform=`translate(${ex-EVX}px,${eyy-EVY}px) scale(${es})`;
+  evTile.style.zIndex=zc>0.02?40:'auto';
+
+  const ac=$('#acard');
+  ac.style.opacity=seg(T,11.9,12.3)*(1-seg(T,13.8,14.2));
+  ac.style.transform=`translateY(${(1-out(seg(T,11.9,12.4)))*20}px)`;
+
+  $('#headName').textContent=
+    `streams — 48 · events — ${T>=9.2?1:0}`;
+  $('#caption').style.opacity=seg(T,15.8,16.4)*(1-seg(T,18.2,18.7));
+}
+
+
+function frame(t){
+  const T=t/1000;
+  const ms=Math.floor(t)%1000, ss=Math.floor(t/1000)%60, mm=Math.floor(t/60000);
+  $('#tc').textContent=`${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}.${String(ms).padStart(3,'0')}`;
+  $('#head').style.opacity=seg(T,1.2,2.0);
+  frameMid(T);
+  const inCh=seg(T,19.3,19.9)*(1-seg(T,23.9,24.5));
+  $('#s4').style.opacity=inCh;
+  chEls.forEach((el,i)=>{
+    const p=seg(T,19.5+i*0.26,20.3+i*0.26);
+    set(el,p,(1-out(p))*26);
+    barEls[i].forEach((b,j)=>{
+      b.style.height=`${6+Math.abs(Math.sin(T*2.6+j*0.5+i*1.3))*28*p}px`;
+      b.style.background=j<16?'var(--rule)':CONFIG.barHi;
+    });
+  });
+  $('#s5').style.opacity=seg(T,24.3,24.9);
+  statEls.forEach((el,i)=>{const p=seg(T,24.6+i*0.22,25.4+i*0.22);set(el,p,(1-out(p))*20)});
+  set($('#lock'),seg(T,26.4,27.2),(1-out(seg(T,26.4,27.4)))*24);
+}
+
+let muted=false, AC=null;
+function ctx(){
+  if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();
+  if(AC.state==='suspended')AC.resume();
+  return AC;
+}
+function tone(at,dur,freqs,vol,type='sine'){
+  if(muted)return;
+  const c=ctx(),g=c.createGain(),t0=c.currentTime+at;
+  g.connect(c.destination);
+  g.gain.setValueAtTime(0,t0);
+  g.gain.linearRampToValueAtTime(vol,t0+0.015);
+  g.gain.exponentialRampToValueAtTime(0.0005,t0+dur);
+  freqs.forEach(f=>{const o=c.createOscillator();o.type=type;o.frequency.value=f;
+    o.connect(g);o.start(t0);o.stop(t0+dur)});
+}
+let cues=[];
+
+function armProductCues(){
+  for(let t=3400;t<8200;t+=1300)
+    cues.push({t,fn:()=>tone(0,0.03,[1300],0.007,'square')});   // idle sweep
+  cues.push(
+    {t:9200, fn:()=>tone(0,0.4,[740,988],0.055)},               // detection
+    {t:10900,fn:()=>tone(0,0.3,[392,523],0.03)},                // focus
+    {t:12300,fn:()=>tone(0,0.12,[880],0.03)},                   // alert sent
+    {t:14300,fn:()=>tone(0,0.1,[660],0.022)}                    // back to grid
+  );
+}
+
+function armCues(){cues=[];armProductCues();cues.push({t:29000,fn:()=>tone(0,0.5,[523,784],0.035)});cues.sort((a,b)=>a.t-b.t)}
+function setMute(m){muted=m;
+  $('#hint').textContent=`R replay \u00B7 M ${m?'unmute':'mute'} \u00B7 controls hide while idle`}
+addEventListener('keydown',e=>{if(e.key==='m'||e.key==='M')setMute(!muted)});
+
+let start=null,raf=null;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function loop(ts){
+  if(start===null)start=ts;
+  const t=ts-start;
+  while(cues.length&&t>=cues[0].t)cues.shift().fn();
+  frame(Math.min(t,DUR));
+  if(t<DUR+1200)raf=requestAnimationFrame(loop);
+}
+function play(){cancelAnimationFrame(raf);armCues();start=null;raf=requestAnimationFrame(loop)}
+$('#replay').addEventListener('click',play);
+addEventListener('keydown',e=>{if(e.key==='r'||e.key==='R')play()});
+let idle;
+function wake(){document.body.classList.add('show');clearTimeout(idle);
+  idle=setTimeout(()=>document.body.classList.remove('show'),2200)}
+addEventListener('mousemove',wake);wake();
+const cover=$('#cover');
+if(reduce){cover.classList.add('gone');frame(DUR)}
+else{
+  frame(0);
+  $('#coverBtn').addEventListener('click',()=>{ctx();cover.classList.add('gone');
+    setTimeout(play,380)},{once:true});
+}
+</script>
+</body>
+</html>
