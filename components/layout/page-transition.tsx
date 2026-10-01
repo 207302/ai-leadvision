@@ -29,7 +29,7 @@ function collect(root: HTMLElement): EnterNode[] {
     (node) => shown(node) && !insideBox(node) && !node.closest(BLOCK) && !node.querySelector(BLOCK),
   );
 
-  return [...text, ...links, ...media, ...boxes].sort((a, b) => {
+  return [...text, ...links, ...media, ...boxes].filter(shown).sort((a, b) => {
     const position = a.compareDocumentPosition(b);
     if (position & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
     if (position & Node.DOCUMENT_POSITION_PRECEDING) return 1;
