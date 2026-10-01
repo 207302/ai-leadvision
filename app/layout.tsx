@@ -3,6 +3,8 @@ import type { ReactNode } from "react";
 import { Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { PageTransition } from "@/components/layout/page-transition";
+import { SiteLoader } from "@/components/layout/site-loader";
 import { siteConfig } from "@/lib/content/site";
 import "./globals.css";
 
@@ -67,8 +69,11 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         >
           Skip to content
         </a>
+        <SiteLoader />
         <Header />
-        <main id="main">{children}</main>
+        <main id="main">
+          <PageTransition>{children}</PageTransition>
+        </main>
         <Footer />
         <script
           type="application/ld+json"

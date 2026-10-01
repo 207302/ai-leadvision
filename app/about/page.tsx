@@ -169,10 +169,9 @@ export default function AboutPage() {
           <Eyebrow>Values</Eyebrow>
           <h2 className="mt-4 max-w-xl text-3xl leading-tight sm:text-4xl">How the work is judged.</h2>
           <div className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((value, index) => (
+            {values.map((value) => (
               <div key={value.title}>
-                <p className="font-mono text-[11px] text-accent">{String(index + 1).padStart(2, "0")}</p>
-                <h3 className="mt-3 text-xl text-ink">{value.title}</h3>
+                <h3 className="text-xl text-ink">{value.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-muted">{value.text}</p>
               </div>
             ))}

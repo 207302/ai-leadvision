@@ -30,10 +30,9 @@ export default function ServicesPage() {
         eyebrow="Services"
         title="Engineering services for intelligent operations."
         description="Robotics, machine learning, and software development. Each engagement starts from the problem, then the system required to change it."
-        trace={["Robotics", "Machine Learning", "Software Development"]}
       />
       <section className="bg-paper">
-        <Container className="pb-8">
+        <Container className="py-16 sm:py-20">
           {services.map((service, index) => (
             <ServiceBlock key={service.id} service={service} index={index} />
           ))}

@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { ContactForm } from "@/components/forms/contact-form";
 import { PageHero } from "@/components/layout/page-hero";
 import { Container } from "@/components/ui/container";
+import { SocialLinks } from "@/components/layout/social-links";
 import { locationLine, siteConfig } from "@/lib/content/site";
 
 export const metadata: Metadata = {
@@ -35,7 +36,6 @@ export default async function ContactPage({
         eyebrow="Contact"
         title="Let’s build something intelligent."
         description="Tell us what you're trying to solve."
-        trace={["Inquiry", "Scoping", "Build"]}
       />
       <section className="bg-paper">
         <Container className="grid gap-12 py-16 sm:py-20 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,0.8fr)]">
@@ -43,7 +43,10 @@ export default async function ContactPage({
             <ContactForm key={formKey} />
           </Suspense>
           <aside className="lg:pt-2">
-            <h2 className="text-xl text-ink">Direct contact</h2>
+            <h2 className="text-xl text-ink">Corporate Contact</h2>
+            <div className="mt-4">
+              <SocialLinks tone="light" />
+            </div>
             <dl className="mt-6 space-y-6 text-sm">
               <div>
                 <dt className="text-[11px] uppercase tracking-[0.16em] text-faint">Email</dt>
@@ -73,19 +76,6 @@ export default async function ContactPage({
                 <dt className="text-[11px] uppercase tracking-[0.16em] text-faint">Location</dt>
                 <dd className="mt-2 text-ink">{locationLine()}</dd>
                 <dd className="mt-1 text-muted">Visiting details are shared when you write to us.</dd>
-              </div>
-              <div>
-                <dt className="text-[11px] uppercase tracking-[0.16em] text-faint">LinkedIn</dt>
-                <dd className="mt-2">
-                  <a
-                    className="text-ink hover:text-accent"
-                    href={siteConfig.social.linkedin}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    AI Lead Vision Pvt Ltd
-                  </a>
-                </dd>
               </div>
             </dl>
           </aside>

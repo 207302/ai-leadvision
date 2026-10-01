@@ -105,6 +105,70 @@
   animation: rise-in 0.7s ease both;
 }
 
+@keyframes load-bar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.load-bar {
+  transform-origin: left center;
+  animation: load-bar 2.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes loader-hold {
+  0%,
+  76% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.site-loader {
+  animation: loader-hold 3.4s ease forwards;
+}
+
+@keyframes value-slide {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.value-slide {
+  animation: none;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(42px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: page-enter 1.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.page-enter-delayed {
+  animation-delay: 2.45s;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -112,8 +176,17 @@
 
   .grid-drift,
   .dash-shift,
-  .rise-in {
+  .rise-in,
+  .load-bar,
+  .value-slide,
+  .page-enter {
     animation: none;
+  }
+
+  .site-loader {
+    animation: none;
+    opacity: 0;
+    visibility: hidden;
   }
 
   .reveal {

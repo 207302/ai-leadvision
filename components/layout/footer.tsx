@@ -3,6 +3,7 @@ import { featuredProducts } from "@/lib/content/products";
 import { services } from "@/lib/content/services";
 import { locationLine, navigation, siteConfig } from "@/lib/content/site";
 import { Logo } from "@/components/layout/logo";
+import { SocialLinks } from "@/components/layout/social-links";
 
 export function Footer() {
   return (
@@ -13,6 +14,9 @@ export function Footer() {
           <p className="mt-5 max-w-xs text-sm leading-6 text-white/65">
             Intelligent products and enterprise systems for operations that have to work outside a demo.
           </p>
+          <div className="mt-6">
+            <SocialLinks />
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:col-span-8">
@@ -79,16 +83,6 @@ export function Footer() {
                 </li>
               ))}
               <li>{locationLine()}</li>
-              <li>
-                <a
-                  href={siteConfig.social.linkedin}
-                  className="hover:text-white"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  LinkedIn
-                </a>
-              </li>
             </ul>
           </div>
         </div>
