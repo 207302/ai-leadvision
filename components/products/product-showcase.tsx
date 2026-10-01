@@ -15,7 +15,7 @@ export function ProductSection({ product, index }: { product: Product; index: nu
   return (
     <article
       id={product.id}
-      className="relative scroll-mt-28 overflow-hidden rounded-2xl border border-line bg-white"
+      className="enter-box relative scroll-mt-28 overflow-hidden rounded-2xl border border-line bg-white"
     >
       <div className={`pointer-events-none absolute inset-0 ${glow}`} aria-hidden="true" />
       <div className="relative grid items-center gap-8 p-5 sm:p-8 lg:grid-cols-2 lg:gap-12 lg:p-10">

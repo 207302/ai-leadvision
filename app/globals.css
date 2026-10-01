@@ -101,6 +101,50 @@
   animation: dash-shift 32s linear infinite;
 }
 
+@keyframes orbit-ccw {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes orbit-cw {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.orbit-ring,
+.orbit-upright {
+  animation-duration: calc(32s * 2 * 3.141592653589793 * 124 / 280);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.orbit-ring {
+  transform-box: view-box;
+  transform-origin: 62.903226% 51.538462%;
+  animation-name: orbit-ccw;
+}
+
+.orbit-upright {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation-name: orbit-cw;
+}
+
+.schematic-link {
+  cursor: pointer;
+}
+
+.schematic-link .schematic-label {
+  transition: fill 160ms linear;
+}
+
+.schematic-link:hover .schematic-label,
+.schematic-link:focus-visible .schematic-label {
+  fill: #8fd8ea;
+}
+
 .rise-in {
   animation: rise-in 0.7s ease both;
 }
@@ -176,6 +220,8 @@
 
   .grid-drift,
   .dash-shift,
+  .orbit-ring,
+  .orbit-upright,
   .rise-in,
   .load-bar,
   .value-slide,

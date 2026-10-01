@@ -40,7 +40,7 @@ export function HomeHero() {
               {signals.map((item) => (
                 <li
                   key={item.label}
-                  className="rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 shadow-[0_0_24px_rgba(26,95,212,0.12)]"
+                  className="enter-box rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 shadow-[0_0_24px_rgba(26,95,212,0.12)]"
                 >
                   <p className="text-sm text-white">{item.label}</p>
                   <p className="mt-1 text-xs text-white/55">{item.detail}</p>

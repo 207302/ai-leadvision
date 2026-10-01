@@ -12,15 +12,24 @@ function shown(node: Element): node is EnterNode {
   return (node instanceof HTMLElement || node instanceof SVGElement) && !node.closest("[hidden]");
 }
 
-function collect(root: HTMLElement): EnterNode[] {
-  const blocks = Array.from(root.querySelectorAll(BLOCK)).filter(shown);
-  const text = blocks.filter((node) => !node.parentElement?.closest(BLOCK));
-  const media = Array.from(root.querySelectorAll(MEDIA)).filter(shown).filter((node) => !node.closest(BLOCK));
-  const links = Array.from(root.querySelectorAll("a"))
-    .filter(shown)
-    .filter((node) => !node.closest(BLOCK) && !node.querySelector(BLOCK));
+function insideBox(node: Element) {
+  return node.closest(".enter-box") !== null;
+}
 
-  return [...text, ...links, ...media].sort((a, b) => {
+function collect(root: HTMLElement): EnterNode[] {
+  const boxes = Array.from(root.querySelectorAll(".enter-box"))
+    .filter(shown)
+    .filter((node) => !node.parentElement?.closest(".enter-box"));
+  const blocks = Array.from(root.querySelectorAll(BLOCK)).filter((node) => shown(node) && !insideBox(node));
+  const text = blocks.filter((node) => !node.parentElement?.closest(BLOCK));
+  const media = Array.from(root.querySelectorAll(MEDIA)).filter(
+    (node) => shown(node) && !insideBox(node) && !node.closest(BLOCK),
+  );
+  const links = Array.from(root.querySelectorAll("a")).filter(
+    (node) => shown(node) && !insideBox(node) && !node.closest(BLOCK) && !node.querySelector(BLOCK),
+  );
+
+  return [...text, ...links, ...media, ...boxes].sort((a, b) => {
     const position = a.compareDocumentPosition(b);
     if (position & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
     if (position & Node.DOCUMENT_POSITION_PRECEDING) return 1;

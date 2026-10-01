@@ -93,7 +93,7 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="rounded-xl border border-line bg-white p-8" role="status">
+      <div className="enter-box rounded-xl border border-line bg-white p-8" role="status">
         <p className="text-[11px] uppercase tracking-[0.16em] text-accent">Inquiry received</p>
         <h2 className="mt-3 text-2xl text-ink">Thank you. We have your note.</h2>
         <p className="mt-3 text-sm leading-6 text-muted">
@@ -104,7 +104,7 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="relative rounded-xl border border-line bg-white p-6 sm:p-8">
+    <form onSubmit={onSubmit} noValidate className="enter-box relative rounded-xl border border-line bg-white p-6 sm:p-8">
       <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
         <label htmlFor="website">Website</label>
         <input id="website" name="website" tabIndex={-1} autoComplete="off" />

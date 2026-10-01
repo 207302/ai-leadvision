@@ -2,7 +2,7 @@ import type { FlowStep } from "@/lib/content/products";
 
 export function FlowDiagram({ steps, title }: { steps: FlowStep[]; title: string }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-navy p-5 text-white sm:p-6">
+    <div className="enter-box rounded-xl border border-white/10 bg-navy p-5 text-white sm:p-6">
       <div className="flex items-center justify-between gap-4">
         <p className="text-[11px] uppercase tracking-[0.16em] text-cyan">System flow</p>
         <p className="text-[11px] uppercase tracking-[0.16em] text-white/35">{title}</p>

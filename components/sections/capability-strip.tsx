@@ -11,19 +11,19 @@ const items = [
 export function CapabilityStrip() {
   return (
     <section aria-label="Our expertise" className="border-y border-white/10 bg-navy-2">
-      <div className="mx-auto max-w-[1160px] px-5 pt-6 sm:px-8">
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-cyan">Our Expertise</p>
-      </div>
-      <div className="mx-auto grid max-w-[1160px] grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
-        {items.map((item) => (
-          <Link
-            key={item.label}
-            href={item.href}
-            className="border-t border-white/10 px-5 py-5 text-[11px] font-medium uppercase tracking-[0.14em] text-white/75 transition-colors hover:bg-white/[0.04] hover:text-cyan sm:px-6"
-          >
-            {item.label}
-          </Link>
-        ))}
+      <div className="mx-auto w-full max-w-[1320px] px-6 sm:px-10 lg:px-12">
+        <p className="pt-6 text-[11px] font-medium uppercase tracking-[0.18em] text-cyan">Our Expertise</p>
+        <div className="mt-4 grid grid-cols-2 border-t border-white/10 sm:grid-cols-3 lg:grid-cols-5">
+          {items.map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className="py-5 pr-4 text-[11px] font-medium uppercase tracking-[0.14em] text-white/75 transition-colors hover:text-cyan"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   );

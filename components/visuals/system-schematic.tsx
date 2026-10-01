@@ -1,41 +1,25 @@
 "use client";
 
-import { useEffect, useId, useRef } from "react";
+import { useId } from "react";
+import { useRouter } from "next/navigation";
 
 const center = { x: 390, y: 268 };
 const nodes = [
-  { x: 168, y: 292, label: "ATTN" },
-  { x: 292, y: 118, label: "VOICE" },
-  { x: 512, y: 150, label: "CHAT" },
-  { x: 548, y: 318, label: "VISION" },
-  { x: 430, y: 458, label: "ML" },
-  { x: 236, y: 430, label: "SOFT" },
+  { x: 168, y: 292, label: "ATTN", name: "Attendance", href: "/products#face-attendance" },
+  { x: 292, y: 118, label: "VOICE", name: "Voice", href: "/products#voice-bot" },
+  { x: 512, y: 150, label: "CHAT", name: "Chat", href: "/products#chat-bot" },
+  { x: 548, y: 318, label: "VISION", name: "Vision", href: "/products#computer-vision" },
+  { x: 430, y: 458, label: "ML", name: "Machine learning", href: "/services#machine-learning" },
+  { x: 236, y: 430, label: "SOFT", name: "Software", href: "/services#software-development" },
 ];
 
-// Dashes travel 280 units in 32s around the radius-124 ring. This is one full turn at that speed.
-const orbitDuration = `${(32 * 2 * Math.PI * 124) / 280}s`;
-
 export function SystemSchematic() {
-  const svgRef = useRef<SVGSVGElement>(null);
+  const router = useRouter();
   const titleId = useId();
-
-  useEffect(() => {
-    const svg = svgRef.current;
-    if (!svg) return;
-    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const apply = () => {
-      if (motion.matches) svg.pauseAnimations();
-      else svg.unpauseAnimations();
-    };
-    apply();
-    motion.addEventListener("change", apply);
-    return () => motion.removeEventListener("change", apply);
-  }, []);
 
   return (
     <div className="relative mx-auto w-full min-w-0">
       <svg
-        ref={svgRef}
         viewBox="0 0 620 520"
         role="img"
         aria-labelledby={titleId}
@@ -78,15 +62,7 @@ export function SystemSchematic() {
           </text>
         </g>
 
-        <g>
-          <animateTransform
-            attributeName="transform"
-            type="rotate"
-            from={`0 ${center.x} ${center.y}`}
-            to={`-360 ${center.x} ${center.y}`}
-            dur={orbitDuration}
-            repeatCount="indefinite"
-          />
+        <g className="orbit-ring">
           {nodes.map((node) => (
             <line
               key={node.label}
@@ -99,28 +75,45 @@ export function SystemSchematic() {
             />
           ))}
           {nodes.map((node) => (
-            <g key={node.label}>
-              <animateTransform
-                attributeName="transform"
-                type="rotate"
-                from={`0 ${node.x} ${node.y}`}
-                to={`360 ${node.x} ${node.y}`}
-                dur={orbitDuration}
-                repeatCount="indefinite"
-              />
-              <circle cx={node.x} cy={node.y} r="5" fill="#07090f" stroke="#8fd8ea" strokeWidth="1.4" />
-              <text
-                x={node.x}
-                y={node.y - 16}
-                textAnchor="middle"
-                fill="rgba(255,255,255,0.78)"
-                fontSize="11"
-                fontFamily="ui-monospace, monospace"
-                letterSpacing="1.2"
-              >
-                {node.label}
-              </text>
-            </g>
+            <a
+              key={node.label}
+              href={node.href}
+              aria-label={node.name}
+              className="schematic-link"
+              onClick={(event) => {
+                event.preventDefault();
+                router.push(node.href);
+              }}
+            >
+              <g transform={`translate(${node.x} ${node.y})`}>
+                <g className="orbit-upright">
+                  <circle r="22" fill="transparent" />
+                  <circle r="5" fill="#07090f" stroke="#8fd8ea" strokeWidth="1.4" />
+                  <text
+                    y={-16}
+                    textAnchor="middle"
+                    className="schematic-label"
+                    fill="rgba(255,255,255,0.78)"
+                    fontSize="11"
+                    fontFamily="ui-monospace, monospace"
+                    letterSpacing="1.2"
+                  >
+                    {node.label}
+                  </text>
+                  <text
+                    y={16}
+                    textAnchor="middle"
+                    fill="transparent"
+                    fontSize="11"
+                    fontFamily="ui-monospace, monospace"
+                    letterSpacing="1.2"
+                    aria-hidden="true"
+                  >
+                    {node.label}
+                  </text>
+                </g>
+              </g>
+            </a>
           ))}
         </g>
 

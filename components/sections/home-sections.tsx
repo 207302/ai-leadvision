@@ -59,7 +59,7 @@ export function ProductPreview() {
             <Link
               key={product.id}
               href={`/products#${product.id}`}
-              className="group rounded-xl border border-white/10 bg-white/[0.03] px-5 py-5 transition-colors hover:border-cyan/40 hover:shadow-[0_0_28px_rgba(143,216,234,0.08)]"
+              className="enter-box group rounded-xl border border-white/10 bg-white/[0.03] px-5 py-5 transition-colors hover:border-cyan/40 hover:shadow-[0_0_28px_rgba(143,216,234,0.08)]"
             >
               <p className="text-[11px] uppercase tracking-[0.16em] text-cyan">{product.kicker}</p>
               <h3 className="mt-2 text-xl leading-tight text-white">{product.name}</h3>
@@ -87,7 +87,7 @@ export function TechnologySection() {
             The disciplines behind the products.
           </h2>
           <p className="mt-4 max-w-lg text-sm leading-6 text-white/65">
-            Move across the list. Each discipline opens the work behind it.
+            The line keeps turning. The card in front carries the discipline, and the ones just passed stay visible behind it.
           </p>
         </div>
         <TechnologyPanel />
@@ -175,13 +175,13 @@ export function AboutPreview() {
         </div>
         <div className="lg:col-span-7">
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-xl border border-line bg-white p-6">
+            <div className="enter-box rounded-xl border border-line bg-white p-6">
               <p className="text-[11px] uppercase tracking-[0.16em] text-accent">Technology</p>
               <p className="mt-4 text-sm leading-6 text-muted">
                 AI products, machine learning, computer vision, robotics, and the software required to deploy them.
               </p>
             </div>
-            <div className="rounded-xl border border-line bg-white p-6">
+            <div className="enter-box rounded-xl border border-line bg-white p-6">
               <p className="text-[11px] uppercase tracking-[0.16em] text-accent">
                 Training & hiring
               </p>

@@ -1,84 +1,84 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { capabilities } from "@/lib/content/services";
+
+const BEHIND = 3;
 
 export function TechnologyPanel() {
   const [active, setActive] = useState(0);
-  const current = capabilities[active];
+  const [paused, setPaused] = useState(false);
+  const count = capabilities.length;
+
+  useEffect(() => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce || paused) return;
+    const timer = window.setInterval(() => {
+      setActive((value) => (value + 1) % count);
+    }, 3600);
+    return () => window.clearInterval(timer);
+  }, [count, paused]);
 
   return (
-    <div className="relative mt-12 overflow-hidden rounded-2xl border border-white/10 bg-navy text-white">
+    <div
+      className="enter-box relative mt-12 overflow-hidden rounded-2xl border border-white/10 bg-navy text-white"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={() => setPaused(false)}
+    >
       <div className="tech-grid pointer-events-none absolute inset-0 opacity-70" aria-hidden="true" />
       <div
-        className="pointer-events-none absolute -right-16 -top-20 h-72 w-72 rounded-full bg-accent/25 blur-3xl"
+        className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-accent/25 blur-3xl"
         aria-hidden="true"
       />
-      <div
-        className="pointer-events-none absolute -bottom-24 left-10 h-64 w-64 rounded-full bg-cyan/15 blur-3xl"
-        aria-hidden="true"
-      />
-      <div className="relative grid gap-8 p-5 sm:p-8 lg:grid-cols-[0.9fr_1.1fr] lg:p-10">
-        <div
-          role="tablist"
-          aria-label="Technology disciplines"
-          className="grid content-start gap-2 sm:grid-cols-2 lg:grid-cols-1"
-        >
+      <div className="relative px-5 py-8 sm:px-8 sm:py-10">
+        <div className="relative mx-auto h-[240px] max-w-lg">
           {capabilities.map((item, index) => {
-            const selected = index === active;
+            const offset = (active - index + count) % count;
+            const next = offset === count - 1;
+            const behind = offset > 0 && offset <= BEHIND;
+            const hidden = offset > BEHIND && !next;
+            const depth = behind ? offset : 0;
+            const y = next ? 168 : behind ? (BEHIND - depth) * 36 : BEHIND * 36;
+            const scale = next ? 0.98 : behind ? 1 - depth * 0.03 : 1;
+
             return (
               <button
                 key={item.title}
                 type="button"
-                role="tab"
-                id={`tech-tab-${index}`}
-                aria-selected={selected}
-                aria-controls="tech-panel"
-                className={`rounded-lg border px-4 py-3 text-left text-sm transition-colors ${
-                  selected
-                    ? "border-cyan/50 bg-white/10 text-white shadow-[0_0_24px_rgba(143,216,234,0.12)]"
-                    : "border-white/10 text-white/70 hover:border-white/25 hover:text-white"
-                }`}
-                onMouseEnter={() => setActive(index)}
-                onFocus={() => setActive(index)}
+                aria-current={offset === 0 ? "true" : undefined}
+                aria-label={item.title}
+                className="absolute inset-x-4 top-0 origin-top rounded-xl border px-4 py-2.5 text-left transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none sm:inset-x-8"
+                style={{
+                  transform: `translateY(${y}px) scale(${scale})`,
+                  opacity: hidden || next ? 0 : behind ? 0.92 - depth * 0.16 : 1,
+                  zIndex: hidden || next ? 0 : 20 - depth,
+                  pointerEvents: offset === 0 || behind ? "auto" : "none",
+                  borderColor: offset === 0 ? "rgba(143,216,234,0.45)" : "rgba(255,255,255,0.12)",
+                  background: offset === 0 ? "rgba(16,22,34,0.96)" : "rgba(12,18,32,0.94)",
+                  boxShadow: offset === 0 ? "0 16px 36px rgba(0,0,0,0.35)" : undefined,
+                }}
                 onClick={() => setActive(index)}
               >
-                <span className="font-mono text-[10px] tracking-[0.16em] text-cyan">
-                  {String(index + 1).padStart(2, "0")}
+                <span className="flex items-baseline gap-3">
+                  <span className="font-mono text-[10px] tracking-[0.16em] text-cyan">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="font-heading text-sm tracking-tight text-white sm:text-base">{item.title}</span>
                 </span>
-                <span className="mt-1 block font-heading text-base tracking-tight">{item.title}</span>
+                <p
+                  className={`overflow-hidden text-sm leading-6 text-white/70 transition-[max-height,opacity,margin] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
+                    offset === 0 ? "mt-2 max-h-24 opacity-100" : "mt-0 max-h-0 opacity-0"
+                  }`}
+                >
+                  {item.text}
+                </p>
               </button>
             );
           })}
         </div>
-
-        <div
-          role="tabpanel"
-          id="tech-panel"
-          aria-labelledby={`tech-tab-${active}`}
-          className="flex min-h-72 flex-col justify-between rounded-xl border border-white/10 bg-white/[0.03] p-6 sm:p-8"
-        >
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.18em] text-cyan">Live discipline</p>
-            <h3 className="mt-4 text-3xl text-white sm:text-4xl">{current.title}</h3>
-            <p className="mt-4 max-w-md text-base leading-7 text-white/70">{current.text}</p>
-          </div>
-          <DisciplineSignal key={current.title} label={current.title} />
-        </div>
       </div>
     </div>
-  );
-}
-
-function DisciplineSignal({ label }: { label: string }) {
-  return (
-    <svg viewBox="0 0 360 80" className="mt-8 h-16 w-full" role="img" aria-label={label}>
-      <line x1="8" y1="36" x2="352" y2="36" stroke="rgba(255,255,255,0.15)" />
-      <circle cx="28" cy="36" r="5" fill="#07090f" stroke="#8fd8ea" />
-      <circle cx="180" cy="36" r="16" fill="#07090f" stroke="#1a5fd4" strokeWidth="1.5" />
-      <circle cx="180" cy="36" r="4" fill="#8fd8ea" />
-      <circle className="dash-shift" cx="180" cy="36" r="28" fill="none" stroke="rgba(143,216,234,0.55)" />
-      <circle cx="332" cy="36" r="5" fill="#07090f" stroke="#8fd8ea" />
-    </svg>
   );
 }

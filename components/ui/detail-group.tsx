@@ -12,7 +12,7 @@ export type DetailItem = {
 
 export function DetailGroup({ items, tone = "light" }: { items: DetailItem[]; tone?: "light" | "dark" }) {
   return (
-    <div className="grid gap-2 sm:grid-cols-2">
+    <div className="grid items-start gap-2 sm:grid-cols-2">
       {items.map((item, index) => (
         <DetailDisclosure
           key={item.title}
@@ -41,7 +41,7 @@ function DetailDisclosure({
   return (
     <div
       className={cn(
-        "rounded-lg border transition-colors",
+        "enter-box rounded-lg border transition-colors",
         wide && "sm:col-span-2",
         dark ? "border-white/10 bg-white/[0.03]" : "border-line bg-white/70",
         open && (dark ? "border-cyan/40" : "border-accent/30"),
