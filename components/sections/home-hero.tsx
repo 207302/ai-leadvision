@@ -18,8 +18,8 @@ export function HomeHero() {
         className="pointer-events-none absolute left-1/2 top-16 h-56 w-56 -translate-x-1/2 rounded-full bg-accent/20 blur-3xl"
         aria-hidden="true"
       />
-      <div className="relative mx-auto w-full max-w-[1320px] px-6 pb-8 pt-24 sm:px-10 sm:pb-10 sm:pt-28 lg:px-12">
-        <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(240px,0.65fr)] lg:gap-16 xl:gap-24">
+      <div className="relative mx-auto w-full max-w-[1320px] px-6 pb-12 pt-28 sm:px-10 sm:pb-14 sm:pt-32 lg:px-12">
+        <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-12 xl:gap-16">
           <div className="min-w-0">
             <Eyebrow tone="dark">Artificial intelligence · Bengaluru</Eyebrow>
             <h1 className="mt-3 max-w-4xl text-5xl leading-[0.98] text-white sm:text-6xl lg:text-7xl">
@@ -48,7 +48,7 @@ export function HomeHero() {
               ))}
             </ul>
           </div>
-          <div className="min-w-0 lg:max-w-[420px] lg:justify-self-end">
+          <div className="mx-auto w-full max-w-[520px] shrink-0 lg:mx-0 lg:w-[520px]">
             <div className="rounded-2xl shadow-[0_0_80px_rgba(26,95,212,0.18)]">
               <SystemSchematic />
             </div>
