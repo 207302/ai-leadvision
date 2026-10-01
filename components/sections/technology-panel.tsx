@@ -1,14 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { capabilities } from "@/lib/content/services";
 
 const BEHIND = 3;
+const SWIPE_STEP = 48;
 
 export function TechnologyPanel() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const count = capabilities.length;
+  const stageRef = useRef<HTMLDivElement>(null);
+  const drag = useRef<{ id: number; y: number } | null>(null);
+  const dragged = useRef(false);
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -18,6 +22,29 @@ export function TechnologyPanel() {
     }, 3600);
     return () => window.clearInterval(timer);
   }, [count, paused]);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    let locked = false;
+    const onWheel = (event: WheelEvent) => {
+      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+      event.preventDefault();
+      if (locked) return;
+      locked = true;
+      const direction = event.deltaY > 0 ? 1 : -1;
+      setActive((value) => (value + direction + count) % count);
+      window.setTimeout(() => {
+        locked = false;
+      }, 460);
+    };
+    stage.addEventListener("wheel", onWheel, { passive: false });
+    return () => stage.removeEventListener("wheel", onWheel);
+  }, [count]);
+
+  function move(direction: number) {
+    setActive((value) => (value + direction + count) % count);
+  }
 
   return (
     <div
@@ -33,7 +60,32 @@ export function TechnologyPanel() {
         aria-hidden="true"
       />
       <div className="relative px-5 py-8 sm:px-8 sm:py-10">
-        <div className="relative mx-auto h-[240px] max-w-lg">
+        <div
+          ref={stageRef}
+          className="relative mx-auto h-[240px] max-w-lg cursor-grab touch-none select-none active:cursor-grabbing"
+          onPointerDown={(event) => {
+            if (event.button !== 0) return;
+            drag.current = { id: event.pointerId, y: event.clientY };
+            dragged.current = false;
+            event.currentTarget.setPointerCapture(event.pointerId);
+          }}
+          onPointerMove={(event) => {
+            const current = drag.current;
+            if (!current || current.id !== event.pointerId) return;
+            const delta = event.clientY - current.y;
+            if (Math.abs(delta) < 8) return;
+            dragged.current = true;
+            if (Math.abs(delta) < SWIPE_STEP) return;
+            current.y = event.clientY;
+            move(delta < 0 ? 1 : -1);
+          }}
+          onPointerUp={() => {
+            drag.current = null;
+          }}
+          onPointerCancel={() => {
+            drag.current = null;
+          }}
+        >
           {capabilities.map((item, index) => {
             const offset = (active - index + count) % count;
             const next = offset === count - 1;
@@ -49,7 +101,7 @@ export function TechnologyPanel() {
                 type="button"
                 aria-current={offset === 0 ? "true" : undefined}
                 aria-label={item.title}
-                className="absolute inset-x-4 top-0 origin-top rounded-xl border px-4 py-2.5 text-left transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none sm:inset-x-8"
+                className="absolute inset-x-4 top-0 origin-top touch-none rounded-xl border px-4 py-2.5 text-left transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none sm:inset-x-8"
                 style={{
                   transform: `translateY(${y}px) scale(${scale})`,
                   opacity: hidden || next ? 0 : behind ? 0.92 - depth * 0.16 : 1,
@@ -59,7 +111,13 @@ export function TechnologyPanel() {
                   background: offset === 0 ? "rgba(16,22,34,0.96)" : "rgba(12,18,32,0.94)",
                   boxShadow: offset === 0 ? "0 16px 36px rgba(0,0,0,0.35)" : undefined,
                 }}
-                onClick={() => setActive(index)}
+                onClick={() => {
+                  if (dragged.current) {
+                    dragged.current = false;
+                    return;
+                  }
+                  setActive(index);
+                }}
               >
                 <span className="flex items-baseline gap-3">
                   <span className="font-mono text-[10px] tracking-[0.16em] text-cyan">
