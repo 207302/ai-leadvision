@@ -6,19 +6,19 @@ import { useLayoutEffect, useRef, type ReactNode } from "react";
 const BLOCK = "h1, h2, h3, h4, p, li, dt, dd, label, button, blockquote";
 const MEDIA = "svg, iframe, video, canvas, img";
 
-function shown(node: Element): node is HTMLElement {
-  return node instanceof HTMLElement && !node.closest("[hidden]");
+type EnterNode = HTMLElement | SVGElement;
+
+function shown(node: Element): node is EnterNode {
+  return (node instanceof HTMLElement || node instanceof SVGElement) && !node.closest("[hidden]");
 }
 
-function collect(root: HTMLElement) {
+function collect(root: HTMLElement): EnterNode[] {
   const blocks = Array.from(root.querySelectorAll(BLOCK)).filter(shown);
   const text = blocks.filter((node) => !node.parentElement?.closest(BLOCK));
-  const media = Array.from(root.querySelectorAll(MEDIA)).filter(
-    (node) => shown(node) && !node.closest(BLOCK),
-  );
-  const links = Array.from(root.querySelectorAll("a")).filter(
-    (node) => shown(node) && !node.closest(BLOCK) && !node.querySelector(BLOCK),
-  );
+  const media = Array.from(root.querySelectorAll(MEDIA)).filter(shown).filter((node) => !node.closest(BLOCK));
+  const links = Array.from(root.querySelectorAll("a"))
+    .filter(shown)
+    .filter((node) => !node.closest(BLOCK) && !node.querySelector(BLOCK));
 
   return [...text, ...links, ...media].sort((a, b) => {
     const position = a.compareDocumentPosition(b);
@@ -43,21 +43,22 @@ export function PageTransition({ children }: { children: ReactNode }) {
     if (reduce || nodes.length === 0) return;
 
     const started = origin.current ?? Date.now();
-    const played = new WeakSet<HTMLElement>();
+    const played = new WeakSet<EnterNode>();
     let step = 0;
 
-    const play = (node: HTMLElement) => {
+    const play = (node: EnterNode) => {
       if (played.has(node)) return;
       played.add(node);
       const wait = Math.max(0, 2450 - (Date.now() - started));
       const delay = wait + Math.min(step * 75, 700);
       step += 1;
       node.style.animation = "none";
-      void node.offsetWidth;
+      void node.getBoundingClientRect();
       node.style.animation = `page-enter 1.45s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms both`;
       node.addEventListener(
         "animationend",
         (event) => {
+          if (!(event instanceof AnimationEvent)) return;
           if (event.target !== node || event.animationName !== "page-enter") return;
           node.style.animation = "";
           node.style.opacity = "";
@@ -68,7 +69,7 @@ export function PageTransition({ children }: { children: ReactNode }) {
     };
 
     const viewBottom = window.innerHeight + 72;
-    const later: HTMLElement[] = [];
+    const later: EnterNode[] = [];
 
     nodes.forEach((node) => {
       node.style.opacity = "0";
@@ -81,7 +82,7 @@ export function PageTransition({ children }: { children: ReactNode }) {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting || !(entry.target instanceof HTMLElement)) return;
+          if (!entry.isIntersecting || !(entry.target instanceof HTMLElement || entry.target instanceof SVGElement)) return;
           play(entry.target);
           observer.unobserve(entry.target);
         });
