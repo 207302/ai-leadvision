@@ -15,6 +15,7 @@ export function HeroGlow() {
   const velocity = useRef({ x: 0, y: 0 });
   const heading = useRef(0);
   const stretch = useRef(0);
+  const swim = useRef({ angle: Math.random() * Math.PI * 2, turn: 0 });
   const blobRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -57,14 +58,6 @@ export function HeroGlow() {
       interacting.current = false;
     };
 
-    const hop = () => {
-      const angle = Math.random() * Math.PI * 2;
-      const step = 0.2 + Math.random() * 0.18;
-      target.current.x = clamp(pos.current.x + Math.cos(angle) * step, 0.14, 0.86);
-      target.current.y = clamp(pos.current.y + Math.sin(angle) * step, 0.16, 0.78);
-    };
-    hop();
-
     section.addEventListener("pointermove", onMove);
     section.addEventListener("pointerdown", onDown);
     section.addEventListener("pointerup", release);
@@ -77,16 +70,36 @@ export function HeroGlow() {
 
     let frame = 0;
     const tick = (now: number) => {
-      if (!interacting.current) {
-        const remaining = Math.hypot(target.current.x - pos.current.x, target.current.y - pos.current.y);
-        if (remaining < 0.045) hop();
-      }
-
-      const ease = interacting.current ? 0.22 : 0.055;
       const previousX = pos.current.x;
       const previousY = pos.current.y;
-      pos.current.x += (target.current.x - pos.current.x) * ease;
-      pos.current.y += (target.current.y - pos.current.y) * ease;
+
+      if (interacting.current) {
+        pos.current.x += (target.current.x - pos.current.x) * 0.22;
+        pos.current.y += (target.current.y - pos.current.y) * 0.22;
+        swim.current.angle = heading.current;
+        swim.current.turn = 0;
+      } else {
+        const x = pos.current.x;
+        const y = pos.current.y;
+        let awayX = 0;
+        let awayY = 0;
+        if (x < 0.22) awayX += 0.22 - x;
+        if (x > 0.78) awayX -= x - 0.78;
+        if (y < 0.22) awayY += 0.22 - y;
+        if (y > 0.78) awayY -= y - 0.78;
+        if (awayX !== 0 || awayY !== 0) {
+          let correction = Math.atan2(awayY, awayX) - swim.current.angle;
+          if (correction > Math.PI) correction -= Math.PI * 2;
+          if (correction < -Math.PI) correction += Math.PI * 2;
+          swim.current.angle += correction * 0.04;
+        }
+        if (Math.random() < 0.004) swim.current.turn = (Math.random() - 0.5) * 0.006;
+        swim.current.turn *= 0.996;
+        swim.current.angle += swim.current.turn;
+        const pace = 0.00085 * (0.92 + 0.08 * Math.sin(now / 1400));
+        pos.current.x = clamp(pos.current.x + Math.cos(swim.current.angle) * pace, 0.1, 0.9);
+        pos.current.y = clamp(pos.current.y + Math.sin(swim.current.angle) * pace, 0.12, 0.88);
+      }
       velocity.current.x += (pos.current.x - previousX - velocity.current.x) * 0.2;
       velocity.current.y += (pos.current.y - previousY - velocity.current.y) * 0.2;
 
