@@ -14,6 +14,7 @@ export function HomeHero() {
   return (
     <section className="relative overflow-hidden bg-navy text-white">
       <div className="tech-grid grid-drift pointer-events-none absolute inset-0" aria-hidden="true" />
+      <div className="hero-glow pointer-events-none absolute inset-0" aria-hidden="true" />
       <HeroGlow />
       <div className="relative mx-auto w-full max-w-[1320px] px-6 pb-12 pt-28 sm:px-10 sm:pb-14 sm:pt-32 lg:px-12">
         <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-12 xl:gap-16">

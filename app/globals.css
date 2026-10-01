@@ -62,11 +62,7 @@
 
 @utility hero-glow {
   background:
-    radial-gradient(
-      ellipse var(--glow-rx, 42%) var(--glow-ry, 36%) at var(--glow-x, 78%) var(--glow-y, 42%),
-      rgba(26, 95, 212, 0.28),
-      transparent 68%
-    ),
+    radial-gradient(ellipse 42% 36% at 78% 42%, rgba(26, 95, 212, 0.22), transparent 68%),
     radial-gradient(ellipse 28% 24% at 12% 88%, rgba(143, 216, 234, 0.08), transparent 70%);
 }
 
