@@ -104,7 +104,7 @@ export default function AboutPage() {
           </div>
           <div className="space-y-5 text-sm leading-7 text-muted lg:col-span-8">
             <p>
-              AI Lead Vision — AILVIN Pvt Ltd — designs intelligent products and the custom software around them. The technology work covers artificial intelligence, machine learning, computer vision, robotics, data, and the applications required to run those systems in a business.
+              AI Lead Vision designs intelligent products and the custom software around them. The technology work covers artificial intelligence, machine learning, computer vision, robotics, data, and the applications required to run those systems in a business.
             </p>
             <p>
               The company builds for an outcome: fewer manual checks, a conversation that resolves, a camera that raises the right alert, a forecast someone can use. The product is the system in operation, not a demonstration of a model.

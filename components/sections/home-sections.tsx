@@ -26,7 +26,7 @@ export function HomeIntro() {
             The work spans artificial intelligence, machine learning, computer vision, robotics, and software engineering. A system is finished when it is integrated, used, and measurable. A demo is not the deliverable.
           </p>
           <p>
-            AILVIN Pvt Ltd also trains professionals in aviation and automotive domains, and recruits for software roles. That practice is described on its own, separate from the product work.
+            AI Lead Vision also trains professionals in aviation and automotive domains, and recruits for software roles. That practice is described on its own, separate from the product work.
           </p>
         </Reveal>
       </Container>

@@ -6,7 +6,7 @@
 
 export const siteConfig = {
   name: "AI Lead Vision",
-  legalName: "AILVIN Pvt Ltd",
+  legalName: "AI Lead Vision",
   url: "https://aileadvision.com",
   description:
     "AI Lead Vision builds intelligent products and enterprise systems across artificial intelligence, machine learning, computer vision, robotics, and software engineering.",

@@ -25,9 +25,6 @@ export function Logo({ className = "" }: { className?: string }) {
         <span className="block font-heading text-[15px] font-medium tracking-[-0.03em] text-white">
           AI Lead Vision
         </span>
-        <span className="mt-1 block text-[10px] uppercase tracking-[0.16em] text-white/50">
-          AILVIN Pvt Ltd
-        </span>
       </span>
     </span>
   );
