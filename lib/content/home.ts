@@ -26,12 +26,12 @@ export const whatWeBuild = [
   {
     title: "Computer Vision",
     text: "Detection on a live camera feed — people, objects, defects, plates, and events — with an alert at the end.",
-    href: "/products#computer-vision",
+    href: "/products/computer-vision",
   },
   {
     title: "Robotics",
     text: "Perception, control, and educational hardware for labs and automated cells.",
-    href: "/services#robotics",
+    href: "/products/robotics",
   },
   {
     title: "Custom Software Development",

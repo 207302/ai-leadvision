@@ -145,7 +145,7 @@ export const serviceCategories: ServiceCategory[] = [
     title: "Computer Vision",
     summary: productSummary("computer-vision"),
     points: productCapabilities("computer-vision"),
-    related: { href: "/products#computer-vision", label: "Computer Vision product" },
+    related: { href: "/products/computer-vision", label: "Computer Vision product" },
     interest: "computer-vision",
   },
   {
@@ -176,7 +176,7 @@ export const serviceCategories: ServiceCategory[] = [
     title: "Industrial AI",
     summary: productSummary("industrial-automation"),
     points: productCapabilities("industrial-automation"),
-    related: { href: "/products#industrial-automation", label: "Industrial Automation" },
+    related: { href: "/products/robotics#industrial-robotics", label: "Industrial Automation" },
     interest: "robotics",
   },
   {
@@ -184,7 +184,7 @@ export const serviceCategories: ServiceCategory[] = [
     title: "Machine Vision Inspection",
     summary: productSummary("machine-vision"),
     points: productCapabilities("machine-vision"),
-    related: { href: "/products#machine-vision", label: "AI Machine Vision Inspection" },
+    related: { href: "/products/computer-vision#machine-vision", label: "AI Machine Vision Inspection" },
     interest: "computer-vision",
   },
   {
@@ -193,6 +193,7 @@ export const serviceCategories: ServiceCategory[] = [
     summary:
       "Perception, control, and educational hardware for labs and automated cells. Inspection, PLC, and production monitoring designed as one operational layer.",
     serviceId: "robotics",
+    related: { href: "/products/robotics", label: "Robotics products" },
     interest: "robotics",
   },
   {

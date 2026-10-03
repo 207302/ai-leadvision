@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { productGuides } from "@/lib/content/product-pages";
 import { featuredProducts } from "@/lib/content/products";
 import { serviceCategories } from "@/lib/content/services";
 import { footerNavigation, locationLine, siteConfig } from "@/lib/content/site";
@@ -43,6 +44,13 @@ export function Footer() {
                     className="text-sm text-white/75 hover:text-white"
                   >
                     {product.kicker}
+                  </Link>
+                </li>
+              ))}
+              {productGuides.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="text-sm text-white/75 hover:text-white">
+                    {item.label}
                   </Link>
                 </li>
               ))}

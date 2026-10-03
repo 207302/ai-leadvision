@@ -1,12 +1,24 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import type { Product } from "@/lib/content/products";
-import { siteConfig } from "@/lib/content/site";
+import { getProductSupplement } from "@/lib/content/product-pages";
+import { DemoLinks } from "@/components/products/demo-links";
 import { FlowDiagram } from "@/components/products/flow-diagram";
+import { MediaGrid } from "@/components/products/media-placeholder";
 import { ProductDemo } from "@/components/products/product-demo";
 import { DetailGroup } from "@/components/ui/detail-group";
 
-export function ProductSection({ product, index }: { product: Product; index: number }) {
+export function ProductSection({
+  product,
+  index,
+  showMedia = true,
+  showPageLink = true,
+}: {
+  product: Product;
+  index: number;
+  showMedia?: boolean;
+  showPageLink?: boolean;
+}) {
+  const supplement = getProductSupplement(product.id);
   const glow =
     index % 2 === 0
       ? "bg-[radial-gradient(ellipse_at_top_right,rgba(26,95,212,0.16),transparent_52%)]"
@@ -33,13 +45,14 @@ export function ProductSection({ product, index }: { product: Product; index: nu
           <h2 className="mt-3 text-3xl leading-tight text-ink sm:text-4xl">{product.name}</h2>
           <p className="mt-4 text-base text-accent">{product.positioning}</p>
           <p className="mt-4 max-w-xl text-sm leading-7 text-muted">{product.summary}</p>
-          <Link
-            href={`${siteConfig.cta.demo.href}&product=${product.id}`}
-            className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-ink"
-          >
-            {siteConfig.cta.demo.label}
-            <ArrowUpRight size={16} aria-hidden="true" />
-          </Link>
+          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <DemoLinks productId={product.id} />
+            {showPageLink && supplement?.page && (
+              <Link href={supplement.page.href} className="text-sm font-medium text-ink">
+                {supplement.page.label}
+              </Link>
+            )}
+          </div>
         </div>
       </div>
       <div className="relative border-t border-line/80 px-5 py-5 sm:px-8 lg:px-10">
@@ -47,11 +60,25 @@ export function ProductSection({ product, index }: { product: Product; index: nu
           items={[
             { title: "Problem", body: product.problem },
             { title: "Solution", body: product.solution },
+            { title: "Key Features", list: product.highlights },
             { title: "Capabilities", list: product.capabilities },
-            { title: "Use cases", list: product.useCases },
+            { title: "Technology", list: supplement?.technology },
+            { title: "Applications", list: product.useCases },
+            { title: "Deployment options", list: supplement?.deployment },
+            { title: "Integration options", list: supplement?.integration },
           ]}
         />
       </div>
+      {showMedia && supplement && supplement.media.length > 0 && (
+        <div className="relative border-t border-line/80 px-5 py-5 sm:px-8 lg:px-10">
+          <p className="text-[11px] uppercase tracking-[0.16em] text-accent">
+            Screenshots, video, and architecture
+          </p>
+          <div className="mt-4">
+            <MediaGrid items={supplement.media} />
+          </div>
+        </div>
+      )}
     </article>
   );
 }

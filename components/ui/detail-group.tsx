@@ -62,20 +62,37 @@ function DetailDisclosure({
           <ChevronDown
             size={16}
             aria-hidden="true"
-            className={cn("shrink-0 text-accent transition-transform", open && "rotate-180")}
+            className={cn(
+              "shrink-0 text-accent transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
+              open && "rotate-180",
+            )}
           />
         </button>
       </h3>
-      <div id={panelId} hidden={!open} className={open ? "block" : "hidden"}>
-        <div className={cn("px-4 pb-4 text-sm leading-6", dark ? "text-white/70" : "text-muted")}>
-          {item.body && <p>{item.body}</p>}
-          {item.list && (
-            <ul className="space-y-2">
-              {item.list.map((entry) => (
-                <li key={entry}>{entry}</li>
-              ))}
-            </ul>
+      <div
+        id={panelId}
+        aria-hidden={!open}
+        className={cn(
+          "grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+        )}
+      >
+        <div
+          className={cn(
+            "overflow-hidden transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
+            open ? "opacity-100" : "opacity-0",
           )}
+        >
+          <div className={cn("px-4 pb-4 text-sm leading-6", dark ? "text-white/70" : "text-muted")}>
+            {item.body && <p>{item.body}</p>}
+            {item.list && (
+              <ul className="space-y-2">
+                {item.list.map((entry) => (
+                  <li key={entry}>{entry}</li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
       </div>
     </div>
