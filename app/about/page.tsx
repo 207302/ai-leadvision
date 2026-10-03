@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { PageHero } from "@/components/layout/page-hero";
 import { FinalCta } from "@/components/sections/final-cta";
 import { Container } from "@/components/ui/container";
@@ -7,8 +6,7 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 
 export const metadata: Metadata = {
   title: "About AI Lead Vision",
-  description:
-    "AI Lead Vision engineers intelligent systems for real-world businesses, with a separate practice in professional training and software hiring.",
+  description: "AI Lead Vision engineers intelligent systems for real-world businesses.",
   alternates: { canonical: "/about" },
   openGraph: {
     title: "About AI Lead Vision",
@@ -69,22 +67,6 @@ const values = [
   },
 ];
 
-const perspectives = [
-  {
-    name: "Chandresh Chahar",
-    quote:
-      "Good company for freshers to learn and explore about latest technologies and management is very nice. Seniors are very helpful.",
-  },
-  {
-    name: "Ashish Kumar",
-    quote: "Very good company to work with good clients and scale up the skills.",
-  },
-  {
-    name: "Sara Tran",
-    quote: "Very good working environment and work-life balance.",
-  },
-];
-
 export default function AboutPage() {
   return (
     <>
@@ -132,38 +114,16 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <section id="training" className="scroll-mt-28 bg-paper">
+      <section className="bg-paper">
         <Container className="py-20 sm:py-24">
           <Eyebrow>Business areas</Eyebrow>
-          <h2 className="mt-4 max-w-2xl text-3xl leading-tight sm:text-4xl">
-            Two practices. They are not the same story.
-          </h2>
-          <div className="mt-12 grid gap-6 lg:grid-cols-2">
-            <article className="border border-line bg-white p-7">
-              <p className="text-[11px] uppercase tracking-[0.16em] text-accent">Technology</p>
-              <h3 className="mt-4 text-2xl text-ink">Products and engineering</h3>
-              <p className="mt-4 text-sm leading-7 text-muted">
-                AI products, machine learning, computer vision, robotics, and software development for organizations that need a system in production. This is the work described across Products and Services.
-              </p>
-            </article>
-            <article className="border border-line bg-white p-7">
-              <p className="text-[11px] uppercase tracking-[0.16em] text-accent">
-                Training & professional development
-              </p>
-              <h3 className="mt-4 text-2xl text-ink">Training and software hiring</h3>
-              <p className="mt-4 text-sm leading-7 text-muted">
-                A separate practice trains working professionals in aviation and automotive domains, and recruits for software development and testing — including people early in their careers. It is not part of the AI product line.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
-                <Link href="/training" className="text-sm font-medium text-accent">
-                  Training
-                </Link>
-                <a href="mailto:hr@aileadvision.com" className="text-sm font-medium text-accent">
-                  hr@aileadvision.com
-                </a>
-              </div>
-            </article>
-          </div>
+          <article className="mt-4 max-w-2xl border border-line bg-white p-7">
+            <p className="text-[11px] uppercase tracking-[0.16em] text-accent">Technology</p>
+            <h2 className="mt-4 text-2xl text-ink">Products and engineering</h2>
+            <p className="mt-4 text-sm leading-7 text-muted">
+              AI products, machine learning, computer vision, robotics, and software development for organizations that need a system in production. This is the work described across Products and Services.
+            </p>
+          </article>
         </Container>
       </section>
 
@@ -177,26 +137,6 @@ export default function AboutPage() {
                 <h3 className="text-xl text-ink">{value.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-muted">{value.text}</p>
               </div>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="bg-paper">
-        <Container className="py-20 sm:py-24">
-          <Eyebrow>Team perspectives</Eyebrow>
-          <h2 className="mt-4 max-w-xl text-3xl leading-tight sm:text-4xl">
-            Notes from people who have worked here.
-          </h2>
-          <p className="mt-4 max-w-2xl text-sm leading-6 text-muted">
-            These are workplace comments. They are not customer testimonials and they are not case studies.
-          </p>
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
-            {perspectives.map((item) => (
-              <figure key={item.name} className="border border-line bg-white p-6">
-                <blockquote className="text-sm leading-7 text-ink">“{item.quote}”</blockquote>
-                <figcaption className="mt-5 text-sm text-muted">{item.name}</figcaption>
-              </figure>
             ))}
           </div>
         </Container>

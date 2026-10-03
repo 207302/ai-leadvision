@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { HomeHero } from "@/components/sections/home-hero";
 import { CapabilityStrip } from "@/components/sections/capability-strip";
+import { AutomotiveEngineering } from "@/components/sections/automotive-engineering";
 import {
   BusinessOutcome,
   GenerativeAiSection,
@@ -11,6 +12,7 @@ import {
   WhoWeServe,
   WhySection,
 } from "@/components/sections/home-sections";
+import { TechnologyStack } from "@/components/sections/technology-stack";
 import { homeHero } from "@/lib/content/home";
 import { siteConfig } from "@/lib/content/site";
 
@@ -34,6 +36,8 @@ export default function HomePage() {
       <CapabilityStrip />
       <GenerativeAiSection />
       <WhatWeBuild />
+      <TechnologyStack />
+      <AutomotiveEngineering />
       <WhoWeServe />
       <IndustriesWeServe />
       <HowItWorks />

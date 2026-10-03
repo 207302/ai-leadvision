@@ -34,7 +34,10 @@ export const placeholderPages = {
     title: "Training",
     description:
       "Professional training in aviation and automotive domains, and recruitment for software development and testing.",
-    note: "Programme names, duration, and cohort details are not published yet. Use [Programme name] until they are confirmed. Enquiries go to the HR address.",
-    links: [{ href: "mailto:hr@aileadvision.com", label: "hr@aileadvision.com" }],
+    note: "Programme names, duration, and cohort details are not published yet. Use [Programme name] until they are confirmed. Enquiries go to the HR address. Recruitment is also listed on Careers / Hiring Solutions.",
+    links: [
+      { href: "mailto:hr@aileadvision.com", label: "hr@aileadvision.com" },
+      { href: "/careers", label: "Careers / Hiring Solutions" },
+    ],
   },
 } as const satisfies Record<string, PlaceholderPage>;

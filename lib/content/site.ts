@@ -73,12 +73,14 @@ export const navigation = [
   { label: "Case Studies", href: "/case-studies" },
   { label: "About", href: "/about" },
   { label: "Training", href: "/training" },
+  { label: "Careers", href: "/careers" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
-/** FAQ stays out of the header. Nine primary items already fill that bar. */
+/** FAQ and Testimonials stay out of the header so the primary bar can hold Careers. */
 export const footerNavigation = [
   ...navigation,
+  { label: "Testimonials", href: "/testimonials" },
   { label: "FAQ", href: "/faq" },
 ] as const;
 

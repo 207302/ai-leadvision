@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/layout/page-hero";
+import { AutomotiveEngineering } from "@/components/sections/automotive-engineering";
 import { FinalCta } from "@/components/sections/final-cta";
 import { ServiceCategory } from "@/components/services/service-category";
 import { Container } from "@/components/ui/container";
@@ -64,6 +65,7 @@ export default function ServicesPage() {
           </div>
         </Container>
       </section>
+      <AutomotiveEngineering />
       <FinalCta
         title="Bring the operation, not a feature list."
         body="Describe the work that is slow, manual, or blind today. We will tell you which discipline — robotics, machine learning, or software — should lead."
