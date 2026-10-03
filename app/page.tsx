@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { HomeHero } from "@/components/sections/home-hero";
+import { CapabilityStrip } from "@/components/sections/capability-strip";
 import {
   BusinessOutcome,
   HomeContact,
@@ -28,6 +29,7 @@ export default function HomePage() {
   return (
     <>
       <HomeHero />
+      <CapabilityStrip />
       <WhatWeBuild />
       <WhoWeServe />
       <HowItWorks />

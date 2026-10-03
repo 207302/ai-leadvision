@@ -76,6 +76,12 @@ export const navigation = [
   { label: "Contact", href: "/contact" },
 ] as const;
 
+/** FAQ stays out of the header. Nine primary items already fill that bar. */
+export const footerNavigation = [
+  ...navigation,
+  { label: "FAQ", href: "/faq" },
+] as const;
+
 /**
  * Unpublished on purpose. The previous site showed 247+ / 74+ on the homepage
  * and 398+ / 120+ on About and FAQ. Render items only after publish is set

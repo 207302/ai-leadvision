@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { featuredProducts } from "@/lib/content/products";
 import { services } from "@/lib/content/services";
-import { locationLine, navigation, siteConfig } from "@/lib/content/site";
+import { footerNavigation, locationLine, siteConfig } from "@/lib/content/site";
 import { Logo } from "@/components/layout/logo";
 import { SocialLinks } from "@/components/layout/social-links";
 
@@ -23,7 +23,7 @@ export function Footer() {
           <div>
             <p className="text-[11px] uppercase tracking-[0.16em] text-white/40">Navigate</p>
             <ul className="mt-4 space-y-2.5">
-              {navigation.map((item) => (
+              {footerNavigation.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href} className="text-sm text-white/75 hover:text-white">
                     {item.label}
