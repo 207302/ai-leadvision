@@ -59,12 +59,14 @@ export function Header() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-4 px-5 sm:h-[4.5rem] sm:px-8">
-        <Link href="/" aria-label="AI Lead Vision, home" className="relative z-50 shrink-0">
+        <Link href="/" aria-label="AI Lead Vision Pvt Ltd, home" className="relative z-50 shrink-0">
           <Logo />
         </Link>
 
         <nav aria-label="Primary" className="hidden min-w-0 items-center gap-x-3.5 xl:flex">
-          {navigation.map((item) => {
+          {navigation
+            .filter((item) => !("mobileOnly" in item && item.mobileOnly))
+            .map((item) => {
             const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return (
               <Link

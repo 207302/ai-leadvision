@@ -26,7 +26,7 @@ export function SystemSchematic() {
         className="h-auto w-full"
       >
         <title id={titleId}>
-          Abstract system diagram linking attendance, voice, chat, vision, machine learning, and software.
+          Diagram of AI Lead Vision systems: attendance, voice, chat, computer vision, machine learning, and software.
         </title>
         <defs>
           <pattern id="dot-grid" width="22" height="22" patternUnits="userSpaceOnUse">

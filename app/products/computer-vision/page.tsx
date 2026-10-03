@@ -2,23 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/layout/page-hero";
-import { MediaGrid, MediaPlaceholder } from "@/components/products/media-placeholder";
 import { ProductSection } from "@/components/products/product-showcase";
 import { FinalCta } from "@/components/sections/final-cta";
 import { Container } from "@/components/ui/container";
 import { visionPage, visionShowcase } from "@/lib/content/product-pages";
 import { getProduct } from "@/lib/content/products";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Computer Vision and Industrial AI | AI Lead Vision",
-  description: visionPage.description,
-  alternates: { canonical: visionPage.path },
-  openGraph: {
-    title: "Computer Vision and Industrial AI | AI Lead Vision",
-    description: visionPage.description,
-    url: visionPage.path,
-  },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Computer Vision Company India",
+  description:
+    "Computer vision and machine vision inspection for production lines, from AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India.",
+  path: visionPage.path,
+});
 
 export default function ComputerVisionPage() {
   const vision = getProduct("computer-vision");
@@ -36,7 +32,7 @@ export default function ComputerVisionPage() {
         <Container className="flex flex-col gap-16 py-16 sm:py-20">
           <section aria-labelledby="vision-capabilities">
             <h2 id="vision-capabilities" className="max-w-2xl text-3xl text-ink sm:text-4xl">
-              Detection, inspection, and the line.
+              Machine vision inspection on the line.
             </h2>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-muted">
               Camera events from the computer vision product, inspection from machine vision, and production monitoring from industrial automation. The full write-ups stay below and on the products page.
@@ -51,30 +47,6 @@ export default function ComputerVisionPage() {
             </ul>
           </section>
 
-          <section aria-labelledby="vision-projects">
-            <h2 id="vision-projects" className="text-3xl text-ink sm:text-4xl">
-              Project photos and videos
-            </h2>
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-muted">
-              Real project photos and videos will go here once they are confirmed. Client names stay unpublished until then.
-            </p>
-            <div className="mt-6">
-              <MediaGrid items={visionPage.projects} framed />
-            </div>
-          </section>
-
-          <section aria-labelledby="before-after">
-            <h2 id="before-after" className="text-3xl text-ink sm:text-4xl">
-              Before and after inspection
-            </h2>
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-muted">
-              Example frames from an inspection, before and after. The images are not published yet.
-            </p>
-            <div className="mt-6">
-              <MediaGrid items={visionPage.beforeAfter} framed />
-            </div>
-          </section>
-
           <section aria-labelledby="vision-architecture" className="max-w-xl">
             <h2 id="vision-architecture" className="text-3xl text-ink sm:text-4xl">
               Architecture
@@ -82,18 +54,11 @@ export default function ComputerVisionPage() {
             <p className="mt-4 text-sm leading-7 text-muted">
               Camera feed, vision model, detection, then an alert or a pass-fail decision.
             </p>
-            <div className="mt-6">
-              <MediaPlaceholder
-                title={visionPage.architecture.title}
-                note={visionPage.architecture.note}
-                framed
-              />
-            </div>
           </section>
 
           <div className="flex flex-col gap-8">
-            <ProductSection product={vision} index={0} showMedia={false} showPageLink={false} />
-            <ProductSection product={inspection} index={1} showMedia={false} showPageLink={false} />
+            <ProductSection product={vision} index={0} showPageLink={false} />
+            <ProductSection product={inspection} index={1} showPageLink={false} />
           </div>
 
           <p className="max-w-2xl text-sm leading-7 text-muted">

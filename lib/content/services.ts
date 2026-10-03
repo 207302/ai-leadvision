@@ -152,13 +152,13 @@ export const serviceCategories: ServiceCategory[] = [
     id: "generative-ai",
     title: "Generative AI",
     summary:
-      "AI agents, retrieval applications, and enterprise assistants for work a team already does.",
+      "Generative AI development: agents, retrieval applications, and enterprise assistants for work a team already does.",
     interest: "ai-development",
   },
   {
     id: "ai-chatbots",
     title: "AI Chatbots",
-    summary: productSummary("chat-bot"),
+    summary: `AI chatbot development. ${productSummary("chat-bot")}`,
     points: productCapabilities("chat-bot"),
     related: { href: "/products#chat-bot", label: "AI Chat Bot" },
     interest: "ai-development",
@@ -206,7 +206,7 @@ export const serviceCategories: ServiceCategory[] = [
   {
     id: "data-analytics",
     title: "Data Analytics & Predictive Analytics",
-    summary: productSummary("predictive-analytics"),
+    summary: `Predictive analytics solutions. ${productSummary("predictive-analytics")}`,
     points: productCapabilities("predictive-analytics"),
     related: { href: "/products#predictive-analytics", label: "AI Predictive Analytics" },
     interest: "machine-learning",

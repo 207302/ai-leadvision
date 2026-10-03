@@ -3,19 +3,16 @@ import type { Product } from "@/lib/content/products";
 import { getProductSupplement } from "@/lib/content/product-pages";
 import { DemoLinks } from "@/components/products/demo-links";
 import { FlowDiagram } from "@/components/products/flow-diagram";
-import { MediaGrid } from "@/components/products/media-placeholder";
 import { ProductDemo } from "@/components/products/product-demo";
 import { DetailGroup } from "@/components/ui/detail-group";
 
 export function ProductSection({
   product,
   index,
-  showMedia = true,
   showPageLink = true,
 }: {
   product: Product;
   index: number;
-  showMedia?: boolean;
   showPageLink?: boolean;
 }) {
   const supplement = getProductSupplement(product.id);
@@ -69,16 +66,6 @@ export function ProductSection({
           ]}
         />
       </div>
-      {showMedia && supplement && supplement.media.length > 0 && (
-        <div className="relative border-t border-line/80 px-5 py-5 sm:px-8 lg:px-10">
-          <p className="text-[11px] uppercase tracking-[0.16em] text-accent">
-            Screenshots, video, and architecture
-          </p>
-          <div className="mt-4">
-            <MediaGrid items={supplement.media} />
-          </div>
-        </div>
-      )}
     </article>
   );
 }

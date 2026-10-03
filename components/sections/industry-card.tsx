@@ -41,18 +41,18 @@ export function IndustryCard({
 }) {
   const Icon = icons[industry.id] ?? Factory;
   const tone = tones[index % tones.length];
-  const className = `industry-card industry-card-${tone} enter-box block h-full rounded-xl p-6`;
+  const className = `industry-card industry-card-${tone} enter-box block h-full overflow-hidden rounded-xl`;
 
   const body = (
     <>
-      <span className="relative flex items-start justify-between gap-4">
+      <span className="relative flex items-start justify-between gap-4 p-6 pb-0">
         <span className={`industry-card-icon industry-card-icon-${tone}`}>
           <Icon size={20} strokeWidth={2} aria-hidden="true" />
         </span>
         <span className="font-mono text-[11px] text-accent">{String(index + 1).padStart(2, "0")}</span>
       </span>
-      <h3 className="relative mt-5 text-2xl text-ink">{industry.title}</h3>
-      <p className="relative mt-3 text-sm leading-6 text-muted">{industry.text}</p>
+      <h3 className="relative px-6 pt-5 text-2xl text-ink">{industry.title}</h3>
+      <p className="relative px-6 pb-6 pt-3 text-sm leading-6 text-muted">{industry.text}</p>
     </>
   );
 

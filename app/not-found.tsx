@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
+
+export const metadata: Metadata = {
+  title: "Page not found",
+  description: "This address is not a page on the AI Lead Vision Pvt Ltd website.",
+  robots: { index: false, follow: true },
+};
 
 export default function NotFound() {
   return (

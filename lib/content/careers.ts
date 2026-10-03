@@ -1,6 +1,6 @@
 /**
- * Careers and hiring. Open roles stay as placeholders until confirmed.
- * The practice sentence is the wording previously published on About.
+ * Careers and hiring. No open roles are listed until the owner provides them.
+ * The description is the recruitment wording already published for this practice.
  */
 
 export const careersPage = {
@@ -9,10 +9,5 @@ export const careersPage = {
   title: "Careers / Hiring Solutions",
   description:
     "Recruitment for software development and testing, including people early in their careers.",
-  role: {
-    title: "[Role]",
-    team: "[Team]",
-    location: "[Location]",
-    experience: "[Experience]",
-  },
+  note: "A separate practice from the AI product line. Enquiries go to the HR address.",
 } as const;

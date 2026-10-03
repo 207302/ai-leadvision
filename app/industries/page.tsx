@@ -4,17 +4,14 @@ import { FinalCta } from "@/components/sections/final-cta";
 import { IndustryCard } from "@/components/sections/industry-card";
 import { Container } from "@/components/ui/container";
 import { industries, industriesPage } from "@/lib/content/industries";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Industries We Serve | AI Lead Vision",
-  description: industriesPage.description,
-  alternates: { canonical: industriesPage.path },
-  openGraph: {
-    title: "Industries We Serve | AI Lead Vision",
-    description: industriesPage.description,
-    url: industriesPage.path,
-  },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Industrial AI Solutions",
+  description:
+    "Industrial AI solutions for automotive, manufacturing, healthcare, logistics, and other sectors. AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India.",
+  path: industriesPage.path,
+});
 
 export default function IndustriesPage() {
   return (

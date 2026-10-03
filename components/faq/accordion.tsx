@@ -18,7 +18,7 @@ export function FaqAccordion({ items }: { items: Faq[] }) {
 
         return (
           <div key={item.question}>
-            <h3>
+            <h2>
               <button
                 id={buttonId}
                 type="button"
@@ -36,7 +36,7 @@ export function FaqAccordion({ items }: { items: Faq[] }) {
                   className={cn("mt-1 shrink-0 text-accent transition-transform", open && "rotate-180")}
                 />
               </button>
-            </h3>
+            </h2>
             <div
               id={panelId}
               role="region"

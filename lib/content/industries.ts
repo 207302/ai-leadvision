@@ -6,15 +6,15 @@
 export const industriesIntro = {
   eyebrow: "Industries we serve",
   title: "Find your industry.",
-  support: "If your industry is listed, we work in it.",
+  support: "Industrial AI solutions for the industries listed here.",
 };
 
 export const industriesPage = {
   path: "/industries",
   eyebrow: "Industries",
-  title: "Industries we serve.",
+  title: "Industrial AI solutions.",
   description:
-    "Automotive, Manufacturing, Healthcare, Education, Retail & E-commerce, Logistics, Banking & Finance, Construction, Government, Agriculture, and Security & Surveillance.",
+    "Industrial AI solutions for automotive, manufacturing, healthcare, education, retail and e-commerce, logistics, banking and finance, construction, government, agriculture, and security.",
 };
 
 export const industries = [

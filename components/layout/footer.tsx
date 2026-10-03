@@ -3,6 +3,7 @@ import { productGuides } from "@/lib/content/product-pages";
 import { featuredProducts } from "@/lib/content/products";
 import { serviceCategories } from "@/lib/content/services";
 import {
+  companyIdentity,
   footerNavigation,
   legalNavigation,
   officeAddressLines,
@@ -18,7 +19,7 @@ export function Footer() {
         <div className="md:col-span-4">
           <Logo />
           <p className="mt-5 max-w-xs text-sm leading-6 text-white/65">
-            Intelligent products and enterprise systems for operations that have to work outside a demo.
+            {companyIdentity()}. Intelligent products and enterprise systems for operations that have to work outside a demo.
           </p>
           <div className="mt-6">
             <SocialLinks />
@@ -117,7 +118,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-[1160px] flex-col gap-4 px-5 pb-32 pt-5 text-xs text-white/40 sm:px-8">
+        <div className="mx-auto flex max-w-[1160px] flex-col gap-4 px-5 pb-44 pt-5 text-xs text-white/40 sm:px-8 md:pb-32">
           <ul className="flex flex-wrap gap-x-5 gap-y-2">
             {legalNavigation.map((item) => (
               <li key={item.href}>

@@ -4,19 +4,19 @@
  */
 
 export const homeHero = {
-  eyebrow: "Technology solutions company · Bengaluru",
-  title: "AI, Computer Vision & Robotics Solutions for Business.",
+  eyebrow: "AI Lead Vision Pvt Ltd",
+  title: "An AI company in Bangalore.",
   support:
     "Enterprise AI, industrial automation, computer vision, robotics, and custom software development.",
   audience:
-    "AI Lead Vision is a technology solutions company serving enterprises, industries, educational institutions, and businesses.",
+    "AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India serves enterprises, industries, educational institutions, and businesses.",
 };
 
 export const whatWeBuild = [
   {
     title: "Enterprise AI",
     text: "Products and custom systems for attendance, conversation, forecasting, and the decisions a team has to make.",
-    href: "/solutions",
+    href: "/products",
   },
   {
     title: "Industrial Automation",
@@ -35,7 +35,7 @@ export const whatWeBuild = [
   },
   {
     title: "Custom Software Development",
-    text: "Web applications, business platforms, and the software that makes an AI system usable.",
+    text: "Custom AI development, web applications, and the software that makes an AI system usable.",
     href: "/services#software-development",
   },
 ] as const;
@@ -117,11 +117,11 @@ export const whyAiLeadVision = [
   {
     value: "Bengaluru",
     title: "Bengaluru presence",
-    text: "Based in Bengaluru, Karnataka, India.",
+    text: "AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India.",
   },
 ] as const;
 
 export const homeContact = {
   title: "Tell us the operation you want to change.",
-  body: "AI Lead Vision works with enterprises, industries, educational institutions, and businesses. Start with the problem. We will say whether a product or a custom system is the right path.",
+  body: "AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India works with enterprises, industries, educational institutions, and businesses. Start with the problem. We will say whether a product or a custom system is the right path.",
 };

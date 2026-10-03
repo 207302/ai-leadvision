@@ -149,6 +149,95 @@
   animation: rise-in 0.7s ease both;
 }
 
+@keyframes frame-scan {
+  0% {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.9;
+  }
+  88% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(250px);
+    opacity: 0;
+  }
+}
+
+@keyframes frame-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes frame-slide {
+  0% {
+    transform: translateX(-36px);
+  }
+  100% {
+    transform: translateX(120px);
+  }
+}
+
+@keyframes frame-fill {
+  0% {
+    transform: scaleX(0.2);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes frame-cycle {
+  0%,
+  26% {
+    opacity: 1;
+  }
+  33%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.frame-scan {
+  animation: frame-scan 3.8s ease-in-out infinite;
+}
+
+.frame-pulse {
+  animation: frame-pulse 2.6s ease-in-out infinite;
+}
+
+.frame-slide {
+  animation: frame-slide 7s linear infinite alternate;
+}
+
+.frame-fill {
+  transform-origin: left center;
+  animation: frame-fill 2.4s ease-in-out infinite alternate;
+}
+
+.frame-cycle {
+  animation: frame-cycle 9s ease-in-out infinite;
+}
+
+.frame-cycle-a {
+  animation-delay: 0s;
+}
+
+.frame-cycle-b {
+  animation-delay: -6s;
+}
+
+.frame-cycle-c {
+  animation-delay: -3s;
+}
+
 @keyframes load-bar {
   from {
     transform: scaleX(0);
@@ -229,6 +318,7 @@
 .industry-card::before {
   content: "";
   position: absolute;
+  z-index: 2;
   top: 0;
   right: 0;
   left: 0;
@@ -320,8 +410,18 @@
   .rise-in,
   .load-bar,
   .value-slide,
-  .page-enter {
+  .page-enter,
+  .frame-scan,
+  .frame-pulse,
+  .frame-slide,
+  .frame-fill,
+  .frame-cycle {
     animation: none;
+  }
+
+  .frame-cycle-b,
+  .frame-cycle-c {
+    opacity: 0;
   }
 
   .site-loader {

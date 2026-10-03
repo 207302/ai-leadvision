@@ -4,22 +4,14 @@ import { FinalCta } from "@/components/sections/final-cta";
 import { Container } from "@/components/ui/container";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { customerTestimonials, employeeExperience, testimonialsPage } from "@/lib/content/testimonials";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Testimonials | AI Lead Vision",
-  description: testimonialsPage.description,
-  alternates: { canonical: testimonialsPage.path },
-  openGraph: {
-    title: "Testimonials | AI Lead Vision",
-    description: testimonialsPage.description,
-    url: testimonialsPage.path,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Testimonials | AI Lead Vision",
-    description: testimonialsPage.description,
-  },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Testimonials",
+  description:
+    "Customer and employee notes for AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India. Quotes stay as placeholders until confirmed.",
+  path: testimonialsPage.path,
+});
 
 export default function TestimonialsPage() {
   return (
@@ -40,10 +32,11 @@ export default function TestimonialsPage() {
           </p>
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
             {customerTestimonials.map((item, index) => (
-              <figure key={item.id} className="flex flex-col border border-line bg-white p-6">
+              <article key={item.id} className="flex flex-col rounded-xl border border-line bg-white">
+                <div className="flex flex-1 flex-col p-6">
                 <p className="font-mono text-[11px] text-accent">{String(index + 1).padStart(2, "0")}</p>
                 <blockquote className="mt-4 text-sm leading-7 text-ink">“{item.quote}”</blockquote>
-                <figcaption className="mt-6 space-y-2 text-sm leading-6 text-muted">
+                <div className="mt-6 space-y-2 text-sm leading-6 text-muted">
                   <p className="text-ink">{item.name}</p>
                   <p>{item.designation}</p>
                   <p>{item.company}</p>
@@ -55,8 +48,9 @@ export default function TestimonialsPage() {
                     <span className="text-[11px] uppercase tracking-[0.16em] text-faint">Permission to publish</span>
                     <span className="mt-1 block">{item.permission}</span>
                   </p>
-                </figcaption>
-              </figure>
+                </div>
+                </div>
+              </article>
             ))}
           </div>
         </Container>

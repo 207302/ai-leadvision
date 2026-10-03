@@ -7,24 +7,16 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { placeholderPages } from "@/lib/content/placeholders";
 import { trainingPage, trainingPractice } from "@/lib/content/training";
 import { siteConfig } from "@/lib/content/site";
+import { pageMetadata } from "@/lib/seo";
 
 const prior = placeholderPages.training;
 
-export const metadata: Metadata = {
-  title: "Training | AI Lead Vision",
-  description: prior.description,
-  alternates: { canonical: trainingPage.path },
-  openGraph: {
-    title: "Training | AI Lead Vision",
-    description: prior.description,
-    url: trainingPage.path,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Training | AI Lead Vision",
-    description: prior.description,
-  },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "AI and Automotive Training",
+  description:
+    "Training in AI, machine learning, computer vision, robotics, and automotive domains from AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India.",
+  path: trainingPage.path,
+});
 
 export default function TrainingPage() {
   return (
@@ -47,7 +39,7 @@ export default function TrainingPage() {
           </div>
         </Container>
       </section>
-      <section className="bg-white" aria-labelledby="training-programmes">
+      <section className="bg-paper" aria-labelledby="training-programmes">
         <Container className="py-20 sm:py-24">
           <Eyebrow>Programmes</Eyebrow>
           <h2 id="training-programmes" className="mt-4 max-w-2xl text-3xl leading-tight text-ink sm:text-4xl">
@@ -55,7 +47,7 @@ export default function TrainingPage() {
           </h2>
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {trainingPage.programmes.map((programme, index) => (
-              <article key={programme.id} id={programme.id} className="scroll-mt-28 rounded-xl border border-line bg-paper p-6">
+              <article key={programme.id} id={programme.id} className="scroll-mt-28 rounded-xl border border-line bg-white p-6">
                 <p className="font-mono text-[11px] text-accent">{String(index + 1).padStart(2, "0")}</p>
                 <h3 className="mt-3 text-xl text-ink">{programme.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-muted">{programme.detail}</p>

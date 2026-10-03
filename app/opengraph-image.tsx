@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og";
 
+export const alt =
+  "AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India — AI, computer vision, and robotics";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -28,7 +30,7 @@ export default function OpenGraphImage() {
           <span>for Business.</span>
         </div>
         <div style={{ display: "flex", fontSize: 24, color: "rgba(255,255,255,0.7)" }}>
-          Enterprise AI · Automation · Vision · Robotics · Software
+          AI Lead Vision Pvt Ltd · Bengaluru, Karnataka, India
         </div>
       </div>
     ),

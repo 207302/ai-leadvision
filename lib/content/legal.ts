@@ -19,13 +19,13 @@ export const privacyPolicy: LegalPage = {
   eyebrow: "Privacy",
   title: "Privacy Policy",
   description:
-    "What AI Lead Vision collects when you write to us from this website, and how that note is used.",
+    "What AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India collects when you write from this website, and how that note is used.",
   updated,
   sections: [
     {
       heading: "Who we are",
       paragraphs: [
-        "This website is operated by AI Lead Vision, Bengaluru, Karnataka, India. The street address is [Office street address] until the office line is confirmed. The company registration number is [Company registration number].",
+        "This website is operated by AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India. The street address is [Office street address] until the office line is confirmed. The company registration number is [Company registration number].",
         "Questions about an inquiry can go to info@aileadvision.com.",
       ],
     },
@@ -46,7 +46,7 @@ export const privacyPolicy: LegalPage = {
     {
       heading: "WhatsApp",
       paragraphs: [
-        "Chat with AI Lead Vision opens WhatsApp with a short prefilled message. The WhatsApp number on this site is [WhatsApp number] until a number is confirmed.",
+        "Chat with AI Lead Vision opens WhatsApp with a short prefilled message. The WhatsApp number is +91-8050243330.",
       ],
     },
     {
@@ -68,13 +68,14 @@ export const termsPage: LegalPage = {
   path: "/terms",
   eyebrow: "Terms",
   title: "Terms & Conditions",
-  description: "The terms for using the AI Lead Vision website and for sending an inquiry.",
+  description:
+    "The terms for using the website of AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India, and for sending an inquiry.",
   updated,
   sections: [
     {
       heading: "Using this website",
       paragraphs: [
-        "The pages describe products, services, and training offered by AI Lead Vision in Bengaluru. You may read them and send an inquiry. You may not misuse the form, attempt to break the site, or copy the pages for your own commercial site.",
+        "The pages describe products, services, and training offered by AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India. You may read them and send an inquiry. You may not misuse the form, attempt to break the site, or copy the pages for your own commercial site.",
       ],
     },
     {
@@ -87,7 +88,7 @@ export const termsPage: LegalPage = {
     {
       heading: "The pages",
       paragraphs: [
-        "Text, layout, and product descriptions on this website belong to AI Lead Vision unless a page says otherwise. Product names describe systems the company offers.",
+        "Text, layout, and product descriptions on this website belong to AI Lead Vision Pvt Ltd unless a page says otherwise. Product names describe systems the company offers.",
       ],
     },
     {
@@ -113,14 +114,15 @@ export const cookiePolicy: LegalPage = {
   path: "/cookies",
   eyebrow: "Cookies",
   title: "Cookie Policy",
-  description: "What this website stores in your browser.",
+  description:
+    "What the website of AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India stores in your browser.",
   updated,
   sections: [
     {
       heading: "What this site stores",
       paragraphs: [
-        "This website does not set analytics cookies or advertising cookies. There is no advertising network and no analytics tool on these pages.",
-        "If that changes, this page will name the tool. Until then, treat analytics and marketing cookies as none in use.",
+        "This website does not set advertising cookies. Google Analytics is not loaded until a measurement ID is configured, so no analytics cookies are set while that ID is still a placeholder.",
+        "If Analytics is turned on later, this page will name it. Until then, treat analytics and marketing cookies as none in use.",
       ],
     },
     {
@@ -132,7 +134,7 @@ export const cookiePolicy: LegalPage = {
     {
       heading: "WhatsApp",
       paragraphs: [
-        "Chat with AI Lead Vision leaves this website and opens WhatsApp. WhatsApp is a separate service and has its own policies. The number used here is [WhatsApp number] until confirmed.",
+        "Chat with AI Lead Vision leaves this website and opens WhatsApp. WhatsApp is a separate service and has its own policies. The number used here is +91-8050243330.",
       ],
     },
     {

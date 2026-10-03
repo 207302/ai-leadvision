@@ -13,21 +13,14 @@ import {
   WhySection,
 } from "@/components/sections/home-sections";
 import { TechnologyStack } from "@/components/sections/technology-stack";
-import { homeHero } from "@/lib/content/home";
-import { siteConfig } from "@/lib/content/site";
+import { pageMetadata } from "@/lib/seo";
 
-const title = "AI, Computer Vision & Robotics Solutions for Business | AI Lead Vision";
-
-export const metadata: Metadata = {
-  title,
-  description: `${homeHero.audience} ${homeHero.support}`,
-  alternates: { canonical: "/" },
-  openGraph: {
-    title,
-    description: siteConfig.description,
-    url: "/",
-  },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "AI Company in Bangalore",
+  description:
+    "AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India is an AI company in Bangalore for industrial AI, computer vision, robotics, and custom software.",
+  path: "/",
+});
 
 export default function HomePage() {
   return (

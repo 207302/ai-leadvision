@@ -3,23 +3,14 @@ import { PageHero } from "@/components/layout/page-hero";
 import { FinalCta } from "@/components/sections/final-cta";
 import { Container } from "@/components/ui/container";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "About AI Lead Vision",
-  description: "AI Lead Vision engineers intelligent systems for real-world businesses.",
-  alternates: { canonical: "/about" },
-  openGraph: {
-    title: "About AI Lead Vision",
-    description:
-      "Engineering intelligent systems for real-world businesses.",
-    url: "/about",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "About AI Lead Vision",
-    description: "Engineering intelligent systems for real-world businesses.",
-  },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Artificial Intelligence Company India",
+  description:
+    "AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India is an artificial intelligence company serving enterprises across India with machine learning, vision, and robotics.",
+  path: "/about",
+});
 
 const builds = [
   {
@@ -72,7 +63,7 @@ export default function AboutPage() {
     <>
       <PageHero
         eyebrow="Company"
-        title="About AI Lead Vision"
+        title="An artificial intelligence company in India."
         description="Engineering intelligent systems for real-world businesses."
         trace={["Ideas", "Systems", "Deployment", "Support"]}
       />
@@ -82,12 +73,12 @@ export default function AboutPage() {
           <div className="lg:col-span-4">
             <Eyebrow>Who we are</Eyebrow>
             <h2 className="mt-4 text-3xl leading-tight sm:text-4xl">
-              A product and engineering company in Bengaluru.
+              AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India.
             </h2>
           </div>
           <div className="space-y-5 text-sm leading-7 text-muted lg:col-span-8">
             <p>
-              AI Lead Vision designs intelligent products and the custom software around them. The technology work covers artificial intelligence, machine learning, computer vision, robotics, data, and the applications required to run those systems in a business.
+              AI Lead Vision Pvt Ltd is a machine learning company in Bangalore. The work covers artificial intelligence, computer vision, robotics, custom AI development, and the applications required to run those systems in a business.
             </p>
             <p>
               The company builds for an outcome: fewer manual checks, a conversation that resolves, a camera that raises the right alert, a forecast someone can use.
@@ -96,7 +87,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <section className="bg-white">
+      <section className="bg-paper">
         <Container className="py-20 sm:py-24">
           <Eyebrow>What we build</Eyebrow>
           <h2 className="mt-4 max-w-xl text-3xl leading-tight sm:text-4xl">
@@ -114,7 +105,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <section className="bg-paper">
+      <section className="bg-white">
         <Container className="py-20 sm:py-24">
           <Eyebrow>Business areas</Eyebrow>
           <article className="mt-4 max-w-2xl border border-line bg-white p-7">
@@ -127,7 +118,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <section className="bg-white">
+      <section className="bg-paper">
         <Container className="py-20 sm:py-24">
           <Eyebrow>Values</Eyebrow>
           <h2 className="mt-4 max-w-xl text-3xl leading-tight sm:text-4xl">How the work is judged.</h2>

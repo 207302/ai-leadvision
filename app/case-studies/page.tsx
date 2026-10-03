@@ -1,28 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/layout/page-hero";
-import { MediaPlaceholder } from "@/components/products/media-placeholder";
 import { FinalCta } from "@/components/sections/final-cta";
 import { Container } from "@/components/ui/container";
 import { caseStudiesIntro, caseStudyTemplates } from "@/lib/content/case-studies";
+import { pageMetadata } from "@/lib/seo";
 
-const stages = ["Client Problem", "AI Solution", "Technology", "Implementation", "Result"] as const;
+const stages = ["Client Problem", "AI Solution", "Technology", "Implementation"] as const;
 
-export const metadata: Metadata = {
-  title: "Case Studies | AI Lead Vision",
-  description: caseStudiesIntro.description,
-  alternates: { canonical: "/case-studies" },
-  openGraph: {
-    title: "Case Studies | AI Lead Vision",
-    description: caseStudiesIntro.description,
-    url: "/case-studies",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Case Studies | AI Lead Vision",
-    description: caseStudiesIntro.description,
-  },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Case Studies",
+  description:
+    "Case study outlines for an AI attendance system, machine vision inspection, robotics, and predictive analytics. Client names stay unpublished until confirmed.",
+  path: "/case-studies",
+});
 
 export default function CaseStudiesPage() {
   return (
@@ -91,15 +82,7 @@ export default function CaseStudiesPage() {
                     <h3 className="text-[11px] uppercase tracking-[0.16em] text-accent">Implementation</h3>
                     <p className="mt-2 text-sm leading-7 text-ink">{study.implementation}</p>
                   </li>
-                  <li>
-                    <h3 className="text-[11px] uppercase tracking-[0.16em] text-accent">Result</h3>
-                    <p className="mt-2 text-sm leading-7 text-ink">{study.result}</p>
-                  </li>
                 </ol>
-              </div>
-              <div className="mt-10 grid gap-3 sm:grid-cols-2">
-                <MediaPlaceholder title="Project screenshot" note="[Screenshot here]" />
-                <MediaPlaceholder title="Project video" note="[Video here]" />
               </div>
             </article>
           ))}
@@ -107,7 +90,7 @@ export default function CaseStudiesPage() {
       </div>
       <FinalCta
         title="Have a project to talk through?"
-        body="Tell us the operation. Client names and results on this page stay unpublished until confirmed."
+        body="Tell us the operation. Client names on this page stay unpublished until confirmed."
       />
     </>
   );

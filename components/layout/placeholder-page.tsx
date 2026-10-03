@@ -1,10 +1,11 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { PageHero } from "@/components/layout/page-hero";
 import { FinalCta } from "@/components/sections/final-cta";
 import { Container } from "@/components/ui/container";
 import type { PlaceholderPage } from "@/lib/content/placeholders";
 
-export function PlaceholderBody({ page }: { page: PlaceholderPage }) {
+export function PlaceholderBody({ page, extra }: { page: PlaceholderPage; extra?: ReactNode }) {
   return (
     <>
       <PageHero eyebrow={page.eyebrow} title={page.title} description={page.description} />
@@ -30,6 +31,7 @@ export function PlaceholderBody({ page }: { page: PlaceholderPage }) {
           )}
         </Container>
       </section>
+      {extra}
       <FinalCta />
     </>
   );

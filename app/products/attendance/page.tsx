@@ -3,25 +3,21 @@ import { notFound } from "next/navigation";
 import { PageHero } from "@/components/layout/page-hero";
 import { DemoLinks } from "@/components/products/demo-links";
 import { FlowDiagram } from "@/components/products/flow-diagram";
-import { MediaGrid } from "@/components/products/media-placeholder";
 import { ProductSection } from "@/components/products/product-showcase";
 import { FinalCta } from "@/components/sections/final-cta";
 import { Container } from "@/components/ui/container";
 import { attendancePage } from "@/lib/content/product-pages";
 import { getProduct } from "@/lib/content/products";
+import { pageMetadata } from "@/lib/seo";
 
 const product = getProduct("face-attendance");
 
-export const metadata: Metadata = {
-  title: "AI Attendance | AI Lead Vision",
-  description: attendancePage.description,
-  alternates: { canonical: attendancePage.path },
-  openGraph: {
-    title: "AI Attendance | AI Lead Vision",
-    description: attendancePage.description,
-    url: attendancePage.path,
-  },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "AI Attendance System",
+  description:
+    "Face-recognition AI attendance system with anti-spoofing, dashboards, and HRMS integration. AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India.",
+  path: attendancePage.path,
+});
 
 export default function AttendancePage() {
   if (!product) notFound();
@@ -35,19 +31,7 @@ export default function AttendancePage() {
       />
       <section className="bg-paper">
         <Container className="flex flex-col gap-16 py-16 sm:py-20">
-          <ProductSection product={product} index={0} showMedia={false} showPageLink={false} />
-
-          <section aria-labelledby="attendance-visuals">
-            <h2 id="attendance-visuals" className="text-3xl text-ink sm:text-4xl">
-              Screenshots and setup
-            </h2>
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-muted">
-              Product screenshots, the camera setup, the attendance dashboard, employee registration, an anti-spoofing demo, and the cloud versus on-premise diagram. The files are not published yet.
-            </p>
-            <div className="mt-6">
-              <MediaGrid items={attendancePage.media} framed />
-            </div>
-          </section>
+          <ProductSection product={product} index={0} showPageLink={false} />
 
           <div className="grid gap-8 lg:grid-cols-2">
             <section aria-labelledby="registration-workflow">

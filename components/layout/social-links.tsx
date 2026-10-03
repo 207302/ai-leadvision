@@ -45,7 +45,7 @@ export function SocialLinks({ tone = "dark" }: { tone?: "dark" | "light" }) {
               <a
                 href={item.href}
                 target="_blank"
-                rel="noreferrer"
+                rel="me noopener noreferrer"
                 aria-label={item.label}
                 className={classes}
               >

@@ -7,17 +7,14 @@ import { FinalCta } from "@/components/sections/final-cta";
 import { Container } from "@/components/ui/container";
 import { educationalFocus, industrialFocus, roboticsPage } from "@/lib/content/product-pages";
 import { getProduct } from "@/lib/content/products";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Robotics | AI Lead Vision",
-  description: roboticsPage.description,
-  alternates: { canonical: roboticsPage.path },
-  openGraph: {
-    title: "Robotics | AI Lead Vision",
-    description: roboticsPage.description,
-    url: roboticsPage.path,
-  },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Robotics Company Bangalore",
+  description:
+    "Educational and industrial robotics from AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India, including machine vision and factory automation.",
+  path: roboticsPage.path,
+});
 
 export default function RoboticsPage() {
   const educational = getProduct("educational-robot");

@@ -5,7 +5,7 @@
 
 export const generativeAi = {
   eyebrow: "Generative AI & LLM solutions",
-  title: "Generative AI and LLM solutions.",
+  title: "Generative AI development.",
   support:
     "AI agents, retrieval applications, and enterprise assistants for work a team already does.",
   offerings: [

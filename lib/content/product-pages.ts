@@ -1,9 +1,21 @@
 import { getProduct, type FlowStep, type Product } from "@/lib/content/products";
 
+export type MediaKind =
+  | "screenshot"
+  | "dashboard"
+  | "camera"
+  | "robotics"
+  | "factory"
+  | "architecture"
+  | "video"
+  | "before-after"
+  | "animation";
+
 export type MediaSlot = {
   id: string;
   title: string;
   note: string;
+  kind?: MediaKind;
 };
 
 export type ProductSupplement = {
@@ -37,9 +49,10 @@ export const productSupplements: Record<string, ProductSupplement> = {
       "[Integration details]",
     ],
     media: [
-      { id: "shot", title: "Product screenshot", note: "[Screenshot here]" },
-      { id: "video", title: "Product video", note: "[Video here]" },
-      { id: "diagram", title: "Architecture diagram", note: "[Architecture diagram here]" },
+      { id: "shot", title: "Product screenshot", note: "[Screenshot here]", kind: "screenshot" },
+      { id: "dashboard", title: "Attendance dashboard", note: "[Screenshot here]", kind: "dashboard" },
+      { id: "video", title: "Product video", note: "[Video here]", kind: "video" },
+      { id: "diagram", title: "Architecture diagram", note: "[Architecture diagram here]", kind: "architecture" },
     ],
     page: { href: "/products/attendance", label: "Attendance page" },
   },
@@ -54,9 +67,10 @@ export const productSupplements: Record<string, ProductSupplement> = {
       "CRM integration and appointment booking",
     ],
     media: [
-      { id: "shot", title: "Product screenshot", note: "[Screenshot here]" },
-      { id: "video", title: "Product video", note: "[Video here]" },
-      { id: "diagram", title: "Architecture diagram", note: "[Architecture diagram here]" },
+      { id: "shot", title: "Product screenshot", note: "[Screenshot here]", kind: "screenshot" },
+      { id: "video", title: "Product video", note: "[Video here]", kind: "video" },
+      { id: "motion", title: "Short product animation", note: "[Video here]", kind: "animation" },
+      { id: "diagram", title: "Architecture diagram", note: "[Architecture diagram here]", kind: "architecture" },
     ],
   },
   "chat-bot": {
@@ -67,9 +81,10 @@ export const productSupplements: Record<string, ProductSupplement> = {
       "Support ticketing",
     ],
     media: [
-      { id: "shot", title: "Product screenshot", note: "[Screenshot here]" },
-      { id: "video", title: "Product video", note: "[Video here]" },
-      { id: "diagram", title: "Architecture diagram", note: "[Architecture diagram here]" },
+      { id: "shot", title: "Product screenshot", note: "[Screenshot here]", kind: "screenshot" },
+      { id: "video", title: "Product video", note: "[Video here]", kind: "video" },
+      { id: "motion", title: "Short product animation", note: "[Video here]", kind: "animation" },
+      { id: "diagram", title: "Architecture diagram", note: "[Architecture diagram here]", kind: "architecture" },
     ],
   },
   "computer-vision": {
@@ -77,9 +92,10 @@ export const productSupplements: Record<string, ProductSupplement> = {
     deployment: ["Existing or new cameras", "[Deployment options]"],
     integration: ["Dashboard or notification", "[Integration options]"],
     media: [
-      { id: "shot", title: "Product screenshot", note: "[Screenshot here]" },
-      { id: "video", title: "Product video", note: "[Video here]" },
-      { id: "diagram", title: "Architecture diagram", note: "[Architecture diagram here]" },
+      { id: "shot", title: "Product screenshot", note: "[Screenshot here]", kind: "screenshot" },
+      { id: "camera", title: "Camera example", note: "[Screenshot here]", kind: "camera" },
+      { id: "video", title: "Product video", note: "[Video here]", kind: "video" },
+      { id: "diagram", title: "Architecture diagram", note: "[Architecture diagram here]", kind: "architecture" },
     ],
     page: { href: "/products/computer-vision", label: "Vision and industrial AI" },
   },
@@ -93,9 +109,10 @@ export const productSupplements: Record<string, ProductSupplement> = {
     deployment: ["Wi-Fi and mobile app control", "[Deployment options]"],
     integration: ["ROS2 compatible", "Wi-Fi and mobile app control"],
     media: [
-      { id: "shot", title: "Product screenshot", note: "[Screenshot here]" },
-      { id: "video", title: "Product video", note: "[Video here]" },
-      { id: "diagram", title: "Architecture diagram", note: "[Architecture diagram here]" },
+      { id: "photo", title: "Robotics photo", note: "[Screenshot here]", kind: "robotics" },
+      { id: "shot", title: "Product screenshot", note: "[Screenshot here]", kind: "screenshot" },
+      { id: "video", title: "Product video", note: "[Video here]", kind: "video" },
+      { id: "diagram", title: "Architecture diagram", note: "[Architecture diagram here]", kind: "architecture" },
     ],
     page: { href: "/products/robotics#educational-robotics", label: "Educational robotics" },
   },
@@ -112,9 +129,10 @@ export const productSupplements: Record<string, ProductSupplement> = {
       "OEE dashboard",
     ],
     media: [
-      { id: "shot", title: "Line photo", note: "[Screenshot here]" },
-      { id: "video", title: "Line video", note: "[Video here]" },
-      { id: "diagram", title: "Architecture diagram", note: "[Architecture diagram here]" },
+      { id: "shot", title: "Line photo", note: "[Screenshot here]", kind: "factory" },
+      { id: "video", title: "Line video", note: "[Video here]", kind: "video" },
+      { id: "dashboard", title: "Production dashboard", note: "[Screenshot here]", kind: "dashboard" },
+      { id: "diagram", title: "Architecture diagram", note: "[Architecture diagram here]", kind: "architecture" },
     ],
     page: { href: "/products/robotics#industrial-robotics", label: "Industrial robotics" },
   },
@@ -123,9 +141,10 @@ export const productSupplements: Record<string, ProductSupplement> = {
     deployment: ["On the moving line", "[Deployment options]"],
     integration: ["[Integration options]"],
     media: [
-      { id: "shot", title: "Inspection screenshot", note: "[Screenshot here]" },
-      { id: "video", title: "Inspection video", note: "[Video here]" },
-      { id: "diagram", title: "Architecture diagram", note: "[Architecture diagram here]" },
+      { id: "shot", title: "Inspection screenshot", note: "[Screenshot here]", kind: "camera" },
+      { id: "pair", title: "Before and after inspection", note: "[Screenshot here]", kind: "before-after" },
+      { id: "video", title: "Inspection video", note: "[Video here]", kind: "video" },
+      { id: "diagram", title: "Architecture diagram", note: "[Architecture diagram here]", kind: "architecture" },
     ],
     page: { href: "/products/computer-vision#machine-vision", label: "On the vision page" },
   },
@@ -134,8 +153,9 @@ export const productSupplements: Record<string, ProductSupplement> = {
     deployment: ["[Deployment options]"],
     integration: ["Systems you already run", "[Integration options]"],
     media: [
-      { id: "shot", title: "Dashboard screenshot", note: "[Screenshot here]" },
-      { id: "diagram", title: "Architecture diagram", note: "[Architecture diagram here]" },
+      { id: "shot", title: "Dashboard screenshot", note: "[Screenshot here]", kind: "dashboard" },
+      { id: "motion", title: "Short product animation", note: "[Video here]", kind: "animation" },
+      { id: "diagram", title: "Architecture diagram", note: "[Architecture diagram here]", kind: "architecture" },
     ],
   },
 };
@@ -149,7 +169,7 @@ export const productGroups = [
     id: "ready",
     title: "Ready Products",
     description:
-      "Attendance, voice, chat, and the educational robot. Each already has a defined workflow. The attendance system and the lab robot also have their own pages.",
+      "An AI attendance system, voice and chat assistants, and the educational robot. Each already has a defined workflow. The attendance system and the lab robot also have their own pages.",
     productIds: ["face-attendance", "voice-bot", "chat-bot", "educational-robot"],
     empty: "",
   },
@@ -157,7 +177,7 @@ export const productGroups = [
     id: "custom",
     title: "Custom AI Solutions",
     description:
-      "Computer vision on a live feed, and predictive analytics on data a business already collects. Both are scoped to the operation. In-line inspection and the factory line are grouped under Industrial Solutions. The vision page covers camera events and inspection together.",
+      "Custom AI development for computer vision on a live feed, and predictive analytics solutions on data a business already collects. Both are scoped to the operation. In-line inspection and the factory line are grouped under Industrial Solutions. The vision page covers camera events and inspection together.",
     productIds: ["computer-vision", "predictive-analytics"],
     empty: "",
   },
@@ -165,7 +185,7 @@ export const productGroups = [
     id: "industrial",
     title: "Industrial Solutions",
     description:
-      "Factory automation and in-line inspection. Educational robotics stays separate, under Ready Products and on the robotics page.",
+      "Machine vision inspection and factory automation. Educational robotics stays separate, under Ready Products and on the robotics page.",
     productIds: ["industrial-automation", "machine-vision"],
     empty: "",
   },
@@ -196,16 +216,17 @@ export const productGuides = [
 export const attendancePage = {
   path: "/products/attendance",
   eyebrow: "Attendance",
-  title: "AI Face Recognition Attendance System",
+  title: "AI attendance system",
   description:
-    "Smart. Secure. Contactless. Face detection, anti-spoofing, contactless attendance, dashboards, leave and shift management, and HRMS or payroll integration.",
+    "An AI attendance system with face recognition. Contactless check-in, anti-spoofing, dashboards, leave and shift management, and HRMS or payroll integration.",
   media: [
-    { id: "screenshots", title: "Product screenshots", note: "[Screenshot here]" },
-    { id: "camera", title: "Camera setup", note: "[Screenshot here]" },
-    { id: "dashboard", title: "Attendance dashboard", note: "[Screenshot here]" },
-    { id: "antispoof", title: "Anti-spoofing demo", note: "[Video here]" },
-    { id: "registration-shot", title: "Employee registration", note: "[Screenshot here]" },
-    { id: "architecture", title: "Cloud vs on-premise architecture", note: "[Architecture diagram here]" },
+    { id: "screenshots", title: "Product screenshots", note: "[Screenshot here]", kind: "screenshot" },
+    { id: "camera", title: "Camera setup", note: "[Screenshot here]", kind: "camera" },
+    { id: "dashboard", title: "Attendance dashboard", note: "[Screenshot here]", kind: "dashboard" },
+    { id: "antispoof", title: "Anti-spoofing demo", note: "[Video here]", kind: "video" },
+    { id: "registration-shot", title: "Employee registration", note: "[Screenshot here]", kind: "screenshot" },
+    { id: "architecture", title: "Cloud vs on-premise architecture", note: "[Architecture diagram here]", kind: "architecture" },
+    { id: "animation", title: "Short product animation", note: "[Video here]", kind: "animation" },
   ] satisfies MediaSlot[],
   registration: {
     title: "Employee registration workflow",
@@ -359,23 +380,35 @@ export const visionShowcase = [
 export const visionPage = {
   path: "/products/computer-vision",
   eyebrow: "Computer vision",
-  title: "Computer vision and industrial AI.",
+  title: "Computer vision company in India.",
   description:
-    "Detection on a live camera feed, and inspection on the line. Defects, codes, counts, safety events, plates, and a view of production.",
+    "Computer vision and machine vision inspection for a live camera feed and the production line. Defects, codes, counts, safety events, plates, and a view of production.",
   projects: [
-    { id: "photo-1", title: "Project photo", note: "[Screenshot here]" },
-    { id: "photo-2", title: "Project photo", note: "[Screenshot here]" },
-    { id: "video-1", title: "Project video", note: "[Video here]" },
-    { id: "video-2", title: "Project video", note: "[Video here]" },
+    { id: "photo-1", title: "Project photo", note: "[Screenshot here]", kind: "camera" },
+    { id: "photo-2", title: "Project photo", note: "[Screenshot here]", kind: "camera" },
+    { id: "video-1", title: "Project video", note: "[Video here]", kind: "video" },
+    { id: "video-2", title: "Project video", note: "[Video here]", kind: "video" },
+  ] satisfies MediaSlot[],
+  cameras: [
+    { id: "camera-live", title: "Camera example", note: "[Screenshot here]", kind: "camera" },
+    { id: "vision-live", title: "Vision example", note: "[Screenshot here]", kind: "camera" },
+    { id: "factory-cam", title: "Factory camera", note: "[Screenshot here]", kind: "factory" },
   ] satisfies MediaSlot[],
   beforeAfter: [
-    { id: "before", title: "Before inspection", note: "[Screenshot here]" },
-    { id: "after", title: "After inspection", note: "[Screenshot here]" },
+    { id: "before", title: "Before inspection", note: "[Screenshot here]", kind: "before-after" },
+    { id: "after", title: "After inspection", note: "[Screenshot here]", kind: "before-after" },
   ] satisfies MediaSlot[],
   architecture: {
     id: "architecture",
     title: "Architecture diagram",
     note: "[Architecture diagram here]",
+    kind: "architecture",
+  } satisfies MediaSlot,
+  animation: {
+    id: "vision-motion",
+    title: "Short product animation",
+    note: "[Video here]",
+    kind: "animation",
   } satisfies MediaSlot,
 };
 
@@ -440,7 +473,7 @@ export const industrialFocus = [
 export const roboticsPage = {
   path: "/products/robotics",
   eyebrow: "Robotics",
-  title: "Educational robotics and industrial robotics.",
+  title: "Robotics company in Bangalore.",
   description:
-    "Two separate lines of work. A programmable robot for labs and STEM, and factory automation with machine vision, PLC, and inspection.",
+    "A robotics company in Bangalore with two lines of work: a programmable robot for labs and STEM, and factory automation with machine vision, PLC, and inspection.",
 };

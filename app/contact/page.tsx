@@ -4,24 +4,16 @@ import { ContactForm } from "@/components/forms/contact-form";
 import { PageHero } from "@/components/layout/page-hero";
 import { Container } from "@/components/ui/container";
 import { SocialLinks } from "@/components/layout/social-links";
-import { officeAddressLines, siteConfig } from "@/lib/content/site";
+import { companyIdentity, officeAddressLines, siteConfig } from "@/lib/content/site";
+import { JsonLd } from "@/components/seo/json-ld";
+import { contactPageJsonLd, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact AI Lead Vision",
+export const metadata: Metadata = pageMetadata({
+  title: "Contact",
   description:
-    "Tell AI Lead Vision what you are trying to solve. Email info@aileadvision.com or hr@aileadvision.com, or send an inquiry from Bengaluru.",
-  alternates: { canonical: "/contact" },
-  openGraph: {
-    title: "Contact AI Lead Vision",
-    description: "Tell us what you're trying to solve.",
-    url: "/contact",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Contact AI Lead Vision",
-    description: "Tell us what you're trying to solve.",
-  },
-};
+    "Contact AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India. Email info@aileadvision.com or hr@aileadvision.com, or send an inquiry.",
+  path: "/contact",
+});
 
 export default async function ContactPage({
   searchParams,
@@ -32,6 +24,7 @@ export default async function ContactPage({
   const formKey = `${params.interest ?? ""}-${params.product ?? ""}-${params.requirement ?? ""}-${params.solution ?? ""}`;
   return (
     <>
+      <JsonLd data={contactPageJsonLd()} />
       <PageHero
         eyebrow="Contact"
         title="Let’s build something intelligent."
@@ -43,7 +36,8 @@ export default async function ContactPage({
             <ContactForm key={formKey} />
           </Suspense>
           <aside className="lg:pt-2">
-            <h2 className="text-xl text-ink">Corporate Contact</h2>
+            <h2 className="text-xl text-ink">{companyIdentity()}</h2>
+            <p className="mt-2 text-sm leading-6 text-muted">Corporate contact</p>
             <div className="mt-4">
               <SocialLinks tone="light" />
             </div>

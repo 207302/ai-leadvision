@@ -21,7 +21,7 @@ function listed(options: readonly { value: string }[], value: string) {
   return options.some((item) => item.value === value) ? value : "";
 }
 
-export function ContactForm() {
+export function ContactForm({ defaultRequirement = "" }: { defaultRequirement?: string }) {
   const params = useSearchParams();
   const requestedInterest = params.get("interest") ?? "";
   const productId = params.get("product") ?? "";
@@ -33,6 +33,7 @@ export function ContactForm() {
   );
   const initialRequirement =
     listed(inquiryRequirements, params.get("requirement") ?? "") ||
+    listed(inquiryRequirements, defaultRequirement) ||
     (requestedInterest === "training" ? "training" : "");
 
   const [status, setStatus] = useState<Status>("idle");

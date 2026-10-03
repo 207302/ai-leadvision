@@ -4,23 +4,14 @@ import { PageHero } from "@/components/layout/page-hero";
 import { FinalCta } from "@/components/sections/final-cta";
 import { Container } from "@/components/ui/container";
 import { faqs } from "@/lib/content/faqs";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Frequently Asked Questions | AI Lead Vision",
+export const metadata: Metadata = pageMetadata({
+  title: "FAQ",
   description:
-    "Answers for teams evaluating AI Lead Vision: what we build, custom work, integrations, demos, and how a project starts.",
-  alternates: { canonical: "/faq" },
-  openGraph: {
-    title: "Frequently Asked Questions | AI Lead Vision",
-    description: "Practical answers before a first conversation.",
-    url: "/faq",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Frequently Asked Questions | AI Lead Vision",
-    description: "Practical answers before a first conversation.",
-  },
-};
+    "Questions about custom AI development, demos, and working with AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India.",
+  path: "/faq",
+});
 
 export default function FaqPage() {
   return (

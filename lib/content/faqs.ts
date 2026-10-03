@@ -12,7 +12,7 @@ export const faqs: Faq[] = [
   {
     question: "Can AI Lead Vision develop a custom AI solution?",
     answer:
-      "Yes. The products are starting points. When the operation does not fit a product, the team designs a system around the problem — the model, the software, and the way it connects to tools you already use.",
+      "Yes. Custom AI development starts when the operation does not fit a product. The team designs a system around the problem — the model, the software, and the way it connects to tools you already use.",
   },
   {
     question: "What industries can your AI solutions support?",

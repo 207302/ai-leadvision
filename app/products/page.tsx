@@ -5,24 +5,14 @@ import { ProductSection } from "@/components/products/product-showcase";
 import { FinalCta } from "@/components/sections/final-cta";
 import { Container } from "@/components/ui/container";
 import { productGroups, productsInGroup } from "@/lib/content/product-pages";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "AI Products | AI Lead Vision",
+export const metadata: Metadata = pageMetadata({
+  title: "AI Products",
   description:
-    "AI-powered products for attendance, voice, chat, computer vision, inspection, industrial automation, analytics, and educational robotics.",
-  alternates: { canonical: "/products" },
-  openGraph: {
-    title: "AI Products | AI Lead Vision",
-    description:
-      "AI-powered products for attendance, voice, chat, computer vision, inspection, industrial automation, analytics, and educational robotics.",
-    url: "/products",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "AI Products | AI Lead Vision",
-    description: "AI-powered solutions for smart businesses.",
-  },
-};
+    "AI attendance system, machine vision inspection, AI chatbot development, and predictive analytics solutions from AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India.",
+  path: "/products",
+});
 
 export default function ProductsPage() {
   return (
@@ -35,7 +25,7 @@ export default function ProductsPage() {
       <section className="bg-paper" aria-labelledby="product-groups">
         <Container className="py-16 sm:py-20">
           <h2 id="product-groups" className="max-w-2xl text-3xl leading-tight text-ink sm:text-5xl">
-            Four product groups.
+            Attendance, vision, chat, and analytics.
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-7 text-muted">
             The same products, grouped as ready products, custom AI solutions, industrial solutions, and research.

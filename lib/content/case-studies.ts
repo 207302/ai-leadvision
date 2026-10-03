@@ -1,16 +1,15 @@
 /**
- * Case study templates. Client names, implementation records, and results
- * stay as placeholders until the owner confirms them.
+ * Case study templates. Client names stay as placeholders until the owner confirms them.
  * Technology lines use the company stack for that kind of system.
  */
 
 export const caseStudiesIntro = {
   eyebrow: "Case Studies",
   title: "Case Studies",
-  description: "Published work, once client names and results are confirmed.",
-  note: "Each entry below is a solution overview, not a completed client project. Client names stay as [Client Name]. Results stay as [Result/Metrics - to be added] until confirmed.",
+  description: "Published work, once client names are confirmed.",
+  note: "Each entry below is a solution overview, not a completed client project. Client names stay as [Client Name].",
   stackNote:
-    "Each overview follows Client Problem, AI Solution, Technology, Implementation, and Result. Technology shows the company stack for that kind of system.",
+    "Each overview follows Client Problem, AI Solution, Technology, and Implementation. Technology shows the company stack for that kind of system.",
   label: "Solution overview",
 };
 
@@ -22,7 +21,6 @@ export type CaseStudyTemplate = {
   solution: string;
   technology: readonly string[];
   implementation: string;
-  result: string;
   related?: { href: string; label: string };
 };
 
@@ -38,7 +36,6 @@ export const caseStudyTemplates: readonly CaseStudyTemplate[] = [
     technology: ["Python", "OpenCV", "Object Detection", "Image Processing"],
     implementation:
       "A camera at the entrance, or a mobile device, captures a live face. People are enrolled before a match. Verification includes anti-spoofing. Attendance, leave, and payroll appear on the dashboard, with HRMS and payroll integration where that connection is required.",
-    result: "[Result/Metrics - to be added]",
     related: { href: "/products/attendance", label: "Attendance system" },
   },
   {
@@ -52,7 +49,6 @@ export const caseStudyTemplates: readonly CaseStudyTemplate[] = [
     technology: ["Python", "OpenCV", "YOLO", "Object Detection", "Image Processing", "Video Analytics"],
     implementation:
       "The unit is captured on the moving line with an industrial camera. A vision model checks the defect, code, or measurement. The station returns a pass, fail, or review.",
-    result: "[Result/Metrics - to be added]",
     related: { href: "/products/computer-vision", label: "Computer vision" },
   },
   {
@@ -66,7 +62,6 @@ export const caseStudyTemplates: readonly CaseStudyTemplate[] = [
     technology: ["ROS2", "Raspberry Pi", "Arduino", "IoT", "Sensors", "Python"],
     implementation:
       "The robot takes camera, voice, and motion input. Students program the loop in Python. The robot moves, avoids obstacles, and follows a line in the lab.",
-    result: "[Result/Metrics - to be added]",
     related: { href: "/products/robotics", label: "Robotics" },
   },
   {
@@ -80,7 +75,6 @@ export const caseStudyTemplates: readonly CaseStudyTemplate[] = [
     technology: ["OCR", "Image Processing", "Python", "OpenCV"],
     implementation:
       "An industrial camera captures the mark or code on the line. Image processing and OCR read it. The station can return a pass, fail, or review, alongside the other checks on that unit.",
-    result: "[Result/Metrics - to be added]",
     related: { href: "/products/computer-vision", label: "Computer vision" },
   },
   {
@@ -94,7 +88,6 @@ export const caseStudyTemplates: readonly CaseStudyTemplate[] = [
     technology: ["Python", "PyTorch", "TensorFlow"],
     implementation:
       "The work starts from the decision and the data already collected. A model is developed for that outcome and integrated into a dashboard or the workflow where the number is used.",
-    result: "[Result/Metrics - to be added]",
     related: { href: "/products#predictive-analytics", label: "AI Predictive Analytics" },
   },
   {
@@ -108,7 +101,6 @@ export const caseStudyTemplates: readonly CaseStudyTemplate[] = [
     technology: ["Python", "Web Applications", "APIs"],
     implementation:
       "The bot is placed on the channels already in use. A message is read in context, matched to intent and a knowledge source, then turned into an answer, a lead, an order, a ticket, or a handoff.",
-    result: "[Result/Metrics - to be added]",
     related: { href: "/products#chat-bot", label: "AI Chat Bot" },
   },
   {
@@ -139,7 +131,6 @@ export const caseStudyTemplates: readonly CaseStudyTemplate[] = [
     ],
     implementation:
       "The practice covers embedded software, in-vehicle communication on CAN and CAN FD, and diagnostics with UDS and DoIP, together with software testing and verification and validation. AUTOSAR, ASPICE, and ISO 26262 are the standards named for this work.",
-    result: "[Result/Metrics - to be added]",
     related: { href: "/services#automotive-engineering", label: "Automotive software and AI engineering" },
   },
 ];

@@ -8,18 +8,6 @@ export type PlaceholderPage = {
 };
 
 export const placeholderPages = {
-  solutions: {
-    path: "/solutions",
-    eyebrow: "Solutions",
-    title: "Solutions",
-    description:
-      "How enterprise AI, industrial automation, computer vision, robotics, and custom software apply to an operation.",
-    note: "This page is a placeholder. Solution descriptions will be added here. Products and services are available now.",
-    links: [
-      { href: "/products", label: "Products" },
-      { href: "/services", label: "Services" },
-    ],
-  },
   caseStudies: {
     path: "/case-studies",
     eyebrow: "Case Studies",

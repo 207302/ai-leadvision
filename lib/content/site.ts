@@ -9,10 +9,10 @@ import { industries } from "@/lib/content/industries";
 
 export const siteConfig = {
   name: "AI Lead Vision",
-  legalName: "AI Lead Vision",
+  legalName: "AI Lead Vision Pvt Ltd",
   url: "https://aileadvision.com",
   description:
-    "AI Lead Vision is a technology solutions company in Bengaluru. We deliver enterprise AI, industrial automation, computer vision, robotics, and custom software development for enterprises, industries, educational institutions, and businesses.",
+    "AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India is an AI company in Bangalore. We deliver enterprise AI, industrial automation, computer vision, robotics, and custom software development for enterprises, industries, educational institutions, and businesses.",
   locale: "en_IN",
   location: {
     city: "Bengaluru",
@@ -64,13 +64,18 @@ export const siteConfig = {
     facebook: null,
   },
   /**
-   * Placeholder until a WhatsApp number is confirmed.
-   * This is not one of the published phone lines.
+   * Confirmed line for the call button and WhatsApp.
+   * Same number as the first published phone line.
    */
+  call: {
+    label: "Call AI Lead Vision",
+    display: "+91-8050243330",
+    tel: "+91-8050243330",
+  },
   whatsapp: {
     label: "Chat with AI Lead Vision",
-    display: "[WhatsApp number]",
-    tel: "910000000000",
+    display: "+91-8050243330",
+    tel: "918050243330",
   },
   /** Placeholder until the company registration number is confirmed. */
   registration: "[Company registration number]",
@@ -93,18 +98,17 @@ export const socialProfiles = [
 
 export const navigation = [
   { label: "Home", href: "/" },
-  { label: "Solutions", href: "/solutions" },
   { label: "Products", href: "/products" },
   { label: "Services", href: "/services" },
   { label: "Industries", href: "/industries" },
   { label: "Case Studies", href: "/case-studies" },
   { label: "About", href: "/about" },
   { label: "Training", href: "/training" },
-  { label: "Careers", href: "/careers" },
+  { label: "Careers", href: "/careers", mobileOnly: true },
   { label: "Contact", href: "/contact" },
 ] as const;
 
-/** FAQ and Testimonials stay out of the header so the primary bar can hold Careers. */
+/** Careers stays in this list for the mobile menu and the footer. mobileOnly keeps it off the desktop bar. FAQ and Testimonials are footer-only. */
 export const footerNavigation = [
   ...navigation,
   { label: "Testimonials", href: "/testimonials" },
@@ -173,6 +177,11 @@ export type InquirySolution = (typeof inquirySolutions)[number]["value"];
 export function locationLine() {
   const { city, region, country } = siteConfig.location;
   return `${city}, ${region}, ${country}`;
+}
+
+/** Legal name and place, in one form, for schema, footer, and page copy. */
+export function companyIdentity() {
+  return `${siteConfig.legalName}, ${locationLine()}`;
 }
 
 /** Street line stays a placeholder until address.confirmed is set. */

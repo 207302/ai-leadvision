@@ -6,7 +6,10 @@ import { Header } from "@/components/layout/header";
 import { PageTransition } from "@/components/layout/page-transition";
 import { SiteLoader } from "@/components/layout/site-loader";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
+import { GoogleAnalytics } from "@/components/seo/google-analytics";
+import { JsonLd } from "@/components/seo/json-ld";
 import { siteConfig } from "@/lib/content/site";
+import { searchConsolePlaceholder, siteJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 const body = Plus_Jakarta_Sans({
@@ -24,40 +27,32 @@ const heading = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "AI Lead Vision | AI Solutions & Intelligent Systems",
-    template: "%s",
+    default: "AI Company in Bangalore | AI Lead Vision",
+    template: "%s | AI Lead Vision",
   },
   description: siteConfig.description,
-  applicationName: siteConfig.name,
+  applicationName: siteConfig.legalName,
+  authors: [{ name: siteConfig.legalName, url: siteConfig.url }],
+  creator: siteConfig.legalName,
+  publisher: siteConfig.legalName,
+  category: "technology",
+  robots: { index: true, follow: true },
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION || searchConsolePlaceholder,
+  },
   openGraph: {
     type: "website",
-    siteName: siteConfig.name,
-    title: "AI Lead Vision | AI Solutions & Intelligent Systems",
+    siteName: siteConfig.legalName,
+    title: "AI Company in Bangalore | AI Lead Vision",
     description: siteConfig.description,
     locale: "en_IN",
     url: siteConfig.url,
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Lead Vision | AI Solutions & Intelligent Systems",
+    title: "AI Company in Bangalore | AI Lead Vision",
     description: siteConfig.description,
   },
-};
-
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: siteConfig.name,
-  legalName: siteConfig.legalName,
-  url: siteConfig.url,
-  email: siteConfig.emails.general,
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: siteConfig.location.city,
-    addressRegion: siteConfig.location.region,
-    addressCountry: "IN",
-  },
-  sameAs: [siteConfig.social.linkedin],
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
@@ -77,10 +72,8 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         </main>
         <Footer />
         <WhatsAppButton />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
+        <GoogleAnalytics />
+        <JsonLd data={siteJsonLd()} />
       </body>
     </html>
   );
