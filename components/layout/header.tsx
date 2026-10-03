@@ -57,12 +57,12 @@ export function Header() {
           : "border-b border-transparent bg-transparent",
       )}
     >
-      <div className="mx-auto flex h-16 max-w-[1160px] items-center justify-between gap-6 px-5 sm:h-[4.5rem] sm:px-8">
-        <Link href="/" aria-label="AI Lead Vision, home" className="relative z-50">
+      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-4 px-5 sm:h-[4.5rem] sm:px-8">
+        <Link href="/" aria-label="AI Lead Vision, home" className="relative z-50 shrink-0">
           <Logo />
         </Link>
 
-        <nav aria-label="Primary" className="hidden items-center gap-7 lg:flex">
+        <nav aria-label="Primary" className="hidden min-w-0 items-center gap-x-3.5 xl:flex">
           {navigation.map((item) => {
             const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return (
@@ -71,7 +71,7 @@ export function Header() {
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "text-sm tracking-tight transition-colors",
+                  "whitespace-nowrap text-[13px] tracking-tight transition-colors",
                   active ? "text-white" : "text-white/65 hover:text-white",
                 )}
               >
@@ -81,7 +81,7 @@ export function Header() {
           })}
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden shrink-0 xl:block">
           <Link
             href={siteConfig.cta.primary.href}
             className="inline-flex rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-strong"
@@ -92,7 +92,7 @@ export function Header() {
 
         <button
           type="button"
-          className="relative z-50 inline-flex h-10 w-10 items-center justify-center rounded-md text-white lg:hidden"
+          className="relative z-50 inline-flex h-10 w-10 items-center justify-center rounded-md text-white xl:hidden"
           aria-expanded={open}
           aria-controls="mobile-navigation"
           onClick={() => setOpen((value) => !value)}
@@ -106,15 +106,15 @@ export function Header() {
         id="mobile-navigation"
         hidden={!open}
         className={cn(
-          "fixed inset-0 z-40 bg-navy lg:hidden",
+          "fixed inset-0 z-40 bg-navy xl:hidden",
           open ? "block" : "hidden",
         )}
       >
         <nav
           aria-label="Mobile"
-          className="flex h-full flex-col justify-between px-6 pb-10 pt-28"
+          className="flex h-full flex-col justify-between overflow-y-auto px-6 pb-10 pt-24"
         >
-          <ul className="space-y-2">
+          <ul className="space-y-1">
             {navigation.map((item) => {
               const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
               return (
@@ -123,7 +123,7 @@ export function Header() {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "block py-2 font-heading text-4xl tracking-[-0.04em]",
+                      "block py-1.5 font-heading text-3xl tracking-[-0.04em] sm:text-4xl",
                       active ? "text-cyan" : "text-white",
                     )}
                   >

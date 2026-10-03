@@ -1,26 +1,25 @@
 import type { Metadata } from "next";
 import { HomeHero } from "@/components/sections/home-hero";
-import { CapabilityStrip } from "@/components/sections/capability-strip";
 import {
-  AboutPreview,
-  FaqPreview,
-  HomeIntro,
-  OutcomesSection,
-  ProductPreview,
-  ServicesPreview,
-  TechnologySection,
+  BusinessOutcome,
+  HomeContact,
+  HowItWorks,
+  WhatWeBuild,
+  WhoWeServe,
+  WhySection,
 } from "@/components/sections/home-sections";
-import { FinalCta } from "@/components/sections/final-cta";
+import { homeHero } from "@/lib/content/home";
+import { siteConfig } from "@/lib/content/site";
+
+const title = "AI, Computer Vision & Robotics Solutions for Business | AI Lead Vision";
 
 export const metadata: Metadata = {
-  title: "AI Lead Vision | AI Solutions & Intelligent Systems",
-  description:
-    "AI Lead Vision builds intelligent products and enterprise systems across artificial intelligence, machine learning, computer vision, robotics, and software engineering.",
+  title,
+  description: `${homeHero.audience} ${homeHero.support}`,
   alternates: { canonical: "/" },
   openGraph: {
-    title: "AI Lead Vision | AI Solutions & Intelligent Systems",
-    description:
-      "AI Lead Vision builds intelligent products and enterprise systems across artificial intelligence, machine learning, computer vision, robotics, and software engineering.",
+    title,
+    description: siteConfig.description,
     url: "/",
   },
 };
@@ -29,15 +28,12 @@ export default function HomePage() {
   return (
     <>
       <HomeHero />
-      <CapabilityStrip />
-      <HomeIntro />
-      <ProductPreview />
-      <TechnologySection />
-      <OutcomesSection />
-      <ServicesPreview />
-      <AboutPreview />
-      <FaqPreview />
-      <FinalCta />
+      <WhatWeBuild />
+      <WhoWeServe />
+      <HowItWorks />
+      <WhySection />
+      <BusinessOutcome />
+      <HomeContact />
     </>
   );
 }

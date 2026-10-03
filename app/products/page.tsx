@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AI Products | AI Lead Vision",
     description:
-      "AI-powered solutions for smart businesses — built for real outcomes, not demos.",
+      "AI-powered products for attendance, voice, chat, computer vision, inspection, industrial automation, analytics, and educational robotics.",
     url: "/products",
   },
   twitter: {
@@ -29,7 +29,7 @@ export default function ProductsPage() {
       <PageHero
         eyebrow="Products"
         title="AI-powered solutions for smart businesses."
-        description="Intelligent products that combine artificial intelligence, machine learning, computer vision, and automation — built for real business outcomes, not demos."
+        description="Intelligent products that combine artificial intelligence, machine learning, computer vision, and automation."
       />
       <section className="bg-paper">
         <Container className="flex flex-col gap-8 py-16 sm:py-20">

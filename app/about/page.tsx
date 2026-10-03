@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageHero } from "@/components/layout/page-hero";
 import { FinalCta } from "@/components/sections/final-cta";
 import { Container } from "@/components/ui/container";
@@ -107,7 +108,7 @@ export default function AboutPage() {
               AI Lead Vision designs intelligent products and the custom software around them. The technology work covers artificial intelligence, machine learning, computer vision, robotics, data, and the applications required to run those systems in a business.
             </p>
             <p>
-              The company builds for an outcome: fewer manual checks, a conversation that resolves, a camera that raises the right alert, a forecast someone can use. The product is the system in operation, not a demonstration of a model.
+              The company builds for an outcome: fewer manual checks, a conversation that resolves, a camera that raises the right alert, a forecast someone can use.
             </p>
           </div>
         </Container>
@@ -153,12 +154,14 @@ export default function AboutPage() {
               <p className="mt-4 text-sm leading-7 text-muted">
                 A separate practice trains working professionals in aviation and automotive domains, and recruits for software development and testing — including people early in their careers. It is not part of the AI product line.
               </p>
-              <a
-                href="mailto:hr@aileadvision.com"
-                className="mt-6 inline-flex text-sm font-medium text-accent"
-              >
-                hr@aileadvision.com
-              </a>
+              <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
+                <Link href="/training" className="text-sm font-medium text-accent">
+                  Training
+                </Link>
+                <a href="mailto:hr@aileadvision.com" className="text-sm font-medium text-accent">
+                  hr@aileadvision.com
+                </a>
+              </div>
             </article>
           </div>
         </Container>

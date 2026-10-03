@@ -22,12 +22,13 @@ export default function OpenGraphImage() {
         <div style={{ display: "flex", fontSize: 28, letterSpacing: 4, color: "#8fd8ea" }}>
           AI LEAD VISION
         </div>
-        <div style={{ display: "flex", flexDirection: "column", fontSize: 68, lineHeight: 1.05, letterSpacing: -2 }}>
-          <span>AI systems built</span>
-          <span>for real business.</span>
+        <div style={{ display: "flex", flexDirection: "column", fontSize: 52, lineHeight: 1.08, letterSpacing: -1.5 }}>
+          <span>AI, Computer Vision &</span>
+          <span>Robotics Solutions</span>
+          <span>for Business.</span>
         </div>
         <div style={{ display: "flex", fontSize: 24, color: "rgba(255,255,255,0.7)" }}>
-          Products · Engineering · Deployment
+          Enterprise AI · Automation · Vision · Robotics · Software
         </div>
       </div>
     ),

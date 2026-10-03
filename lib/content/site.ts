@@ -9,7 +9,7 @@ export const siteConfig = {
   legalName: "AI Lead Vision",
   url: "https://aileadvision.com",
   description:
-    "AI Lead Vision builds intelligent products and enterprise systems across artificial intelligence, machine learning, computer vision, robotics, and software engineering.",
+    "AI Lead Vision is a technology solutions company in Bengaluru. We deliver enterprise AI, industrial automation, computer vision, robotics, and custom software development for enterprises, industries, educational institutions, and businesses.",
   locale: "en_IN",
   location: {
     city: "Bengaluru",
@@ -66,10 +66,13 @@ export const siteConfig = {
 
 export const navigation = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
+  { label: "Solutions", href: "/solutions" },
   { label: "Products", href: "/products" },
   { label: "Services", href: "/services" },
-  { label: "FAQ", href: "/faq" },
+  { label: "Industries", href: "/industries" },
+  { label: "Case Studies", href: "/case-studies" },
+  { label: "About", href: "/about" },
+  { label: "Training", href: "/training" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
