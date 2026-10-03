@@ -1,6 +1,5 @@
 import { homeHero } from "@/lib/content/home";
-import { siteConfig } from "@/lib/content/site";
-import { Button } from "@/components/ui/button";
+import { LeadCtas } from "@/components/layout/lead-ctas";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { HeroGlow } from "@/components/visuals/hero-glow";
 import { SystemSchematic } from "@/components/visuals/system-schematic";
@@ -30,14 +29,7 @@ export function HomeHero() {
             <p className="mt-2 max-w-2xl text-base leading-7 text-white/65">
               {homeHero.audience}
             </p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button href={siteConfig.cta.primary.href} className="h-12 w-full px-5 sm:w-auto">
-                {siteConfig.cta.primary.label}
-              </Button>
-              <Button href={siteConfig.cta.secondary.href} variant="secondary" className="h-12 w-full px-5 sm:w-auto">
-                {siteConfig.cta.secondary.label}
-              </Button>
-            </div>
+            <LeadCtas className="mt-6" />
             <ul className="mt-4 grid gap-3 sm:grid-cols-3">
               {signals.map((item) => (
                 <li

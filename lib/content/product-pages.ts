@@ -262,8 +262,8 @@ export const attendancePage = {
     ] satisfies FlowStep[],
   },
   sales: {
-    label: "Contact Sales",
-    href: "/contact?interest=products&product=face-attendance",
+    label: "Talk to an AI Expert",
+    href: "/contact?requirement=expert&product=face-attendance",
   },
 };
 

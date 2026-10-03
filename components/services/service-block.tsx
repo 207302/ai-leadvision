@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Service } from "@/lib/content/services";
+import { siteConfig } from "@/lib/content/site";
 import { DetailGroup } from "@/components/ui/detail-group";
 
 export function ServiceBlock({
@@ -37,10 +38,10 @@ export function ServiceBlock({
           />
         </div>
         <Link
-          href={`/contact?interest=${service.interest}`}
+          href={`/contact?requirement=consultation&interest=${service.interest}`}
           className="mt-6 inline-flex text-sm font-medium text-accent hover:text-accent-strong"
         >
-          Talk to Our Team
+          {siteConfig.cta.consultation.label}
         </Link>
       </div>
     </article>

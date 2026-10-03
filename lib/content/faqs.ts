@@ -32,7 +32,7 @@ export const faqs: Faq[] = [
   {
     question: "How can I request a product demo?",
     answer:
-      "Use the contact form and choose Products, or email info@aileadvision.com. Name the product, the kind of site it needs to run in, and a phone number.",
+      "Use Request a Demo, or email info@aileadvision.com. On the contact form, choose Request a Demo and the product under Interested Solution. Name the kind of site it needs to run in, and a phone number.",
   },
   {
     question: "What information is needed to start an AI project?",
@@ -42,7 +42,7 @@ export const faqs: Faq[] = [
   {
     question: "Do you also offer training and hiring support?",
     answer:
-      "Yes, as a separate practice. AI Lead Vision trains working professionals in aviation and automotive domains, and recruits for software development and testing roles. For that work, email hr@aileadvision.com or choose Training on the contact form.",
+      "Yes, as a separate practice. AI Lead Vision trains working professionals in aviation and automotive domains, and recruits for software development and testing roles. For that work, email hr@aileadvision.com or choose Training under Requirement on the contact form.",
   },
 ];
 

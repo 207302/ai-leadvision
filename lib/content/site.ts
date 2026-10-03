@@ -1,6 +1,9 @@
+import { industries } from "@/lib/content/industries";
+
 /**
  * Single source for company identity, navigation, and contact details.
- * Street addresses published on the previous site disagree, so none are rendered.
+ * Street addresses published on the previous site disagree, so the street line
+ * stays a placeholder and address.confirmed stays null.
  * Project and client counts also disagreed across pages, so statistics stay unpublished.
  */
 
@@ -56,13 +59,37 @@ export const siteConfig = {
   },
   social: {
     linkedin: "https://www.linkedin.com/company/ai-lead-vision-pvt-ltd/",
+    youtube: null,
+    instagram: null,
+    facebook: null,
   },
+  /**
+   * Placeholder until a WhatsApp number is confirmed.
+   * This is not one of the published phone lines.
+   */
+  whatsapp: {
+    label: "Chat with AI Lead Vision",
+    display: "[WhatsApp number]",
+    tel: "910000000000",
+  },
+  /** Placeholder until the company registration number is confirmed. */
+  registration: "[Company registration number]",
   cta: {
-    primary: { label: "Talk to Our Team", href: "/contact" },
-    secondary: { label: "Explore Products", href: "/products" },
-    demo: { label: "Request a Demo", href: "/contact?interest=products" },
+    demo: { label: "Request a Demo", href: "/contact?requirement=demo" },
+    expert: { label: "Talk to an AI Expert", href: "/contact?requirement=expert" },
+    consultation: {
+      label: "Get a Project Consultation",
+      href: "/contact?requirement=consultation",
+    },
   },
 } as const;
+
+export const socialProfiles = [
+  { label: "LinkedIn", href: siteConfig.social.linkedin },
+  { label: "YouTube", href: siteConfig.social.youtube },
+  { label: "Instagram", href: siteConfig.social.instagram },
+  { label: "Facebook", href: siteConfig.social.facebook },
+] as const;
 
 export const navigation = [
   { label: "Home", href: "/" },
@@ -94,20 +121,62 @@ export const statistics = {
   items: [] as { label: string; value: string }[],
 };
 
-export const inquiryInterests = [
-  { value: "products", label: "Products" },
-  { value: "ai-development", label: "AI Development" },
-  { value: "machine-learning", label: "Machine Learning" },
+export const legalNavigation = [
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms & Conditions", href: "/terms" },
+  { label: "Cookie Policy", href: "/cookies" },
+  { label: "Sitemap", href: "/sitemap.xml" },
+] as const;
+
+/** Published industries, plus Other. Labels match the industries page. */
+export const inquiryIndustries = [
+  ...industries.map((item) => ({ value: item.id, label: item.title })),
+  { value: "other", label: "Other" },
+];
+
+export const inquiryRequirements = [
+  { value: "demo", label: "Request a Demo" },
+  { value: "expert", label: "Talk to an AI Expert" },
+  { value: "consultation", label: "Get a Project Consultation" },
+  { value: "training", label: "Training" },
+  { value: "careers", label: "Careers" },
+  { value: "other", label: "Other" },
+] as const;
+
+/** Product names already published, plus service areas used by existing contact links. */
+export const inquirySolutions = [
+  { value: "face-attendance", label: "AI Face Recognition Attendance System" },
+  { value: "voice-bot", label: "AI Voice Chat Bot" },
+  { value: "chat-bot", label: "AI Chat Bot" },
   { value: "computer-vision", label: "Computer Vision" },
+  { value: "machine-vision", label: "AI Machine Vision Inspection" },
+  { value: "industrial-automation", label: "Industrial Automation" },
+  { value: "predictive-analytics", label: "AI Predictive Analytics" },
+  { value: "educational-robot", label: "Educational AI Robot" },
+  { value: "ai-development", label: "Generative AI" },
+  { value: "machine-learning", label: "Machine Learning" },
   { value: "robotics", label: "Robotics" },
-  { value: "software-development", label: "Software Development" },
+  { value: "software-development", label: "Custom software development" },
   { value: "training", label: "Training" },
   { value: "other", label: "Other" },
 ] as const;
 
-export type InquiryInterest = (typeof inquiryInterests)[number]["value"];
+export const preferredContactMethods = [
+  { value: "email", label: "Email" },
+  { value: "phone", label: "Phone" },
+  { value: "whatsapp", label: "WhatsApp" },
+] as const;
+
+export type InquiryRequirement = (typeof inquiryRequirements)[number]["value"];
+export type InquirySolution = (typeof inquirySolutions)[number]["value"];
 
 export function locationLine() {
   const { city, region, country } = siteConfig.location;
   return `${city}, ${region}, ${country}`;
+}
+
+/** Street line stays a placeholder until address.confirmed is set. */
+export function officeAddressLines() {
+  if (siteConfig.address.confirmed) return [...siteConfig.address.confirmed.lines];
+  return ["[Office street address]", locationLine()];
 }

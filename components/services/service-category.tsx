@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getService, type ServiceCategory } from "@/lib/content/services";
+import { siteConfig } from "@/lib/content/site";
 import { GenerativeOfferingList } from "@/components/sections/generative-offerings";
 import { ServiceBlock } from "@/components/services/service-block";
 
@@ -40,10 +41,10 @@ export function ServiceCategory({
         )}
         {!service && (
           <Link
-            href={`/contact?interest=${category.interest}`}
+            href={`/contact?requirement=consultation&interest=${category.interest}`}
             className="text-sm font-medium text-accent hover:text-accent-strong"
           >
-            Talk to Our Team
+            {siteConfig.cta.consultation.label}
           </Link>
         )}
       </div>

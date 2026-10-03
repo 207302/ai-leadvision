@@ -3,7 +3,13 @@
 import { FormEvent, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { getProduct } from "@/lib/content/products";
-import { inquiryInterests, siteConfig, type InquiryInterest } from "@/lib/content/site";
+import {
+  inquiryIndustries,
+  inquiryRequirements,
+  inquirySolutions,
+  preferredContactMethods,
+  siteConfig,
+} from "@/lib/content/site";
 import { parseInquiry, type InquiryErrors } from "@/lib/contact/parse";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -11,21 +17,30 @@ type Status = "idle" | "submitting" | "success" | "error";
 const inputClass =
   "mt-2 w-full rounded-md border border-line bg-white px-3 py-2.5 text-sm text-ink outline-none transition-colors placeholder:text-faint focus:border-accent";
 
+function listed(options: readonly { value: string }[], value: string) {
+  return options.some((item) => item.value === value) ? value : "";
+}
+
 export function ContactForm() {
   const params = useSearchParams();
   const requestedInterest = params.get("interest") ?? "";
   const productId = params.get("product") ?? "";
   const product = getProduct(productId);
 
-  const initialInterest = inquiryInterests.some((item) => item.value === requestedInterest)
-    ? (requestedInterest as InquiryInterest)
-    : "";
+  const initialSolution = listed(
+    inquirySolutions,
+    params.get("solution") || productId || requestedInterest,
+  );
+  const initialRequirement =
+    listed(inquiryRequirements, params.get("requirement") ?? "") ||
+    (requestedInterest === "training" ? "training" : "");
 
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<InquiryErrors>({});
   const [formError, setFormError] = useState("");
 
-  const interestDefault = useMemo(() => initialInterest, [initialInterest]);
+  const solutionDefault = useMemo(() => initialSolution, [initialSolution]);
+  const requirementDefault = useMemo(() => initialRequirement, [initialRequirement]);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -33,11 +48,14 @@ export function ContactForm() {
     const data = new FormData(form);
     const payload = {
       name: String(data.get("name") ?? ""),
-      email: String(data.get("email") ?? ""),
       company: String(data.get("company") ?? ""),
+      email: String(data.get("email") ?? ""),
       phone: String(data.get("phone") ?? ""),
-      interest: String(data.get("interest") ?? ""),
+      industry: String(data.get("industry") ?? ""),
+      requirement: String(data.get("requirement") ?? ""),
+      solution: String(data.get("solution") ?? ""),
       message: String(data.get("message") ?? ""),
+      contactMethod: String(data.get("contactMethod") ?? ""),
       product: product?.name ?? "",
       website: String(data.get("website") ?? ""),
     };
@@ -123,44 +141,36 @@ export function ContactForm() {
       )}
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Full name" name="name" error={errors.name} autoComplete="name" />
-        <Field label="Work email" name="email" type="email" error={errors.email} autoComplete="email" />
+        <Field label="Name" name="name" error={errors.name} autoComplete="name" />
         <Field label="Company" name="company" error={errors.company} autoComplete="organization" />
-        <Field
-          label="Phone"
-          name="phone"
-          type="tel"
-          error={errors.phone}
-          autoComplete="tel"
-          optional
+        <Field label="Work Email" name="email" type="email" error={errors.email} autoComplete="email" />
+        <Field label="Phone" name="phone" type="tel" error={errors.phone} autoComplete="tel" />
+        <SelectField
+          label="Industry"
+          name="industry"
+          error={errors.industry}
+          options={inquiryIndustries}
+          placeholder="Select an industry"
+        />
+        <SelectField
+          label="Requirement"
+          name="requirement"
+          error={errors.requirement}
+          options={inquiryRequirements}
+          defaultValue={requirementDefault}
+          placeholder="Select a requirement"
         />
       </div>
 
-      <div className="mt-5">
-        <label htmlFor="interest" className="text-sm font-medium text-ink">
-          What are you interested in?
-        </label>
-        <select
-          id="interest"
-          name="interest"
-          defaultValue={interestDefault}
-          aria-invalid={Boolean(errors.interest)}
-          aria-describedby={errors.interest ? "interest-error" : undefined}
-          className={inputClass}
-        >
-          <option value="">Select one</option>
-          {inquiryInterests.map((item) => (
-            <option key={item.value} value={item.value}>
-              {item.label}
-            </option>
-          ))}
-        </select>
-        {errors.interest && (
-          <p id="interest-error" className="mt-1.5 text-sm text-red-700">
-            {errors.interest}
-          </p>
-        )}
-      </div>
+      <SelectField
+        className="mt-5"
+        label="Interested Solution"
+        name="solution"
+        error={errors.solution}
+        options={inquirySolutions}
+        defaultValue={solutionDefault}
+        placeholder="Select a solution"
+      />
 
       <div className="mt-5">
         <label htmlFor="message" className="text-sm font-medium text-ink">
@@ -182,6 +192,33 @@ export function ContactForm() {
         )}
       </div>
 
+      <fieldset
+        className="mt-5"
+        aria-invalid={Boolean(errors.contactMethod)}
+        aria-describedby={errors.contactMethod ? "contactMethod-error" : undefined}
+      >
+        <legend className="text-sm font-medium text-ink">Preferred contact method</legend>
+        <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-6">
+          {preferredContactMethods.map((item) => (
+            <label key={item.value} className="inline-flex items-center gap-2 text-sm text-ink">
+              <input
+                type="radio"
+                name="contactMethod"
+                value={item.value}
+                className="accent-accent"
+                aria-invalid={Boolean(errors.contactMethod)}
+              />
+              {item.label}
+            </label>
+          ))}
+        </div>
+        {errors.contactMethod && (
+          <p id="contactMethod-error" className="mt-1.5 text-sm text-red-700">
+            {errors.contactMethod}
+          </p>
+        )}
+      </fieldset>
+
       <button
         type="submit"
         disabled={status === "submitting"}
@@ -199,21 +236,18 @@ function Field({
   error,
   type = "text",
   autoComplete,
-  optional = false,
 }: {
   label: string;
   name: string;
   error?: string;
   type?: string;
   autoComplete?: string;
-  optional?: boolean;
 }) {
   const errorId = `${name}-error`;
   return (
     <div>
       <label htmlFor={name} className="text-sm font-medium text-ink">
         {label}
-        {optional && <span className="font-normal text-faint"> (optional)</span>}
       </label>
       <input
         id={name}
@@ -224,6 +258,53 @@ function Field({
         aria-describedby={error ? errorId : undefined}
         className={inputClass}
       />
+      {error && (
+        <p id={errorId} className="mt-1.5 text-sm text-red-700">
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function SelectField({
+  label,
+  name,
+  error,
+  options,
+  defaultValue = "",
+  placeholder,
+  className = "",
+}: {
+  label: string;
+  name: string;
+  error?: string;
+  options: readonly { value: string; label: string }[];
+  defaultValue?: string;
+  placeholder: string;
+  className?: string;
+}) {
+  const errorId = `${name}-error`;
+  return (
+    <div className={className}>
+      <label htmlFor={name} className="text-sm font-medium text-ink">
+        {label}
+      </label>
+      <select
+        id={name}
+        name={name}
+        defaultValue={defaultValue}
+        aria-invalid={Boolean(error)}
+        aria-describedby={error ? errorId : undefined}
+        className={inputClass}
+      >
+        <option value="">{placeholder}</option>
+        {options.map((item) => (
+          <option key={item.value} value={item.value}>
+            {item.label}
+          </option>
+        ))}
+      </select>
       {error && (
         <p id={errorId} className="mt-1.5 text-sm text-red-700">
           {error}

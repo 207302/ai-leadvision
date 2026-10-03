@@ -2,7 +2,12 @@ import Link from "next/link";
 import { productGuides } from "@/lib/content/product-pages";
 import { featuredProducts } from "@/lib/content/products";
 import { serviceCategories } from "@/lib/content/services";
-import { footerNavigation, locationLine, siteConfig } from "@/lib/content/site";
+import {
+  footerNavigation,
+  legalNavigation,
+  officeAddressLines,
+  siteConfig,
+} from "@/lib/content/site";
 import { Logo } from "@/components/layout/logo";
 import { SocialLinks } from "@/components/layout/social-links";
 
@@ -71,7 +76,14 @@ export function Footer() {
           </div>
 
           <div className="col-span-2 sm:col-span-1">
-            <p className="text-[11px] uppercase tracking-[0.16em] text-white/40">Contact</p>
+            <p className="text-[11px] uppercase tracking-[0.16em] text-white/40">Bengaluru office</p>
+            <address className="mt-4 space-y-1 text-sm not-italic leading-6 text-white/75">
+              {officeAddressLines().map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
+            </address>
             <ul className="mt-4 space-y-2.5 text-sm text-white/75">
               <li>
                 <a className="hover:text-white" href={`mailto:${siteConfig.emails.general}`}>
@@ -90,16 +102,32 @@ export function Footer() {
                   </a>
                 </li>
               ))}
-              <li>{locationLine()}</li>
+              <li>
+                <span className="text-white/45">WhatsApp </span>
+                {siteConfig.whatsapp.display}
+              </li>
             </ul>
+            <p className="mt-6 text-[11px] uppercase tracking-[0.16em] text-white/40">Registration</p>
+            <p className="mt-3 text-sm leading-6 text-white/75">
+              {siteConfig.legalName}
+              <span className="mt-1 block">{siteConfig.registration}</span>
+            </p>
           </div>
         </div>
       </div>
 
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-[1160px] flex-col gap-2 px-5 py-5 text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <div className="mx-auto flex max-w-[1160px] flex-col gap-4 px-5 pb-32 pt-5 text-xs text-white/40 sm:px-8">
+          <ul className="flex flex-wrap gap-x-5 gap-y-2">
+            {legalNavigation.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} className="hover:text-white">
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
           <p>© {new Date().getFullYear()} {siteConfig.legalName}</p>
-          <p>{siteConfig.name}</p>
         </div>
       </div>
     </footer>

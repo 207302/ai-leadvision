@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { navigation, siteConfig } from "@/lib/content/site";
+import { LeadCtas } from "@/components/layout/lead-ctas";
 import { Logo } from "@/components/layout/logo";
 import { cn } from "@/lib/utils";
 
@@ -83,10 +84,10 @@ export function Header() {
 
         <div className="hidden shrink-0 xl:block">
           <Link
-            href={siteConfig.cta.primary.href}
+            href={siteConfig.cta.expert.href}
             className="inline-flex rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-strong"
           >
-            {siteConfig.cta.primary.label}
+            {siteConfig.cta.expert.label}
           </Link>
         </div>
 
@@ -133,12 +134,7 @@ export function Header() {
               );
             })}
           </ul>
-          <Link
-            href={siteConfig.cta.primary.href}
-            className="inline-flex h-12 items-center justify-center rounded-md bg-accent text-sm font-medium text-white"
-          >
-            {siteConfig.cta.primary.label}
-          </Link>
+          <LeadCtas layout="stack" className="mt-8 shrink-0" />
         </nav>
       </div>
     </header>

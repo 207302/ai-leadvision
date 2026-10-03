@@ -1,5 +1,4 @@
-import { siteConfig } from "@/lib/content/site";
-import { Button } from "@/components/ui/button";
+import { LeadCtas } from "@/components/layout/lead-ctas";
 import { Container } from "@/components/ui/container";
 
 export function FinalCta({
@@ -16,9 +15,7 @@ export function FinalCta({
           <h2 className="text-3xl leading-tight sm:text-4xl">{title}</h2>
           <p className="mt-4 text-base leading-7 text-white/70">{body}</p>
         </div>
-        <Button href={siteConfig.cta.primary.href} className="h-12 px-5">
-          {siteConfig.cta.primary.label}
-        </Button>
+        <LeadCtas layout="stack" className="w-full sm:max-w-xs sm:w-80" />
       </Container>
     </section>
   );

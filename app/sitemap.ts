@@ -18,6 +18,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/testimonials",
     "/faq",
     "/contact",
+    "/privacy",
+    "/terms",
+    "/cookies",
   ];
   return routes.map((route) => ({
     url: `${siteConfig.url}${route}`,

@@ -4,7 +4,7 @@ import { ContactForm } from "@/components/forms/contact-form";
 import { PageHero } from "@/components/layout/page-hero";
 import { Container } from "@/components/ui/container";
 import { SocialLinks } from "@/components/layout/social-links";
-import { locationLine, siteConfig } from "@/lib/content/site";
+import { officeAddressLines, siteConfig } from "@/lib/content/site";
 
 export const metadata: Metadata = {
   title: "Contact AI Lead Vision",
@@ -26,10 +26,10 @@ export const metadata: Metadata = {
 export default async function ContactPage({
   searchParams,
 }: {
-  searchParams: Promise<{ interest?: string; product?: string }>;
+  searchParams: Promise<{ interest?: string; product?: string; requirement?: string; solution?: string }>;
 }) {
   const params = await searchParams;
-  const formKey = `${params.interest ?? ""}-${params.product ?? ""}`;
+  const formKey = `${params.interest ?? ""}-${params.product ?? ""}-${params.requirement ?? ""}-${params.solution ?? ""}`;
   return (
     <>
       <PageHero
@@ -73,9 +73,22 @@ export default async function ContactPage({
                 </dd>
               </div>
               <div>
-                <dt className="text-[11px] uppercase tracking-[0.16em] text-faint">Location</dt>
-                <dd className="mt-2 text-ink">{locationLine()}</dd>
-                <dd className="mt-1 text-muted">Visiting details are shared when you write to us.</dd>
+                <dt className="text-[11px] uppercase tracking-[0.16em] text-faint">Bengaluru office</dt>
+                <dd className="mt-2 space-y-1 text-ink">
+                  {officeAddressLines().map((line) => (
+                    <span key={line} className="block">
+                      {line}
+                    </span>
+                  ))}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-[11px] uppercase tracking-[0.16em] text-faint">WhatsApp</dt>
+                <dd className="mt-2 text-ink">{siteConfig.whatsapp.display}</dd>
+              </div>
+              <div>
+                <dt className="text-[11px] uppercase tracking-[0.16em] text-faint">Registration</dt>
+                <dd className="mt-2 text-ink">{siteConfig.registration}</dd>
               </div>
             </dl>
           </aside>
