@@ -128,7 +128,22 @@ export function Footer() {
               </li>
             ))}
           </ul>
-          <p>© {new Date().getFullYear()} {siteConfig.legalName}</p>
+          <p className="flex flex-wrap gap-x-4 gap-y-1">
+            <span>
+              © {new Date().getFullYear()} {siteConfig.legalName}
+            </span>
+            <span>
+              Designed by{" "}
+              <a
+                href="https://www.linkedin.com/in/vishakhs17"
+                className="underline decoration-white/25 underline-offset-2 hover:text-white hover:decoration-white"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Vishakh S
+              </a>
+            </span>
+          </p>
         </div>
       </div>
     </footer>
