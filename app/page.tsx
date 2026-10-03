@@ -3,8 +3,10 @@ import { HomeHero } from "@/components/sections/home-hero";
 import { CapabilityStrip } from "@/components/sections/capability-strip";
 import {
   BusinessOutcome,
+  GenerativeAiSection,
   HomeContact,
   HowItWorks,
+  IndustriesWeServe,
   WhatWeBuild,
   WhoWeServe,
   WhySection,
@@ -30,8 +32,10 @@ export default function HomePage() {
     <>
       <HomeHero />
       <CapabilityStrip />
+      <GenerativeAiSection />
       <WhatWeBuild />
       <WhoWeServe />
+      <IndustriesWeServe />
       <HowItWorks />
       <WhySection />
       <BusinessOutcome />

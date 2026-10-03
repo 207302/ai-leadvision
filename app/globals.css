@@ -213,6 +213,101 @@
   animation-delay: 2.45s;
 }
 
+.industry-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(18, 24, 38, 0.03);
+  transition:
+    transform 280ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 280ms ease,
+    border-color 280ms ease,
+    background-color 280ms ease;
+}
+
+.industry-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.industry-card-blue::before {
+  background: linear-gradient(90deg, #1a5fd4, #8fd8ea);
+}
+
+.industry-card-cyan::before {
+  background: linear-gradient(90deg, #8fd8ea, #1a5fd4);
+}
+
+.industry-card-navy::before {
+  background: linear-gradient(90deg, #101622, #1a5fd4);
+}
+
+.industry-card-icon {
+  display: inline-flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  transition:
+    background-color 220ms ease,
+    color 220ms ease,
+    transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.industry-card-icon-blue {
+  background: rgba(26, 95, 212, 0.14);
+  color: #1a5fd4;
+}
+
+.industry-card-icon-cyan {
+  background: rgba(143, 216, 234, 0.45);
+  color: #0c4a5e;
+}
+
+.industry-card-icon-navy {
+  background: rgba(16, 22, 34, 0.08);
+  color: #101622;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .industry-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(26, 95, 212, 0.4);
+    box-shadow: 0 18px 36px rgba(18, 24, 38, 0.08);
+  }
+
+  .industry-card:hover .industry-card-icon {
+    transform: rotate(-8deg) scale(1.06);
+  }
+
+  .industry-card:hover .industry-card-icon-blue {
+    background: #1a5fd4;
+    color: #fff;
+  }
+
+  .industry-card:hover .industry-card-icon-cyan {
+    background: #101622;
+    color: #8fd8ea;
+  }
+
+  .industry-card:hover .industry-card-icon-navy {
+    background: #1a5fd4;
+    color: #fff;
+  }
+}
+
+.industry-card:active {
+  transform: translateY(-2px) scale(0.985);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -239,5 +334,17 @@
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+
+  .industry-card,
+  .industry-card::before,
+  .industry-card-icon {
+    transition: none;
+  }
+
+  .industry-card:hover,
+  .industry-card:active,
+  .industry-card:hover .industry-card-icon {
+    transform: none;
   }
 }

@@ -20,15 +20,6 @@ export const placeholderPages = {
       { href: "/services", label: "Services" },
     ],
   },
-  industries: {
-    path: "/industries",
-    eyebrow: "Industries",
-    title: "Industries",
-    description:
-      "The industries AI Lead Vision works with, once that list is confirmed.",
-    note: "This page is a placeholder. Industry names and counts are not published yet. Use [N industries] until the owner confirms the list.",
-    links: [{ href: "/contact", label: "Contact" }],
-  },
   caseStudies: {
     path: "/case-studies",
     eyebrow: "Case Studies",

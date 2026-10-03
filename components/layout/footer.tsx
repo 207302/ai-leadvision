@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { featuredProducts } from "@/lib/content/products";
-import { services } from "@/lib/content/services";
+import { serviceCategories } from "@/lib/content/services";
 import { footerNavigation, locationLine, siteConfig } from "@/lib/content/site";
 import { Logo } from "@/components/layout/logo";
 import { SocialLinks } from "@/components/layout/social-links";
@@ -49,13 +49,13 @@ export function Footer() {
             </ul>
             <p className="mt-6 text-[11px] uppercase tracking-[0.16em] text-white/40">Services</p>
             <ul className="mt-4 space-y-2.5">
-              {services.map((service) => (
-                <li key={service.id}>
+              {serviceCategories.map((category) => (
+                <li key={category.id}>
                   <Link
-                    href={`/services#${service.id}`}
+                    href={`/services#${category.id}`}
                     className="text-sm text-white/75 hover:text-white"
                   >
-                    {service.title}
+                    {category.title}
                   </Link>
                 </li>
               ))}

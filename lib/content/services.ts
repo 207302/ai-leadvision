@@ -1,3 +1,6 @@
+import { getProduct } from "@/lib/content/products";
+import { placeholderPages } from "@/lib/content/placeholders";
+
 export type Service = {
   id: string;
   title: string;
@@ -9,6 +12,26 @@ export type Service = {
   useCases: string[];
   interest: string;
 };
+
+export type ServiceCategory = {
+  id: string;
+  title: string;
+  summary: string;
+  /** Existing engineering write-up, kept under this category. */
+  serviceId?: string;
+  points?: readonly string[];
+  note?: string;
+  related?: { href: string; label: string };
+  interest: string;
+};
+
+function productSummary(id: string) {
+  return getProduct(id)?.summary ?? "";
+}
+
+function productCapabilities(id: string) {
+  return getProduct(id)?.capabilities ?? [];
+}
 
 export const services: Service[] = [
   {
@@ -96,6 +119,116 @@ export const services: Service[] = [
       "Internal software that needs an AI feature, not a separate experiment",
     ],
     interest: "software-development",
+  },
+];
+
+export function getService(id: string) {
+  return services.find((service) => service.id === id);
+}
+
+/**
+ * Twelve service categories. Robotics, machine learning, and software development
+ * keep their existing write-ups via serviceId. Other categories use published
+ * product capabilities or the training page.
+ */
+export const serviceCategories: ServiceCategory[] = [
+  {
+    id: "machine-learning",
+    title: "AI & Machine Learning",
+    summary:
+      "Models and products that take a defined business decision from data to software.",
+    serviceId: "machine-learning",
+    interest: "machine-learning",
+  },
+  {
+    id: "computer-vision",
+    title: "Computer Vision",
+    summary: productSummary("computer-vision"),
+    points: productCapabilities("computer-vision"),
+    related: { href: "/products#computer-vision", label: "Computer Vision product" },
+    interest: "computer-vision",
+  },
+  {
+    id: "generative-ai",
+    title: "Generative AI",
+    summary:
+      "AI agents, retrieval applications, and enterprise assistants for work a team already does.",
+    interest: "ai-development",
+  },
+  {
+    id: "ai-chatbots",
+    title: "AI Chatbots",
+    summary: productSummary("chat-bot"),
+    points: productCapabilities("chat-bot"),
+    related: { href: "/products#chat-bot", label: "AI Chat Bot" },
+    interest: "ai-development",
+  },
+  {
+    id: "voice-ai",
+    title: "Voice AI",
+    summary: productSummary("voice-bot"),
+    points: productCapabilities("voice-bot"),
+    related: { href: "/products#voice-bot", label: "AI Voice Chat Bot" },
+    interest: "ai-development",
+  },
+  {
+    id: "industrial-ai",
+    title: "Industrial AI",
+    summary: productSummary("industrial-automation"),
+    points: productCapabilities("industrial-automation"),
+    related: { href: "/products#industrial-automation", label: "Industrial Automation" },
+    interest: "robotics",
+  },
+  {
+    id: "machine-vision-inspection",
+    title: "Machine Vision Inspection",
+    summary: productSummary("machine-vision"),
+    points: productCapabilities("machine-vision"),
+    related: { href: "/products#machine-vision", label: "AI Machine Vision Inspection" },
+    interest: "computer-vision",
+  },
+  {
+    id: "robotics",
+    title: "Robotics & Automation",
+    summary:
+      "Perception, control, and educational hardware for labs and automated cells. Inspection, PLC, and production monitoring designed as one operational layer.",
+    serviceId: "robotics",
+    interest: "robotics",
+  },
+  {
+    id: "software-development",
+    title: "Software Development",
+    summary: "The applications, dashboards, and integrations a system needs in order to run.",
+    serviceId: "software-development",
+    interest: "software-development",
+  },
+  {
+    id: "data-analytics",
+    title: "Data Analytics & Predictive Analytics",
+    summary: productSummary("predictive-analytics"),
+    points: productCapabilities("predictive-analytics"),
+    related: { href: "/products#predictive-analytics", label: "AI Predictive Analytics" },
+    interest: "machine-learning",
+  },
+  {
+    id: "ai-integration",
+    title: "AI Integration & Deployment",
+    summary: "Integration, handover, and support for the team that runs the system.",
+    points: [
+      "Models, applications, and connections to the equipment and software already on site.",
+      "Integrations with the systems the software must meet.",
+      "Deployment support.",
+      "Handover to the team that will run it, then support after the system is in use.",
+    ],
+    interest: "ai-development",
+  },
+  {
+    id: "ai-training",
+    title: "AI Training & Corporate Training",
+    summary: placeholderPages.training.description,
+    note: placeholderPages.training.note,
+    related: { href: "/training", label: "Training" },
+    interest: "training",
   },
 ];
 

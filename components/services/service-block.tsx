@@ -2,7 +2,15 @@ import Link from "next/link";
 import type { Service } from "@/lib/content/services";
 import { DetailGroup } from "@/components/ui/detail-group";
 
-export function ServiceBlock({ service, index }: { service: Service; index: number }) {
+export function ServiceBlock({
+  service,
+  index,
+  anchor = true,
+}: {
+  service: Service;
+  index: number;
+  anchor?: boolean;
+}) {
   const glow =
     index % 2 === 0
       ? "bg-[radial-gradient(ellipse_at_top_right,rgba(26,95,212,0.14),transparent_55%)]"
@@ -10,8 +18,8 @@ export function ServiceBlock({ service, index }: { service: Service; index: numb
 
   return (
     <article
-      id={service.id}
-      className="enter-box relative scroll-mt-28 mt-8 overflow-hidden rounded-2xl border border-line bg-white first:mt-0"
+      id={anchor ? service.id : undefined}
+      className="enter-box relative mt-8 overflow-hidden rounded-2xl border border-line bg-white first:mt-0"
     >
       <div className={`pointer-events-none absolute inset-0 ${glow}`} aria-hidden="true" />
       <div className="relative p-6 sm:p-8 lg:p-10">

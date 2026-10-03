@@ -7,7 +7,11 @@ import {
   whoWeServe,
   whyAiLeadVision,
 } from "@/lib/content/home";
+import { generativeAi } from "@/lib/content/generative-ai";
+import { industries, industriesIntro } from "@/lib/content/industries";
 import { outcomes } from "@/lib/content/services";
+import { GenerativeOfferingList } from "@/components/sections/generative-offerings";
+import { IndustryCard } from "@/components/sections/industry-card";
 import { Container } from "@/components/ui/container";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Reveal } from "@/components/ui/reveal";
@@ -49,6 +53,30 @@ export function WhatWeBuild() {
   );
 }
 
+export function GenerativeAiSection() {
+  return (
+    <section className="bg-white" aria-labelledby="generative-ai">
+      <Container className="py-24 sm:py-28 lg:py-32">
+        <Reveal className="max-w-2xl">
+          <Eyebrow>{generativeAi.eyebrow}</Eyebrow>
+          <h2 id="generative-ai" className="mt-4 text-3xl leading-tight text-ink sm:text-5xl">
+            {generativeAi.title}
+          </h2>
+          <p className="mt-4 text-base leading-7 text-muted">{generativeAi.support}</p>
+        </Reveal>
+        <GenerativeOfferingList cardClassName="bg-paper" />
+        <Link
+          href="/services#generative-ai"
+          className="mt-8 inline-flex items-center gap-1.5 text-sm font-medium text-ink"
+        >
+          View in Services
+          <ArrowUpRight size={16} aria-hidden="true" />
+        </Link>
+      </Container>
+    </section>
+  );
+}
+
 export function WhoWeServe() {
   return (
     <section className="bg-white" aria-labelledby="who-we-serve">
@@ -67,6 +95,38 @@ export function WhoWeServe() {
             </article>
           ))}
         </div>
+      </Container>
+    </section>
+  );
+}
+
+export function IndustriesWeServe() {
+  return (
+    <section className="bg-paper" aria-labelledby="industries-we-serve">
+      <Container className="py-24 sm:py-28 lg:py-32">
+        <Reveal className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-2xl">
+            <Eyebrow>{industriesIntro.eyebrow}</Eyebrow>
+            <h2 id="industries-we-serve" className="mt-4 text-3xl leading-tight text-ink sm:text-5xl">
+              {industriesIntro.title}
+            </h2>
+            <p className="mt-4 text-base leading-7 text-muted">{industriesIntro.support}</p>
+          </div>
+          <Link
+            href="/industries"
+            className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-ink"
+          >
+            All industries
+            <ArrowUpRight size={16} aria-hidden="true" />
+          </Link>
+        </Reveal>
+        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {industries.map((industry, index) => (
+            <li key={industry.id}>
+              <IndustryCard industry={industry} index={index} href={`/industries#${industry.id}`} />
+            </li>
+          ))}
+        </ul>
       </Container>
     </section>
   );
