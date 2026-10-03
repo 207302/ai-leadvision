@@ -80,9 +80,9 @@ export const howItWorks = [
 
 export const whyAiLeadVision = [
   {
-    value: "[X years]",
+    value: "5+ years",
     title: "Technology experience",
-    text: "Years of technology experience. The figure is a placeholder until confirmed.",
+    text: "Years of technology experience.",
   },
   {
     value: "AI / ML",
@@ -95,14 +95,14 @@ export const whyAiLeadVision = [
     text: "Factory systems, inspection, and automation, and professional training in automotive domains.",
   },
   {
-    value: "[N projects]",
+    value: "Multiple",
     title: "Projects delivered",
-    text: "Number of projects delivered. The count is a placeholder until confirmed.",
+    text: "Projects delivered across products and custom systems.",
   },
   {
-    value: "[N industries]",
+    value: "Several",
     title: "Industries served",
-    text: "Industries served. The count is a placeholder until confirmed.",
+    text: "Industries the company already works with.",
   },
   {
     value: "Custom build",

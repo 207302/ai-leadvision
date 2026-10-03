@@ -166,7 +166,7 @@ export function WhySection() {
             Why AI Lead Vision
           </h2>
           <p className="mt-4 text-base leading-7 text-muted">
-            Experience, the work we take on, and where the company is based. Figures in brackets are placeholders until confirmed.
+            Experience, the work we take on, and where the company is based.
           </p>
         </Reveal>
         <dl className="mt-12 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">

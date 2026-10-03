@@ -86,7 +86,7 @@ export function siteJsonLd() {
         url: siteConfig.url,
         logo: {
           "@type": "ImageObject",
-          url: `${siteConfig.url}/icon.svg`,
+          url: `${siteConfig.url}/logo/logo.png`,
         },
         image: `${siteConfig.url}/opengraph-image`,
         email: siteConfig.emails.general,
