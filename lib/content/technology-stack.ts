@@ -3,7 +3,8 @@
 export const technologyStack = {
   eyebrow: "Technology stack",
   title: "Technology stack",
-  support: "Languages, libraries, and methods used across AI, vision, robotics, software, and automotive work.",
+  support:
+    "Languages, libraries, and methods used across AI, vision, robotics, software, and automotive work. Python and the vision libraries sit next to robotics hardware, web applications, and the automotive protocols a vehicle program expects.",
   groups: [
     {
       id: "ai-ml",

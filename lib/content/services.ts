@@ -271,18 +271,18 @@ export const capabilities = [
 export const outcomes = [
   {
     title: "Automate repetitive operations",
-    text: "Attendance, first-line support, and inspection that no longer depend on a person repeating the same check.",
+    text: "Attendance, first-line support, and inspection that no longer depend on a person repeating the same check. The system does the repeated step and leaves a record the team can review.",
   },
   {
     title: "Improve decision-making",
-    text: "Forecasts, alerts, and dashboards aimed at a number someone can act on.",
+    text: "Forecasts, alerts, and dashboards aimed at a number someone can act on. The output shows up where the work already happens, so the decision is not left in a notebook.",
   },
   {
     title: "Reduce manual processes",
-    text: "Registers, status calls, and end-of-line sampling replaced by a system with an audit trail.",
+    text: "Registers, status calls, and end-of-line sampling replaced by a system with an audit trail. People still handle the exceptions. The routine check does not wait on them.",
   },
   {
     title: "Create intelligent customer experiences",
-    text: "Voice and chat that answer in the channel the customer already uses, and hand off when a person is needed.",
+    text: "Voice and chat that answer in the channel the customer already uses, and hand off when a person is needed. The conversation can connect to booking, support, and the CRM.",
   },
 ] as const;

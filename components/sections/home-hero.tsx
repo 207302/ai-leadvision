@@ -4,12 +4,6 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { HeroGlow } from "@/components/visuals/hero-glow";
 import { SystemSchematic } from "@/components/visuals/system-schematic";
 
-const signals = [
-  { label: "Attendance", detail: "Contactless check-in" },
-  { label: "Conversation", detail: "Voice and chat" },
-  { label: "Vision", detail: "Cameras that raise an alert" },
-];
-
 export function HomeHero() {
   return (
     <section className="relative overflow-hidden bg-navy text-white">
@@ -31,7 +25,7 @@ export function HomeHero() {
             </p>
             <LeadCtas className="mt-6" />
             <ul className="mt-4 grid gap-3 sm:grid-cols-3">
-              {signals.map((item) => (
+              {homeHero.signals.map((item) => (
                 <li
                   key={item.label}
                   className="enter-box rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2.5 shadow-[0_0_24px_rgba(26,95,212,0.12)]"

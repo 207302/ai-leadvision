@@ -1,11 +1,16 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import {
+  businessOutcomeIntro,
   homeContact,
   howItWorks,
+  howItWorksIntro,
   whatWeBuild,
+  whatWeBuildIntro,
   whoWeServe,
+  whoWeServeIntro,
   whyAiLeadVision,
+  whyIntro,
 } from "@/lib/content/home";
 import { generativeAi } from "@/lib/content/generative-ai";
 import { industries, industriesIntro } from "@/lib/content/industries";
@@ -26,9 +31,7 @@ export function WhatWeBuild() {
           <h2 id="what-we-build" className="mt-4 text-3xl leading-tight text-ink sm:text-5xl">
             Five kinds of systems.
           </h2>
-          <p className="mt-4 text-base leading-7 text-muted">
-            Enterprise AI, industrial automation, computer vision, robotics, and custom software development.
-          </p>
+          <p className="mt-4 text-base leading-7 text-muted">{whatWeBuildIntro.support}</p>
         </Reveal>
         <div className="mt-12 divide-y divide-line border-y border-line">
           {whatWeBuild.map((item, index) => (
@@ -86,6 +89,7 @@ export function WhoWeServe() {
           <h2 id="who-we-serve" className="mt-4 text-3xl leading-tight text-ink sm:text-5xl">
             Enterprises, industries, educational institutions, and businesses.
           </h2>
+          <p className="mt-4 text-base leading-7 text-muted">{whoWeServeIntro.support}</p>
         </Reveal>
         <div className="mt-12 grid gap-4 sm:grid-cols-2">
           {whoWeServe.map((item) => (
@@ -141,6 +145,7 @@ export function HowItWorks() {
           <h2 id="how-it-works" className="mt-4 text-3xl leading-tight sm:text-5xl">
             From the operation to a system in use.
           </h2>
+          <p className="mt-4 text-base leading-7 text-white/70">{howItWorksIntro.support}</p>
         </Reveal>
         <ol className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {howItWorks.map((item, index) => (
@@ -165,9 +170,7 @@ export function WhySection() {
           <h2 id="why-ai-lead-vision" className="mt-4 text-3xl leading-tight text-ink sm:text-5xl">
             Why AI Lead Vision
           </h2>
-          <p className="mt-4 text-base leading-7 text-muted">
-            Experience, the work we take on, and where the company is based.
-          </p>
+          <p className="mt-4 text-base leading-7 text-muted">{whyIntro.support}</p>
         </Reveal>
         <dl className="mt-12 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
           {whyAiLeadVision.map((item) => (
@@ -200,6 +203,7 @@ export function BusinessOutcome() {
           <h2 id="business-outcome" className="mt-4 text-3xl leading-tight text-ink sm:text-5xl">
             Technology should solve a business problem.
           </h2>
+          <p className="mt-4 text-base leading-7 text-muted">{businessOutcomeIntro.support}</p>
         </Reveal>
         <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {outcomes.map((item, index) => (

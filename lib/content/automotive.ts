@@ -5,7 +5,7 @@ export const automotiveEngineering = {
   eyebrow: "Automotive",
   title: "Automotive software and AI engineering.",
   support:
-    "Embedded software, automotive AI, computer vision, and ADAS-related solutions, with the automotive software standards named here.",
+    "Embedded software, automotive AI, computer vision, and ADAS-related solutions, with the automotive software standards named here. The work covers the software in the vehicle and the testing, diagnostics, and validation around it.",
   items: [
     "Embedded Software",
     "Automotive AI",
