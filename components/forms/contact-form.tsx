@@ -96,7 +96,9 @@ export function ContactForm({ defaultRequirement = "" }: { defaultRequirement?: 
         setFormError(
           result.code === "DELIVERY_NOT_CONFIGURED"
             ? `Email delivery is not connected on this server yet. Please write to ${siteConfig.emails.general} with the same details.`
-            : `The message could not be sent. Please email ${siteConfig.emails.general} directly.`,
+            : result.code === "RATE_LIMITED"
+              ? `We have received several inquiries from this connection in the last hour. Please try again later or email ${siteConfig.emails.general} directly.`
+              : `The message could not be sent. Please email ${siteConfig.emails.general} directly.`,
         );
         setStatus("error");
         return;

@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { deliverInquiry } from "@/lib/contact/deliver";
 import { parseInquiry } from "@/lib/contact/parse";
+import { DAY, HOUR, clientIp, takeToken } from "@/lib/contact/rate-limit";
+
+const inquiriesPerIpPerHour = 5;
+const confirmationsPerAddressPerDay = 2;
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -23,7 +27,17 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   }
 
-  const delivery = await deliverInquiry(parsed.data);
+  if (!takeToken(`ip:${clientIp(request)}`, inquiriesPerIpPerHour, HOUR)) {
+    return NextResponse.json({ ok: false, code: "RATE_LIMITED" }, { status: 429 });
+  }
+
+  const confirm = takeToken(
+    `confirm:${parsed.data.email.toLowerCase()}`,
+    confirmationsPerAddressPerDay,
+    DAY,
+  );
+
+  const delivery = await deliverInquiry(parsed.data, { confirm });
   if (!delivery.ok) {
     return NextResponse.json({ ok: false, code: delivery.code }, { status: 503 });
   }
