@@ -1,0 +1,19 @@
+---
+description: Ground rules for all work on the AI Lead Vision website
+alwaysApply: true
+---
+
+# AI Lead Vision website - ground rules
+
+Company: AI Lead Vision Pvt Ltd, Bengaluru, India. B2B: AI, Computer Vision, Robotics,
+Industrial Automation, Automotive Software, Custom Software Development.
+
+- Modify the existing Next.js site incrementally. Never rewrite pages or components from scratch.
+- Never invent facts. Use clear placeholders for real data: [X years], [N projects],
+  [Client Name], [Testimonial here], [Screenshot here], [Video here].
+- Only show technologies and capabilities the owner has listed. Do not add new ones.
+- Keep the design modern, visual and mobile-friendly; reuse existing tokens in
+  app/globals.css and components in components/ui.
+- Company facts, navigation and contacts live in lib/content/site.ts; page copy lives in
+  lib/content/*.ts. Edit content there rather than hardcoding it in components.
+- Keep statistics.publish false and address.confirmed null until the owner confirms them.
