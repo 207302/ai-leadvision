@@ -61,6 +61,7 @@ export const products: Product[] = [
       { label: "Dashboard", detail: "Attendance, leave, payroll" },
     ],
     featured: true,
+    demo: "/product-demos/AiLeadVision Attendance.mp4",
   },
   {
     id: "voice-bot",
