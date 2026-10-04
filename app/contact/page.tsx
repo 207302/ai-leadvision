@@ -10,8 +10,7 @@ import { contactPageJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Contact",
-  description:
-    "Contact AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India. Email info@aileadvision.com or hr@aileadvision.com, or send an inquiry.",
+  description: `Contact AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India. Email ${siteConfig.emails.general} or ${siteConfig.emails.hr}, or send an inquiry.`,
   path: "/contact",
 });
 

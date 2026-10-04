@@ -20,7 +20,7 @@ export const siteConfig = {
     country: "India",
   },
   emails: {
-    general: "info@aileadvision.com",
+    general: "aradhana@aileadvision.com",
     hr: "hr@aileadvision.com",
   },
   /**

@@ -1,3 +1,5 @@
+import { siteConfig } from "@/lib/content/site";
+
 export type LegalSection = {
   heading: string;
   paragraphs: string[];
@@ -26,7 +28,7 @@ export const privacyPolicy: LegalPage = {
       heading: "Who we are",
       paragraphs: [
         "This website is operated by AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India. The street address is [Office street address] until the office line is confirmed. The company registration number is [Company registration number].",
-        "Questions about an inquiry can go to info@aileadvision.com.",
+        `Questions about an inquiry can go to ${siteConfig.emails.general}.`,
       ],
     },
     {
@@ -58,7 +60,7 @@ export const privacyPolicy: LegalPage = {
     {
       heading: "Asking about your inquiry",
       paragraphs: [
-        "To ask what we hold from your form submission, or to ask us to correct it, email info@aileadvision.com from the work address you used.",
+        `To ask what we hold from your form submission, or to ask us to correct it, email ${siteConfig.emails.general} from the work address you used.`,
       ],
     },
   ],
@@ -105,7 +107,7 @@ export const termsPage: LegalPage = {
     },
     {
       heading: "Contact",
-      paragraphs: ["Questions about these terms: info@aileadvision.com."],
+      paragraphs: [`Questions about these terms: ${siteConfig.emails.general}.`],
     },
   ],
 };

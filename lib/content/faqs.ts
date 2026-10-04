@@ -1,3 +1,5 @@
+import { siteConfig } from "@/lib/content/site";
+
 export type Faq = {
   question: string;
   answer: string;
@@ -32,7 +34,7 @@ export const faqs: Faq[] = [
   {
     question: "How can I request a product demo?",
     answer:
-      "Use Request a Demo, or email info@aileadvision.com. On the contact form, choose Request a Demo and the product under Interested Solution. Name the kind of site it needs to run in, and a phone number.",
+      `Use Request a Demo, or email ${siteConfig.emails.general}. On the contact form, choose Request a Demo and the product under Interested Solution. Name the kind of site it needs to run in, and a phone number.`,
   },
   {
     question: "What information is needed to start an AI project?",
