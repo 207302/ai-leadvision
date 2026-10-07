@@ -9,8 +9,8 @@ const nodes = [
   { x: 292, y: 118, label: "VOICE", name: "Voice", href: "/products#voice-bot" },
   { x: 512, y: 150, label: "CHAT", name: "Chat", href: "/products#chat-bot" },
   { x: 548, y: 318, label: "VISION", name: "Vision", href: "/products#computer-vision" },
-  { x: 430, y: 458, label: "ML", name: "Machine learning", href: "/services#machine-learning" },
-  { x: 236, y: 430, label: "SOFT", name: "Software", href: "/services#software-development" },
+  { x: 430, y: 458, label: "ML", name: "Machine learning", href: "/solutions#ai-machine-learning" },
+  { x: 236, y: 430, label: "SOFT", name: "Software", href: "/solutions#software-engineering" },
 ];
 
 export function SystemSchematic() {

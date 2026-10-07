@@ -356,3 +356,63 @@ export const featuredProducts = products.filter((product) => product.featured);
 export function getProduct(id: string) {
   return products.find((product) => product.id === id);
 }
+
+/** Cards for the products index. Detail copy stays on each product record. */
+export const productCards = [
+  {
+    id: "face-attendance",
+    title: "AI Face Recognition Attendance",
+    line: "Contactless attendance that identifies a live face, blocks photo and video attempts, and records the result.",
+    tags: ["Face recognition", "Anti-spoofing", "Attendance and analytics"],
+    href: "/products/attendance",
+  },
+  {
+    id: "voice-bot",
+    title: "AI Voice Assistant / Voice Bot",
+    line: "A spoken assistant for defined business tasks, connected to the channels a team already uses.",
+    tags: ["Voice AI", "Conversational workflows", "Integrations"],
+    href: "/products#voice-bot",
+  },
+  {
+    id: "chat-bot",
+    title: "AI Chatbot",
+    line: "Business-specific conversational AI across the website, app, and chat channels already in use.",
+    tags: ["Conversational AI", "Business-specific"],
+    href: "/products#chat-bot",
+  },
+  {
+    id: "educational-robot",
+    title: "Educational / Service Robot",
+    line: "A programmable robot for labs: sensors, AI, and interaction on hardware a student can program. TODO: confirm with client — a separate service-robot deployment is not published.",
+    tags: ["Robotics", "Sensors", "AI and interaction"],
+    href: "/products/robotics",
+  },
+  {
+    id: "machine-vision",
+    title: "Machine Vision Inspection",
+    line: "Industrial cameras and deep learning inspect each unit for defects while the line is running.",
+    tags: ["Object detection", "Defect detection", "Industrial inspection"],
+    href: "/products/computer-vision#machine-vision",
+  },
+  {
+    id: "predictive-analytics",
+    title: "Predictive Analytics",
+    line: "Forecasts and dashboards on data a business already collects, shown where a decision is made.",
+    tags: ["Forecasting", "Dashboards", "Decision support"],
+    href: "/products#predictive-analytics",
+  },
+  {
+    id: "computer-vision",
+    title: "AI Video Analytics",
+    line: "Detection and alerts on a live camera feed for safety and security events.",
+    tags: ["Object detection", "Tracking", "Safety and security alerts"],
+    href: "/products/computer-vision",
+  },
+  {
+    id: "industrial-automation",
+    title: "Industrial Automation",
+    line: "AI, control, sensors, and machine integration designed as one layer on the line.",
+    tags: ["AI", "Control and sensors", "Machine integration"],
+    href: "/products/robotics",
+  },
+] as const;

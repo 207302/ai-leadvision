@@ -1,8 +1,17 @@
+"use client";
+
 import { homeHero } from "@/lib/content/home";
-import { LeadCtas } from "@/components/layout/lead-ctas";
+import { siteConfig } from "@/lib/content/site";
+import { trackEvent } from "@/lib/analytics";
+import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { HeroGlow } from "@/components/visuals/hero-glow";
 import { SystemSchematic } from "@/components/visuals/system-schematic";
+
+const heroCtas = [
+  { ...siteConfig.cta.explore, variant: "primary" as const },
+  { ...siteConfig.cta.expert, variant: "secondary" as const },
+];
 
 export function HomeHero() {
   return (
@@ -17,24 +26,24 @@ export function HomeHero() {
             <h1 className="mt-3 max-w-3xl text-4xl leading-[1.05] text-white sm:text-5xl lg:text-[3.25rem]">
               {homeHero.title}
             </h1>
-            <p className="mt-4 max-w-2xl text-lg leading-7 text-white/80 sm:text-xl">
-              {homeHero.support}
-            </p>
-            <p className="mt-2 max-w-2xl text-base leading-7 text-white/65">
-              {homeHero.audience}
-            </p>
-            <LeadCtas className="mt-6" />
-            <ul className="mt-4 grid gap-3 sm:grid-cols-3">
-              {homeHero.signals.map((item) => (
-                <li
+            <p className="mt-4 max-w-2xl text-lg leading-7 text-white/80 sm:text-xl">{homeHero.subheadline}</p>
+            <p className="mt-2 max-w-2xl text-base leading-7 text-white/65">{homeHero.support}</p>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              {heroCtas.map((item) => (
+                <Button
                   key={item.label}
-                  className="enter-box rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2.5 shadow-[0_0_24px_rgba(26,95,212,0.12)]"
+                  href={item.href}
+                  variant={item.variant}
+                  tone="dark"
+                  className="h-auto min-h-12 w-full whitespace-normal px-4 py-3 text-center sm:w-auto"
+                  onClick={() =>
+                    trackEvent("cta_click", { cta_label: item.label, cta_location: "home_hero" })
+                  }
                 >
-                  <p className="text-sm text-white">{item.label}</p>
-                  <p className="mt-1 text-xs text-white/55">{item.detail}</p>
-                </li>
+                  {item.label}
+                </Button>
               ))}
-            </ul>
+            </div>
           </div>
           <div className="mx-auto w-full max-w-[480px] shrink-0 lg:mx-0 lg:w-[480px]">
             <div className="rounded-2xl shadow-[0_0_80px_rgba(26,95,212,0.18)]">

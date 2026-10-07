@@ -2,7 +2,7 @@ import { LeadCtas } from "@/components/layout/lead-ctas";
 import { Container } from "@/components/ui/container";
 
 export function FinalCta({
-  title = "Let’s build something intelligent.",
+  title = "Let's Build Something Intelligent.",
   body = "Have a product idea, an automation challenge, or an AI initiative? Let’s discuss what is possible.",
 }: {
   title?: string;

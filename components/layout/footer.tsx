@@ -4,6 +4,7 @@ import { featuredProducts } from "@/lib/content/products";
 import { serviceCategories } from "@/lib/content/services";
 import {
   companyIdentity,
+  companyNavigation,
   footerNavigation,
   legalNavigation,
   officeAddressLines,
@@ -19,7 +20,7 @@ export function Footer() {
         <div className="md:col-span-4">
           <Logo />
           <p className="mt-5 max-w-xs text-sm leading-6 text-white/65">
-            {companyIdentity()}. Intelligent products and enterprise systems for operations that have to work outside a demo.
+            {companyIdentity()}. Engineering intelligence for real business environments: AI, computer vision, robotics, and automation.
           </p>
           <div className="mt-6">
             <SocialLinks />
@@ -31,6 +32,16 @@ export function Footer() {
             <p className="text-[11px] uppercase tracking-[0.16em] text-white/40">Navigate</p>
             <ul className="mt-4 space-y-2.5">
               {footerNavigation.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="text-sm text-white/75 hover:text-white">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 text-[11px] uppercase tracking-[0.16em] text-white/40">Company</p>
+            <ul className="mt-4 space-y-2.5">
+              {companyNavigation.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href} className="text-sm text-white/75 hover:text-white">
                     {item.label}
@@ -61,12 +72,12 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-            <p className="mt-6 text-[11px] uppercase tracking-[0.16em] text-white/40">Services</p>
+            <p className="mt-6 text-[11px] uppercase tracking-[0.16em] text-white/40">Solutions</p>
             <ul className="mt-4 space-y-2.5">
               {serviceCategories.map((category) => (
                 <li key={category.id}>
                   <Link
-                    href={`/services#${category.id}`}
+                    href={`/solutions#${category.id}`}
                     className="text-sm text-white/75 hover:text-white"
                   >
                     {category.title}

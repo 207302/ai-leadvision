@@ -4,13 +4,13 @@ import { ContactForm } from "@/components/forms/contact-form";
 import { PageHero } from "@/components/layout/page-hero";
 import { Container } from "@/components/ui/container";
 import { SocialLinks } from "@/components/layout/social-links";
-import { companyIdentity, officeAddressLines, siteConfig } from "@/lib/content/site";
+import { officeAddressLines, siteConfig } from "@/lib/content/site";
 import { JsonLd } from "@/components/seo/json-ld";
 import { contactPageJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Contact",
-  description: `Contact AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India. Email ${siteConfig.emails.general} or ${siteConfig.emails.hr}, or send an inquiry.`,
+  description: `Contact AI Lead Vision Pvt Ltd in Bengaluru, India. Email ${siteConfig.emails.general} or send a project enquiry.`,
   path: "/contact",
 });
 
@@ -26,8 +26,8 @@ export default async function ContactPage({
       <JsonLd data={contactPageJsonLd()} />
       <PageHero
         eyebrow="Contact"
-        title="Let’s build something intelligent."
-        description="Tell us what you're trying to solve."
+        title="Let's Build Something Intelligent Together."
+        description="Tell us what you want to build. AI Lead Vision Pvt. Ltd. is in Bengaluru, India."
       />
       <section className="bg-paper">
         <Container className="grid gap-12 py-16 sm:py-20 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,0.8fr)]">
@@ -35,8 +35,8 @@ export default async function ContactPage({
             <ContactForm key={formKey} />
           </Suspense>
           <aside className="lg:pt-2">
-            <h2 className="text-xl text-ink">{companyIdentity()}</h2>
-            <p className="mt-2 text-sm leading-6 text-muted">Corporate contact</p>
+            <h2 className="text-xl text-ink">AI Lead Vision Pvt. Ltd.</h2>
+            <p className="mt-2 text-sm leading-6 text-muted">Bengaluru, India</p>
             <div className="mt-4">
               <SocialLinks tone="light" />
             </div>

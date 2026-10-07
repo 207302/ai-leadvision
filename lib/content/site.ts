@@ -12,7 +12,7 @@ export const siteConfig = {
   legalName: "AI Lead Vision Pvt Ltd",
   url: "https://aileadvision.com",
   description:
-    "AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India is an AI company in Bangalore. We deliver enterprise AI, industrial automation, computer vision, robotics, and custom software development for enterprises, industries, educational institutions, and businesses.",
+    "AI Lead Vision Pvt Ltd, Bengaluru, India builds production-ready AI, computer vision, machine learning, robotics, and automation for real business environments.",
   locale: "en_IN",
   location: {
     city: "Bengaluru",
@@ -80,11 +80,11 @@ export const siteConfig = {
   /** Placeholder until the company registration number is confirmed. */
   registration: "[Company registration number]",
   cta: {
-    demo: { label: "Request a Demo", href: "/contact?requirement=demo" },
-    expert: { label: "Talk to an AI Expert", href: "/contact?requirement=expert" },
+    explore: { label: "Explore Solutions", href: "/solutions" },
+    expert: { label: "Talk to Our AI Team", href: "/contact" },
     consultation: {
-      label: "Get a Project Consultation",
-      href: "/contact?requirement=consultation",
+      label: "Discuss Your Project",
+      href: "/contact",
     },
   },
 } as const;
@@ -99,21 +99,24 @@ export const socialProfiles = [
 export const navigation = [
   { label: "Home", href: "/" },
   { label: "Products", href: "/products" },
-  { label: "Services", href: "/services" },
+  { label: "Solutions", href: "/solutions" },
   { label: "Industries", href: "/industries" },
-  { label: "Case Studies", href: "/case-studies" },
+  { label: "Projects", href: "/projects" },
+  { label: "Technology", href: "/technology" },
   { label: "About", href: "/about" },
-  { label: "Training", href: "/training" },
-  { label: "Careers", href: "/careers", mobileOnly: true },
   { label: "Contact", href: "/contact" },
 ] as const;
 
-/** Careers stays in this list for the mobile menu and the footer. mobileOnly keeps it off the desktop bar. FAQ and Testimonials are footer-only. */
-export const footerNavigation = [
-  ...navigation,
-  { label: "Testimonials", href: "/testimonials" },
+/** No dropdown in the header. These sit in the footer. */
+export const companyNavigation = [
+  { label: "Training", href: "/training" },
+  { label: "Careers", href: "/careers" },
+  { label: "Insights", href: "/insights" },
   { label: "FAQ", href: "/faq" },
+  { label: "Testimonials", href: "/testimonials" },
 ] as const;
+
+export const footerNavigation = navigation;
 
 /**
  * Unpublished on purpose. The previous site showed 247+ / 74+ on the homepage
@@ -138,12 +141,16 @@ export const inquiryIndustries = [
   { value: "other", label: "Other" },
 ];
 
-export const inquiryRequirements = [
-  { value: "demo", label: "Request a Demo" },
-  { value: "expert", label: "Talk to an AI Expert" },
-  { value: "consultation", label: "Get a Project Consultation" },
+/** Project enquiry: what the visitor wants built. */
+export const inquiryBuilds = [
+  { value: "ai-ml", label: "AI/ML" },
+  { value: "computer-vision", label: "Computer Vision" },
+  { value: "robotics", label: "Robotics" },
+  { value: "automation", label: "Automation" },
+  { value: "ai-software", label: "AI Software" },
+  { value: "automotive", label: "Automotive Engineering" },
+  { value: "data-analytics", label: "Data Analytics" },
   { value: "training", label: "Training" },
-  { value: "careers", label: "Careers" },
   { value: "other", label: "Other" },
 ] as const;
 
@@ -171,7 +178,7 @@ export const preferredContactMethods = [
   { value: "whatsapp", label: "WhatsApp" },
 ] as const;
 
-export type InquiryRequirement = (typeof inquiryRequirements)[number]["value"];
+export type InquiryBuild = (typeof inquiryBuilds)[number]["value"];
 export type InquirySolution = (typeof inquirySolutions)[number]["value"];
 
 export function locationLine() {

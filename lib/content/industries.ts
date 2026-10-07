@@ -1,77 +1,102 @@
 /**
- * Industries the owner has named. Supporting lines use systems already published
- * on the site. Logistics and agriculture are named here without a product of their own.
+ * Industries the owner has named. Primary six lead the page.
+ * Extra industries already on the site stay below them.
  */
 
 export const industriesIntro = {
-  eyebrow: "Industries we serve",
-  title: "Find your industry.",
+  eyebrow: "Industries",
+  title: "Industries we work with.",
   support:
-    "Industrial AI solutions for the industries listed here. Each one is tied to a system the company already builds: attendance, vision, conversation, inspection, robotics, or custom software.",
+    "Manufacturing, automotive, retail, healthcare, education, and security lead. Other sectors already described on the site sit below.",
 };
 
 export const industriesPage = {
   path: "/industries",
   eyebrow: "Industries",
-  title: "Industrial AI solutions.",
+  title: "Industries we work with.",
   description:
-    "Industrial AI solutions for automotive, manufacturing, healthcare, education, retail and e-commerce, logistics, banking and finance, construction, government, agriculture, and security.",
+    "AI, computer vision, robotics, and automation for manufacturing, automotive, retail, healthcare, education, and security.",
 };
 
 export const industries = [
   {
-    id: "automotive",
-    title: "Automotive",
-    text: "Factory systems, inspection, and automation, and professional training in automotive domains. The engineering side covers embedded software, automotive AI, computer vision, and the standards named on this site.",
-  },
-  {
     id: "manufacturing",
     title: "Manufacturing",
-    text: "Inspection, control, robot integration, and a production view for the line. Machine vision and the software that supervises the cell are designed as one operational layer.",
+    text: "Machine vision, inspection, automation, and predictive maintenance for the production line.",
+    href: "/solutions#robotics-automation",
+    primary: true,
   },
   {
-    id: "healthcare",
-    title: "Healthcare",
-    text: "Attendance for hospitals, and voice systems for healthcare conversations. Check-in stays contactless, and the conversation can connect to the channels the organization already uses.",
-  },
-  {
-    id: "education",
-    title: "Education",
-    text: "Schools, colleges, and STEM labs that need hardware and systems students can program. Campus attendance and educational robots for the lab sit in the same practice.",
+    id: "automotive",
+    title: "Automotive",
+    text: "AI, embedded systems, testing, computer vision, and intelligent systems, including the automotive standards named on this site.",
+    href: "/solutions#automotive-engineering",
+    primary: true,
   },
   {
     id: "retail-ecommerce",
     title: "Retail & E-commerce",
-    text: "Voice and chat for retail, product recommendations, and e-commerce assistance. The conversation sits in the channel the customer already uses, and hands off when a person is needed.",
+    text: "Customer analytics, AI assistants, and inventory intelligence. Voice and chat sit in the channel the customer already uses.",
+    href: "/solutions#ai-machine-learning",
+    primary: true,
+  },
+  {
+    id: "healthcare",
+    title: "Healthcare",
+    text: "Intelligent workflows for hospital check-in and healthcare conversations. TODO: confirm with client — clinical monitoring products are not published yet.",
+    href: "/solutions#ai-machine-learning",
+    primary: true,
+  },
+  {
+    id: "education",
+    title: "Education",
+    text: "AI training, robotics, and smart systems for schools, colleges, and STEM labs, including campus attendance.",
+    href: "/products/robotics",
+    primary: true,
+  },
+  {
+    id: "security-surveillance",
+    title: "Security",
+    text: "Video analytics, detection, and alerts on a live camera feed — intrusion, PPE, fire and smoke, crowds, vehicles, plates, and falls.",
+    href: "/products#computer-vision",
+    primary: true,
   },
   {
     id: "logistics",
     title: "Logistics",
-    text: "Enterprise AI, computer vision, and software for logistics operations. The work uses those systems, scoped to the logistics operation.",
+    text: "Enterprise AI, computer vision, and software scoped to a logistics operation.",
+    href: "/solutions",
+    primary: false,
   },
   {
     id: "banking-finance",
     title: "Banking & Finance",
-    text: "Voice assistants for banking conversations, connected to booking, support, and the CRM. The assistant answers in conversation and hands off when a person is needed.",
+    text: "Voice assistants for banking conversations, connected to booking, support, and the CRM.",
+    href: "/products#voice-bot",
+    primary: false,
   },
   {
     id: "construction",
     title: "Construction",
-    text: "Contactless attendance for construction sites. Face recognition replaces a paper register at the entrance, with a record the site can audit.",
+    text: "Contactless attendance for construction sites, with a record the site can audit.",
+    href: "/products/attendance",
+    primary: false,
   },
   {
     id: "government",
     title: "Government",
-    text: "Contactless attendance for government offices. The same attendance system supports offices that need check-in without a shared biometric device.",
+    text: "Contactless attendance for government offices, without a shared biometric device.",
+    href: "/products/attendance",
+    primary: false,
   },
   {
     id: "agriculture",
     title: "Agriculture",
-    text: "Enterprise AI, computer vision, and software for agricultural operations. The work uses those systems, scoped to the agricultural operation.",
-  },
-  {
-    id: "security-surveillance",
-    title: "Security & Surveillance",
-    text: "Video analytics on a live camera feed — intrusion, PPE, fire and smoke, crowds, vehicles, plates, and falls. The camera raises an alert when one of those events is detected.",
+    text: "Enterprise AI, computer vision, and software scoped to an agricultural operation.",
+    href: "/solutions",
+    primary: false,
   },
 ] as const;
+
+export const primaryIndustries = industries.filter((item) => item.primary);
+export const moreIndustries = industries.filter((item) => !item.primary);

@@ -120,9 +120,6 @@ export function TechnologyPanel() {
                 }}
               >
                 <span className="flex items-baseline gap-3">
-                  <span className="font-mono text-[10px] tracking-[0.16em] text-cyan">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
                   <span className="font-heading text-sm tracking-tight text-white sm:text-base">{item.title}</span>
                 </span>
                 <p

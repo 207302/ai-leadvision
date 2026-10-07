@@ -108,11 +108,8 @@ function notificationText(inquiry: Inquiry) {
     ["Company", inquiry.company],
     ["Email", inquiry.email],
     ["Phone", inquiry.phone],
-    ["Industry", inquiry.industry],
-    ["Requirement", inquiry.requirement],
-    ["Interested solution", inquiry.solution],
+    ["Looking to build", inquiry.build],
     ["Product page", inquiry.product],
-    ["Preferred contact", inquiry.contactMethod],
     ["Submitted", new Date().toISOString()],
   ];
 

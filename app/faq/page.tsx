@@ -9,7 +9,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "FAQ",
   description:
-    "Questions about custom AI development, demos, and working with AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India.",
+    "Buyer questions about custom AI, integration, edge deployment, computer vision, ROS2, proof of concept, support, and training at AI Lead Vision.",
   path: "/faq",
 });
 

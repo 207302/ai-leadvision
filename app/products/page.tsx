@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/layout/page-hero";
 import { ProductSection } from "@/components/products/product-showcase";
 import { FinalCta } from "@/components/sections/final-cta";
 import { Container } from "@/components/ui/container";
-import { productGroups, productsInGroup } from "@/lib/content/product-pages";
+import { productCards, products } from "@/lib/content/products";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "AI Products",
+  title: "AI Products Built for the Real World",
   description:
-    "AI attendance system, machine vision inspection, AI chatbot development, and predictive analytics solutions from AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India.",
+    "Ready-to-deploy intelligent systems from AI Lead Vision: attendance, voice, chat, vision, inspection, robotics, and analytics.",
   path: "/products",
 });
 
@@ -19,53 +20,52 @@ export default function ProductsPage() {
     <>
       <PageHero
         eyebrow="Products"
-        title="AI-powered solutions for smart businesses."
-        description="Intelligent products that combine artificial intelligence, machine learning, computer vision, and automation."
+        title="AI Products Built for the Real World."
+        description="Ready-to-deploy intelligent systems designed for specific business and operational problems."
       />
-      <section className="bg-paper" aria-labelledby="product-groups">
+      <section className="bg-paper" aria-labelledby="product-cards">
         <Container className="py-16 sm:py-20">
-          <h2 id="product-groups" className="max-w-2xl text-3xl leading-tight text-ink sm:text-5xl">
-            Attendance, vision, chat, and analytics.
+          <h2 id="product-cards" className="max-w-2xl text-3xl leading-tight text-ink sm:text-5xl">
+            What AI Lead Vision has already built.
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-7 text-muted">
-            The same products, grouped as ready products, custom AI solutions, industrial solutions, and research.
+            These are products. Custom work sits on{" "}
+            <Link href="/solutions" className="font-medium text-ink">
+              Solutions
+            </Link>
+            . Published builds are also listed under{" "}
+            <Link href="/projects" className="font-medium text-ink">
+              Projects
+            </Link>
+            .
           </p>
-          <ol className="mt-10 grid gap-3 sm:grid-cols-2">
-            {productGroups.map((group, index) => (
-              <li key={group.id}>
-                <Link
-                  href={`#${group.id}`}
-                  className="flex h-full items-baseline gap-3 rounded-xl border border-line bg-white px-4 py-4 text-ink transition-colors hover:border-accent/40"
-                >
-                  <span className="font-mono text-[11px] text-accent">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-base leading-snug">{group.title}</span>
-                </Link>
+          <ul className="mt-10 grid gap-4 sm:grid-cols-2">
+            {productCards.map((card) => (
+              <li key={card.id}>
+                <article className="enter-box flex h-full flex-col rounded-xl border border-line bg-white p-6">
+                  <h3 className="text-xl text-ink">{card.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-muted">{card.line}</p>
+                  <ul className="mt-4 flex flex-wrap gap-2">
+                    {card.tags.map((tag) => (
+                      <li key={tag} className="rounded-full border border-line px-3 py-1 text-xs text-ink">
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href={card.href} className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-ink">
+                    View Product
+                    <ArrowUpRight size={16} aria-hidden="true" />
+                  </Link>
+                </article>
               </li>
             ))}
-          </ol>
+          </ul>
 
-          {productGroups.map((group) => {
-            const items = productsInGroup(group.productIds);
-            return (
-              <section key={group.id} id={group.id} className="mt-16 scroll-mt-28">
-                <h2 className="text-3xl text-ink sm:text-4xl">{group.title}</h2>
-                <p className="mt-4 max-w-2xl text-sm leading-7 text-muted">{group.description}</p>
-                {items.length === 0 ? (
-                  <p className="mt-6 rounded-xl border border-dashed border-accent/35 bg-white px-5 py-6 text-sm leading-7 text-muted">
-                    {group.empty}
-                  </p>
-                ) : (
-                  <div className="mt-8 flex flex-col gap-8">
-                    {items.map((product, index) => (
-                      <ProductSection key={product.id} product={product} index={index} />
-                    ))}
-                  </div>
-                )}
-              </section>
-            );
-          })}
+          <div className="mt-16 flex flex-col gap-8">
+            {products.map((product, index) => (
+              <ProductSection key={product.id} product={product} index={index} />
+            ))}
+          </div>
         </Container>
       </section>
       <FinalCta

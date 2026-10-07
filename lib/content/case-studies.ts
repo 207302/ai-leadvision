@@ -131,6 +131,6 @@ export const caseStudyTemplates: readonly CaseStudyTemplate[] = [
     ],
     implementation:
       "The practice covers embedded software, in-vehicle communication on CAN and CAN FD, and diagnostics with UDS and DoIP, together with software testing and verification and validation. AUTOSAR, ASPICE, and ISO 26262 are the standards named for this work.",
-    related: { href: "/services#automotive-engineering", label: "Automotive software and AI engineering" },
+    related: { href: "/solutions#automotive-engineering", label: "Automotive engineering" },
   },
 ];

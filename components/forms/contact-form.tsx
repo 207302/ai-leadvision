@@ -3,14 +3,9 @@
 import { FormEvent, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { getProduct } from "@/lib/content/products";
-import {
-  inquiryIndustries,
-  inquiryRequirements,
-  inquirySolutions,
-  preferredContactMethods,
-  siteConfig,
-} from "@/lib/content/site";
+import { inquiryBuilds, siteConfig } from "@/lib/content/site";
 import { parseInquiry, type InquiryErrors } from "@/lib/contact/parse";
+import { trackEvent } from "@/lib/analytics";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -21,27 +16,24 @@ function listed(options: readonly { value: string }[], value: string) {
   return options.some((item) => item.value === value) ? value : "";
 }
 
-export function ContactForm({ defaultRequirement = "" }: { defaultRequirement?: string }) {
+export function ContactForm() {
   const params = useSearchParams();
-  const requestedInterest = params.get("interest") ?? "";
   const productId = params.get("product") ?? "";
   const product = getProduct(productId);
+  const requested =
+    params.get("build") ||
+    params.get("interest") ||
+    params.get("solution") ||
+    params.get("requirement") ||
+    "";
 
-  const initialSolution = listed(
-    inquirySolutions,
-    params.get("solution") || productId || requestedInterest,
-  );
-  const initialRequirement =
-    listed(inquiryRequirements, params.get("requirement") ?? "") ||
-    listed(inquiryRequirements, defaultRequirement) ||
-    (requestedInterest === "training" ? "training" : "");
+  const initialBuild = listed(inquiryBuilds, requested);
 
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<InquiryErrors>({});
   const [formError, setFormError] = useState("");
 
-  const solutionDefault = useMemo(() => initialSolution, [initialSolution]);
-  const requirementDefault = useMemo(() => initialRequirement, [initialRequirement]);
+  const buildDefault = useMemo(() => initialBuild, [initialBuild]);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -52,11 +44,8 @@ export function ContactForm({ defaultRequirement = "" }: { defaultRequirement?: 
       company: String(data.get("company") ?? ""),
       email: String(data.get("email") ?? ""),
       phone: String(data.get("phone") ?? ""),
-      industry: String(data.get("industry") ?? ""),
-      requirement: String(data.get("requirement") ?? ""),
-      solution: String(data.get("solution") ?? ""),
+      build: String(data.get("build") ?? ""),
       message: String(data.get("message") ?? ""),
-      contactMethod: String(data.get("contactMethod") ?? ""),
       product: product?.name ?? "",
       website: String(data.get("website") ?? ""),
     };
@@ -104,6 +93,7 @@ export function ContactForm({ defaultRequirement = "" }: { defaultRequirement?: 
         return;
       }
 
+      trackEvent("enquiry_submit", { build: payload.build });
       setStatus("success");
       form.reset();
     } catch {
@@ -143,41 +133,25 @@ export function ContactForm({ defaultRequirement = "" }: { defaultRequirement?: 
         </p>
       )}
 
-      <div className="grid gap-5 sm:grid-cols-2">
+      <SelectField
+        label="What are you looking to build?"
+        name="build"
+        error={errors.build}
+        options={inquiryBuilds}
+        defaultValue={buildDefault}
+        placeholder="Select a type of work"
+      />
+
+      <div className="mt-5 grid gap-5 sm:grid-cols-2">
         <Field label="Name" name="name" error={errors.name} autoComplete="name" />
         <Field label="Company" name="company" error={errors.company} autoComplete="organization" />
-        <Field label="Work Email" name="email" type="email" error={errors.email} autoComplete="email" />
+        <Field label="Business Email" name="email" type="email" error={errors.email} autoComplete="email" />
         <Field label="Phone" name="phone" type="tel" error={errors.phone} autoComplete="tel" />
-        <SelectField
-          label="Industry"
-          name="industry"
-          error={errors.industry}
-          options={inquiryIndustries}
-          placeholder="Select an industry"
-        />
-        <SelectField
-          label="Requirement"
-          name="requirement"
-          error={errors.requirement}
-          options={inquiryRequirements}
-          defaultValue={requirementDefault}
-          placeholder="Select a requirement"
-        />
       </div>
-
-      <SelectField
-        className="mt-5"
-        label="Interested Solution"
-        name="solution"
-        error={errors.solution}
-        options={inquirySolutions}
-        defaultValue={solutionDefault}
-        placeholder="Select a solution"
-      />
 
       <div className="mt-5">
         <label htmlFor="message" className="text-sm font-medium text-ink">
-          Message
+          Project Description
         </label>
         <textarea
           id="message"
@@ -195,39 +169,12 @@ export function ContactForm({ defaultRequirement = "" }: { defaultRequirement?: 
         )}
       </div>
 
-      <fieldset
-        className="mt-5"
-        aria-invalid={Boolean(errors.contactMethod)}
-        aria-describedby={errors.contactMethod ? "contactMethod-error" : undefined}
-      >
-        <legend className="text-sm font-medium text-ink">Preferred contact method</legend>
-        <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-6">
-          {preferredContactMethods.map((item) => (
-            <label key={item.value} className="inline-flex items-center gap-2 text-sm text-ink">
-              <input
-                type="radio"
-                name="contactMethod"
-                value={item.value}
-                className="accent-accent"
-                aria-invalid={Boolean(errors.contactMethod)}
-              />
-              {item.label}
-            </label>
-          ))}
-        </div>
-        {errors.contactMethod && (
-          <p id="contactMethod-error" className="mt-1.5 text-sm text-red-700">
-            {errors.contactMethod}
-          </p>
-        )}
-      </fieldset>
-
       <button
         type="submit"
         disabled={status === "submitting"}
         className="mt-6 inline-flex h-12 items-center justify-center rounded-md bg-accent px-5 text-sm font-medium text-white transition-colors hover:bg-accent-strong disabled:opacity-60"
       >
-        {status === "submitting" ? "Sending…" : "Send Inquiry"}
+        {status === "submitting" ? "Sending…" : "Discuss Your Project"}
       </button>
     </form>
   );

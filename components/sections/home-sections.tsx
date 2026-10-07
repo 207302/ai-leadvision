@@ -1,50 +1,37 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import {
-  businessOutcomeIntro,
+  companyHighlight,
   homeContact,
-  howItWorks,
-  howItWorksIntro,
-  whatWeBuild,
-  whatWeBuildIntro,
-  whoWeServe,
-  whoWeServeIntro,
+  homeIndustries,
+  homeSolutions,
+  whatWeDo,
   whyAiLeadVision,
-  whyIntro,
 } from "@/lib/content/home";
-import { generativeAi } from "@/lib/content/generative-ai";
-import { industries, industriesIntro } from "@/lib/content/industries";
-import { outcomes } from "@/lib/content/services";
-import { GenerativeOfferingList } from "@/components/sections/generative-offerings";
+import { featuredProjects } from "@/lib/content/projects";
 import { IndustryCard } from "@/components/sections/industry-card";
+import { FinalCta } from "@/components/sections/final-cta";
 import { Container } from "@/components/ui/container";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Reveal } from "@/components/ui/reveal";
-import { FinalCta } from "@/components/sections/final-cta";
 
-export function WhatWeBuild() {
+export function WhatWeDo() {
   return (
-    <section className="bg-paper" aria-labelledby="what-we-build">
+    <section className="bg-paper" aria-labelledby="what-we-do">
       <Container className="py-24 sm:py-28 lg:py-32">
         <Reveal className="max-w-2xl">
-          <Eyebrow>What we build</Eyebrow>
-          <h2 id="what-we-build" className="mt-4 text-3xl leading-tight text-ink sm:text-5xl">
-            Five kinds of systems.
+          <Eyebrow>What we do</Eyebrow>
+          <h2 id="what-we-do" className="mt-4 text-3xl leading-tight text-ink sm:text-5xl">
+            See. Think. Act.
           </h2>
-          <p className="mt-4 text-base leading-7 text-muted">{whatWeBuildIntro.support}</p>
         </Reveal>
-        <div className="mt-12 divide-y divide-line border-y border-line">
-          {whatWeBuild.map((item, index) => (
-            <article key={item.title} className="grid gap-3 py-7 md:grid-cols-12 md:items-start md:gap-8">
-              <p className="font-mono text-[11px] text-accent md:col-span-1">
-                {String(index + 1).padStart(2, "0")}
-              </p>
-              <h3 className="text-2xl text-ink md:col-span-4">{item.title}</h3>
-              <p className="text-sm leading-6 text-muted md:col-span-5">{item.text}</p>
-              <Link
-                href={item.href}
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-ink md:col-span-2 md:justify-end"
-              >
+        <div className="mt-12 grid gap-4 lg:grid-cols-3">
+          {whatWeDo.map((item) => (
+            <article key={item.title} className="enter-box rounded-xl border border-line bg-white p-6">
+              <p className="text-[11px] uppercase tracking-[0.16em] text-accent">{item.kicker}</p>
+              <h3 className="mt-3 text-2xl text-ink">{item.title}</h3>
+              <p className="mt-3 text-sm leading-6 text-muted">{item.text}</p>
+              <Link href={item.href} className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-ink">
                 View
                 <ArrowUpRight size={16} aria-hidden="true" />
               </Link>
@@ -56,46 +43,31 @@ export function WhatWeBuild() {
   );
 }
 
-export function GenerativeAiSection() {
+export function HomeSolutions() {
   return (
-    <section className="bg-white" aria-labelledby="generative-ai">
+    <section className="bg-white" aria-labelledby="ai-solutions">
       <Container className="py-24 sm:py-28 lg:py-32">
-        <Reveal className="max-w-2xl">
-          <Eyebrow>{generativeAi.eyebrow}</Eyebrow>
-          <h2 id="generative-ai" className="mt-4 text-3xl leading-tight text-ink sm:text-5xl">
-            {generativeAi.title}
-          </h2>
-          <p className="mt-4 text-base leading-7 text-muted">{generativeAi.support}</p>
+        <Reveal className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-2xl">
+            <Eyebrow>AI Solutions</Eyebrow>
+            <h2 id="ai-solutions" className="mt-4 text-3xl leading-tight text-ink sm:text-5xl">
+              What we can build.
+            </h2>
+          </div>
+          <Link href="/solutions" className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-ink">
+            All solutions
+            <ArrowUpRight size={16} aria-hidden="true" />
+          </Link>
         </Reveal>
-        <GenerativeOfferingList cardClassName="bg-paper" />
-        <Link
-          href="/services#generative-ai"
-          className="mt-8 inline-flex items-center gap-1.5 text-sm font-medium text-ink"
-        >
-          View in Services
-          <ArrowUpRight size={16} aria-hidden="true" />
-        </Link>
-      </Container>
-    </section>
-  );
-}
-
-export function WhoWeServe() {
-  return (
-    <section className="bg-white" aria-labelledby="who-we-serve">
-      <Container className="py-24 sm:py-28 lg:py-32">
-        <Reveal className="max-w-2xl">
-          <Eyebrow>Who we serve</Eyebrow>
-          <h2 id="who-we-serve" className="mt-4 text-3xl leading-tight text-ink sm:text-5xl">
-            Enterprises, industries, educational institutions, and businesses.
-          </h2>
-          <p className="mt-4 text-base leading-7 text-muted">{whoWeServeIntro.support}</p>
-        </Reveal>
-        <div className="mt-12 grid gap-4 sm:grid-cols-2">
-          {whoWeServe.map((item) => (
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {homeSolutions.map((item) => (
             <article key={item.title} className="enter-box rounded-xl border border-line bg-paper p-6">
               <h3 className="text-xl text-ink">{item.title}</h3>
               <p className="mt-3 text-sm leading-6 text-muted">{item.text}</p>
+              <Link href={item.href} className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-ink">
+                Explore
+                <ArrowUpRight size={16} aria-hidden="true" />
+              </Link>
             </article>
           ))}
         </div>
@@ -104,30 +76,26 @@ export function WhoWeServe() {
   );
 }
 
-export function IndustriesWeServe() {
+export function HomeIndustries() {
   return (
-    <section className="bg-paper" aria-labelledby="industries-we-serve">
+    <section className="bg-paper" aria-labelledby="home-industries">
       <Container className="py-24 sm:py-28 lg:py-32">
         <Reveal className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
-            <Eyebrow>{industriesIntro.eyebrow}</Eyebrow>
-            <h2 id="industries-we-serve" className="mt-4 text-3xl leading-tight text-ink sm:text-5xl">
-              {industriesIntro.title}
+            <Eyebrow>Industries</Eyebrow>
+            <h2 id="home-industries" className="mt-4 text-3xl leading-tight text-ink sm:text-5xl">
+              Where the systems run.
             </h2>
-            <p className="mt-4 text-base leading-7 text-muted">{industriesIntro.support}</p>
           </div>
-          <Link
-            href="/industries"
-            className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-ink"
-          >
+          <Link href="/industries" className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-ink">
             All industries
             <ArrowUpRight size={16} aria-hidden="true" />
           </Link>
         </Reveal>
         <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {industries.map((industry, index) => (
+          {homeIndustries.map((industry, index) => (
             <li key={industry.id}>
-              <IndustryCard industry={industry} index={index} href={`/industries#${industry.id}`} />
+              <IndustryCard industry={industry} index={index} href={industry.href} />
             </li>
           ))}
         </ul>
@@ -136,26 +104,52 @@ export function IndustriesWeServe() {
   );
 }
 
-export function HowItWorks() {
+export function SelectedProjects() {
   return (
-    <section className="bg-navy text-white" aria-labelledby="how-it-works">
+    <section className="bg-white" aria-labelledby="selected-projects">
       <Container className="py-24 sm:py-28 lg:py-32">
-        <Reveal className="max-w-2xl">
-          <Eyebrow tone="dark">How it works</Eyebrow>
-          <h2 id="how-it-works" className="mt-4 text-3xl leading-tight sm:text-5xl">
-            From the operation to a system in use.
-          </h2>
-          <p className="mt-4 text-base leading-7 text-white/70">{howItWorksIntro.support}</p>
+        <Reveal className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-2xl">
+            <Eyebrow>Selected projects</Eyebrow>
+            <h2 id="selected-projects" className="mt-4 text-3xl leading-tight text-ink sm:text-5xl">
+              Systems already built.
+            </h2>
+            <p className="mt-4 text-base leading-7 text-muted">
+              Client names and measured results stay unpublished until they are confirmed.
+            </p>
+          </div>
+          <Link href="/projects" className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-ink">
+            All projects
+            <ArrowUpRight size={16} aria-hidden="true" />
+          </Link>
         </Reveal>
-        <ol className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          {howItWorks.map((item, index) => (
-            <li key={item.title}>
-              <p className="font-mono text-[11px] text-cyan">{String(index + 1).padStart(2, "0")}</p>
-              <h3 className="mt-3 text-xl leading-snug text-white">{item.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-white/65">{item.text}</p>
+        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {featuredProjects.map((project) => (
+            <li key={project.slug}>
+              <article className="enter-box flex h-full flex-col rounded-xl border border-line bg-paper p-6">
+                <div className="flex h-28 items-center justify-center rounded-lg border border-dashed border-line bg-white px-4 text-center text-xs leading-5 text-muted">
+                  {project.imageNote}
+                </div>
+                <h3 className="mt-5 text-xl text-ink">{project.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-muted">{project.outcome}</p>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <li key={tag} className="rounded-full border border-line px-3 py-1 text-xs text-ink">
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-ink"
+                >
+                  View Project
+                  <ArrowUpRight size={16} aria-hidden="true" />
+                </Link>
+              </article>
             </li>
           ))}
-        </ol>
+        </ul>
       </Container>
     </section>
   );
@@ -166,54 +160,42 @@ export function WhySection() {
     <section className="bg-paper" aria-labelledby="why-ai-lead-vision">
       <Container className="py-24 sm:py-28 lg:py-32">
         <Reveal className="max-w-2xl">
-          <Eyebrow>Evidence</Eyebrow>
+          <Eyebrow>Why AI Lead Vision</Eyebrow>
           <h2 id="why-ai-lead-vision" className="mt-4 text-3xl leading-tight text-ink sm:text-5xl">
             Why AI Lead Vision
           </h2>
-          <p className="mt-4 text-base leading-7 text-muted">{whyIntro.support}</p>
         </Reveal>
-        <dl className="mt-12 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {whyAiLeadVision.map((item) => (
-            <div key={item.title} className="bg-white p-6">
-              <dt className="font-heading text-2xl leading-tight text-ink">{item.value}</dt>
-              <dd className="mt-3 text-sm leading-6 text-muted">
-                <span className="block font-medium text-ink">{item.title}</span>
-                {item.text}
-              </dd>
-            </div>
+            <article key={item.title} className="rounded-xl border border-line bg-white p-6">
+              <h3 className="text-xl text-ink">{item.title}</h3>
+              <p className="mt-3 text-sm leading-6 text-muted">{item.text}</p>
+            </article>
           ))}
-        </dl>
-        <p className="mt-8 max-w-2xl text-sm leading-6 text-muted">
-          Case studies will be published when client names and results are confirmed.{" "}
-          <Link href="/case-studies" className="font-medium text-ink">
-            Case Studies
-          </Link>
-        </p>
+        </div>
       </Container>
     </section>
   );
 }
 
-export function BusinessOutcome() {
+export function CompanyHighlight() {
   return (
-    <section className="bg-white" aria-labelledby="business-outcome">
+    <section className="bg-white" aria-labelledby="company-highlight">
       <Container className="py-24 sm:py-28 lg:py-32">
         <Reveal className="max-w-2xl">
-          <Eyebrow>Business outcome</Eyebrow>
-          <h2 id="business-outcome" className="mt-4 text-3xl leading-tight text-ink sm:text-5xl">
-            Technology should solve a business problem.
+          <Eyebrow>Company</Eyebrow>
+          <h2 id="company-highlight" className="mt-4 text-3xl leading-tight text-ink sm:text-5xl">
+            {companyHighlight.title}
           </h2>
-          <p className="mt-4 text-base leading-7 text-muted">{businessOutcomeIntro.support}</p>
+          <p className="mt-4 text-base leading-7 text-muted">{companyHighlight.text}</p>
+          <Link
+            href={companyHighlight.href}
+            className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-ink"
+          >
+            {companyHighlight.link}
+            <ArrowUpRight size={16} aria-hidden="true" />
+          </Link>
         </Reveal>
-        <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          {outcomes.map((item, index) => (
-            <div key={item.title}>
-              <p className="font-mono text-[11px] text-accent">{String(index + 1).padStart(2, "0")}</p>
-              <h3 className="mt-3 text-xl leading-snug text-ink">{item.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-muted">{item.text}</p>
-            </div>
-          ))}
-        </div>
       </Container>
     </section>
   );

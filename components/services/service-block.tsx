@@ -38,7 +38,7 @@ export function ServiceBlock({
           />
         </div>
         <Link
-          href={`/contact?requirement=consultation&interest=${service.interest}`}
+          href={`/contact?build=${service.build}`}
           className="mt-6 inline-flex text-sm font-medium text-accent hover:text-accent-strong"
         >
           {siteConfig.cta.consultation.label}

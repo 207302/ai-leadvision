@@ -30,14 +30,11 @@ export function PageHero({
         </div>
         {trace && trace.length > 0 && (
           <ol className="border-t border-white/10 lg:border-l lg:border-t-0 lg:pl-8">
-            {trace.map((item, index) => (
+            {trace.map((item) => (
               <li
                 key={item}
                 className="flex items-baseline gap-4 border-b border-white/10 py-3 last:border-b-0"
               >
-                <span className="font-mono text-[11px] text-cyan">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
                 <span className="text-sm tracking-tight text-white/80">{item}</span>
               </li>
             ))}

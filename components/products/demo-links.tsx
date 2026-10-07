@@ -12,8 +12,8 @@ export function DemoLinks({
 }) {
   return (
     <div className="flex flex-wrap gap-3">
-      <Button href={`${siteConfig.cta.demo.href}&product=${productId}`} tone="light">
-        {siteConfig.cta.demo.label}
+      <Button href={`/contact?product=${productId}`} tone="light">
+        {siteConfig.cta.consultation.label}
       </Button>
       {salesHref && salesLabel && (
         <Button href={salesHref} variant="secondary" tone="light">

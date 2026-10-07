@@ -18,9 +18,8 @@ export function AutomotiveEngineering() {
           <p className="mt-4 text-base leading-7 text-muted">{automotiveEngineering.support}</p>
         </div>
         <ul className="mt-12 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
-          {automotiveEngineering.items.map((item, index) => (
-            <li key={item} className="flex items-baseline gap-3 bg-paper px-5 py-5">
-              <span className="font-mono text-[11px] text-accent">{String(index + 1).padStart(2, "0")}</span>
+          {automotiveEngineering.items.map((item) => (
+            <li key={item} className="bg-paper px-5 py-5">
               <span className="text-base text-ink">{item}</span>
             </li>
           ))}

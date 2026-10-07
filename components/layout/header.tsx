@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { navigation, siteConfig } from "@/lib/content/site";
+import { trackEvent } from "@/lib/analytics";
 import { LeadCtas } from "@/components/layout/lead-ctas";
 import { Logo } from "@/components/layout/logo";
 import { cn } from "@/lib/utils";
@@ -87,6 +88,9 @@ export function Header() {
         <div className="hidden shrink-0 xl:block">
           <Link
             href={siteConfig.cta.expert.href}
+            onClick={() =>
+              trackEvent("cta_click", { cta_label: siteConfig.cta.expert.label, cta_location: "header" })
+            }
             className="inline-flex rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-strong"
           >
             {siteConfig.cta.expert.label}

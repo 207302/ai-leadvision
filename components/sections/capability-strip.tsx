@@ -3,10 +3,10 @@ import Link from "next/link";
 const items = [
   { label: "Artificial Intelligence", href: "/products" },
   { label: "Machine Learning", href: "/products" },
-  { label: "Computer Vision", href: "/services#computer-vision" },
-  { label: "Generative AI", href: "/services#generative-ai" },
-  { label: "Robotics", href: "/services#robotics" },
-  { label: "Software Engineering", href: "/services#software-development" },
+  { label: "Computer Vision", href: "/solutions#computer-vision" },
+  { label: "Generative AI", href: "/solutions#ai-machine-learning" },
+  { label: "Robotics", href: "/solutions#robotics-automation" },
+  { label: "Software Engineering", href: "/solutions#software-engineering" },
 ];
 
 export function CapabilityStrip() {

@@ -15,11 +15,10 @@ export function ServiceCategory({
 
   return (
     <section id={category.id} className="scroll-mt-28 border-t border-line pt-12 mt-12">
-      <p className="font-mono text-[11px] text-accent">{String(index + 1).padStart(2, "0")}</p>
-      <h2 className="mt-3 text-3xl text-ink sm:text-4xl">{category.title}</h2>
+      <h2 className="text-3xl text-ink sm:text-4xl">{category.title}</h2>
       <p className="mt-4 max-w-2xl text-sm leading-7 text-muted">{category.summary}</p>
 
-      {category.id === "generative-ai" && <GenerativeOfferingList />}
+      {category.showGenerative && <GenerativeOfferingList />}
 
       {category.points && category.points.length > 0 && (
         <ul className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -41,7 +40,7 @@ export function ServiceCategory({
         )}
         {!service && (
           <Link
-            href={`/contact?requirement=consultation&interest=${category.interest}`}
+            href={`/contact?build=${category.build}`}
             className="text-sm font-medium text-accent hover:text-accent-strong"
           >
             {siteConfig.cta.consultation.label}

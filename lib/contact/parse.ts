@@ -1,20 +1,12 @@
-import {
-  inquiryIndustries,
-  inquiryRequirements,
-  inquirySolutions,
-  preferredContactMethods,
-} from "@/lib/content/site";
+import { inquiryBuilds } from "@/lib/content/site";
 
 export type Inquiry = {
   name: string;
   company: string;
   email: string;
   phone: string;
-  industry: string;
-  requirement: string;
-  solution: string;
+  build: string;
   message: string;
-  contactMethod: string;
   product: string;
 };
 
@@ -37,11 +29,8 @@ export function parseInquiry(input: unknown):
   const company = clean(raw.company, 150);
   const email = clean(raw.email, 200);
   const phone = clean(raw.phone, 30);
-  const industry = clean(raw.industry, 80);
-  const requirement = clean(raw.requirement, 40);
-  const solution = clean(raw.solution, 80) || clean(raw.interest, 80);
+  const build = clean(raw.build, 40);
   const message = clean(raw.message, 5000);
-  const contactMethod = clean(raw.contactMethod, 20);
   const product = clean(raw.product, 120);
   const honeypot = clean(raw.website, 200);
 
@@ -50,11 +39,8 @@ export function parseInquiry(input: unknown):
     company,
     email,
     phone,
-    industry: labelFor(inquiryIndustries, industry) ?? industry,
-    requirement: labelFor(inquiryRequirements, requirement) ?? requirement,
-    solution: labelFor(inquirySolutions, solution) ?? solution,
+    build: labelFor(inquiryBuilds, build) ?? build,
     message,
-    contactMethod: labelFor(preferredContactMethods, contactMethod) ?? contactMethod,
     product,
   };
 
@@ -66,17 +52,12 @@ export function parseInquiry(input: unknown):
 
   if (name.length < 2) errors.name = "Enter your name.";
   if (company.length < 2) errors.company = "Enter your company name.";
-  if (!emailPattern.test(email)) errors.email = "Enter a valid work email.";
+  if (!emailPattern.test(email)) errors.email = "Enter a valid business email.";
   if (!phone) errors.phone = "Enter a phone number.";
   else if (!phonePattern.test(phone)) errors.phone = "Enter a valid phone number.";
-  if (!labelFor(inquiryIndustries, industry)) errors.industry = "Choose an industry.";
-  if (!labelFor(inquiryRequirements, requirement)) errors.requirement = "Choose a requirement.";
-  if (!labelFor(inquirySolutions, solution)) errors.solution = "Choose an interested solution.";
+  if (!labelFor(inquiryBuilds, build)) errors.build = "Choose what you are looking to build.";
   if (message.length < 20) {
-    errors.message = "Add a short note — at least a sentence — about what you want to solve.";
-  }
-  if (!labelFor(preferredContactMethods, contactMethod)) {
-    errors.contactMethod = "Choose how you would like to be contacted.";
+    errors.message = "Add a short project description — at least a sentence.";
   }
 
   if (Object.keys(errors).length > 0) return { ok: false, errors };

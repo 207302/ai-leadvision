@@ -1,4 +1,6 @@
 import type { Metadata, MetadataRoute } from "next";
+import { insights } from "@/lib/content/insights";
+import { projects } from "@/lib/content/projects";
 import { siteConfig, socialProfiles } from "@/lib/content/site";
 
 /** Shown until Search Console HTML-tag verification is pasted into the environment. */
@@ -7,7 +9,7 @@ export const searchConsolePlaceholder = "REPLACE_WITH_SEARCH_CONSOLE_VERIFICATIO
 /** Shown until a GA4 measurement ID is set. Analytics does not load while this value is in use. */
 export const analyticsPlaceholder = "G-XXXXXXXXXX";
 
-export const contentUpdated = new Date("2026-10-03");
+export const contentUpdated = new Date("2026-10-07");
 
 const ogImage = {
   url: "/opengraph-image",
@@ -168,13 +170,15 @@ const routes: {
   { path: "/products/attendance", changeFrequency: "monthly", priority: 0.8 },
   { path: "/products/computer-vision", changeFrequency: "monthly", priority: 0.8 },
   { path: "/products/robotics", changeFrequency: "monthly", priority: 0.8 },
-  { path: "/services", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/solutions", changeFrequency: "weekly", priority: 0.9 },
   { path: "/industries", changeFrequency: "monthly", priority: 0.8 },
-  { path: "/case-studies", changeFrequency: "monthly", priority: 0.6 },
+  { path: "/projects", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/technology", changeFrequency: "monthly", priority: 0.6 },
   { path: "/about", changeFrequency: "monthly", priority: 0.8 },
-  { path: "/training", changeFrequency: "monthly", priority: 0.6 },
+  { path: "/training", changeFrequency: "monthly", priority: 0.4 },
   { path: "/careers", changeFrequency: "monthly", priority: 0.5 },
-  { path: "/testimonials", changeFrequency: "monthly", priority: 0.4 },
+  { path: "/insights", changeFrequency: "weekly", priority: 0.5 },
+  { path: "/testimonials", changeFrequency: "monthly", priority: 0.3 },
   { path: "/faq", changeFrequency: "monthly", priority: 0.5 },
   { path: "/contact", changeFrequency: "monthly", priority: 0.9 },
   { path: "/privacy", changeFrequency: "yearly", priority: 0.3 },
@@ -183,10 +187,26 @@ const routes: {
 ];
 
 export function sitemapEntries(): MetadataRoute.Sitemap {
-  return routes.map((route) => ({
+  const staticRoutes = routes.map((route) => ({
     url: `${siteConfig.url}${route.path}`,
     lastModified: contentUpdated,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }));
+
+  const projectRoutes = projects.map((project) => ({
+    url: `${siteConfig.url}/projects/${project.slug}`,
+    lastModified: contentUpdated,
+    changeFrequency: "monthly" as const,
+    priority: 0.5,
+  }));
+
+  const insightRoutes = insights.map((item) => ({
+    url: `${siteConfig.url}/insights/${item.slug}`,
+    lastModified: contentUpdated,
+    changeFrequency: "monthly" as const,
+    priority: 0.4,
+  }));
+
+  return [...staticRoutes, ...projectRoutes, ...insightRoutes];
 }

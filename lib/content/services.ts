@@ -1,5 +1,4 @@
 import { getProduct } from "@/lib/content/products";
-import { placeholderPages } from "@/lib/content/placeholders";
 
 export type Service = {
   id: string;
@@ -11,10 +10,13 @@ export type Service = {
   deliverables: string[];
   useCases: string[];
   interest: string;
+  build: string;
 };
 
 export type ServiceCategory = {
   id: string;
+  /** Reserved for a future /solutions/[slug] page. Not built yet. */
+  slug: string;
   title: string;
   summary: string;
   /** Existing engineering write-up, kept under this category. */
@@ -23,6 +25,9 @@ export type ServiceCategory = {
   note?: string;
   related?: { href: string; label: string };
   interest: string;
+  /** Contact form "What are you looking to build?" */
+  build: string;
+  showGenerative?: boolean;
 };
 
 function productSummary(id: string) {
@@ -61,6 +66,7 @@ export const services: Service[] = [
       "Cells where a machine has to see, decide, and act",
     ],
     interest: "robotics",
+    build: "robotics",
   },
   {
     id: "machine-learning",
@@ -90,6 +96,7 @@ export const services: Service[] = [
       "KPI monitoring for a team that has to act on the number",
     ],
     interest: "machine-learning",
+    build: "ai-ml",
   },
   {
     id: "software-development",
@@ -119,6 +126,7 @@ export const services: Service[] = [
       "Internal software that needs an AI feature, not a separate experiment",
     ],
     interest: "software-development",
+    build: "ai-software",
   },
 ];
 
@@ -127,109 +135,93 @@ export function getService(id: string) {
 }
 
 /**
- * Twelve service categories. Robotics, machine learning, and software development
- * keep their existing write-ups via serviceId. Other categories use published
- * product capabilities or the training page.
+ * Custom capabilities a customer can commission. Each slug is reserved for a
+ * future detail page. Detail pages are not built yet.
+ * Product write-ups stay on /products.
  */
 export const serviceCategories: ServiceCategory[] = [
   {
-    id: "machine-learning",
-    title: "AI & Machine Learning",
+    id: "ai-machine-learning",
+    slug: "ai-machine-learning",
+    title: "Artificial Intelligence & Machine Learning",
     summary:
-      "Models and products that take a defined business decision from data to software.",
+      "Machine learning, deep learning, generative AI, AI agents, and predictive analytics for a defined business decision.",
     serviceId: "machine-learning",
+    points: [
+      "Machine learning and deep learning",
+      "Generative AI and AI agents",
+      "Predictive analytics",
+    ],
+    related: { href: "/products#predictive-analytics", label: "Predictive Analytics product" },
     interest: "machine-learning",
+    build: "ai-ml",
+    showGenerative: true,
   },
   {
     id: "computer-vision",
+    slug: "computer-vision",
     title: "Computer Vision",
-    summary: productSummary("computer-vision"),
-    points: productCapabilities("computer-vision"),
-    related: { href: "/products/computer-vision", label: "Computer Vision product" },
-    interest: "computer-vision",
-  },
-  {
-    id: "generative-ai",
-    title: "Generative AI",
     summary:
-      "Generative AI development: agents, retrieval applications, and enterprise assistants for work a team already does.",
-    interest: "ai-development",
-  },
-  {
-    id: "ai-chatbots",
-    title: "AI Chatbots",
-    summary: `AI chatbot development. ${productSummary("chat-bot")}`,
-    points: productCapabilities("chat-bot"),
-    related: { href: "/products#chat-bot", label: "AI Chat Bot" },
-    interest: "ai-development",
-  },
-  {
-    id: "voice-ai",
-    title: "Voice AI",
-    summary: productSummary("voice-bot"),
-    points: productCapabilities("voice-bot"),
-    related: { href: "/products#voice-bot", label: "AI Voice Chat Bot" },
-    interest: "ai-development",
-  },
-  {
-    id: "industrial-ai",
-    title: "Industrial AI",
-    summary: productSummary("industrial-automation"),
-    points: productCapabilities("industrial-automation"),
-    related: { href: "/products/robotics#industrial-robotics", label: "Industrial Automation" },
-    interest: "robotics",
-  },
-  {
-    id: "machine-vision-inspection",
-    title: "Machine Vision Inspection",
-    summary: productSummary("machine-vision"),
-    points: productCapabilities("machine-vision"),
-    related: { href: "/products/computer-vision#machine-vision", label: "AI Machine Vision Inspection" },
+      "Detection, OCR, classification, segmentation, tracking, and video analytics on a camera feed or a production line.",
+    points: [
+      "Object detection and classification",
+      "OCR",
+      "Segmentation and tracking",
+      "Video analytics",
+      ...productCapabilities("machine-vision").slice(0, 4),
+    ],
+    related: { href: "/products/computer-vision", label: "Computer vision products" },
     interest: "computer-vision",
+    build: "computer-vision",
   },
   {
-    id: "robotics",
+    id: "robotics-automation",
+    slug: "robotics-automation",
     title: "Robotics & Automation",
     summary:
-      "Perception, control, and educational hardware for labs and automated cells. Inspection, PLC, and production monitoring designed as one operational layer.",
+      "ROS2, autonomous systems, edge AI, sensors, and industrial automation. Perception, control, and the software that supervises the machine.",
     serviceId: "robotics",
+    points: ["ROS2", "Autonomous systems", "Edge AI", "Sensors", "Industrial automation"],
     related: { href: "/products/robotics", label: "Robotics products" },
     interest: "robotics",
+    build: "robotics",
   },
   {
-    id: "software-development",
-    title: "Software Development",
-    summary: "The applications, dashboards, and integrations a system needs in order to run.",
+    id: "software-engineering",
+    slug: "software-engineering",
+    title: "Software Engineering",
+    summary:
+      "AI applications, desktop and web applications, APIs, dashboards, and integrations.",
     serviceId: "software-development",
     interest: "software-development",
+    build: "ai-software",
+  },
+  {
+    id: "automotive-engineering",
+    slug: "automotive-engineering",
+    title: "Automotive Engineering",
+    summary:
+      "AUTOSAR, CAN and CAN FD, UDS, DoIP, diagnostics, embedded software, verification and validation, ASPICE, and ISO 26262.",
+    points: [
+      "AUTOSAR",
+      "CAN / CAN FD",
+      "UDS and DoIP",
+      "Diagnostics and embedded software",
+      "Verification and validation",
+      "ASPICE and ISO 26262",
+    ],
+    interest: "automotive",
+    build: "automotive",
   },
   {
     id: "data-analytics",
-    title: "Data Analytics & Predictive Analytics",
-    summary: `Predictive analytics solutions. ${productSummary("predictive-analytics")}`,
+    slug: "data-analytics",
+    title: "Data & Analytics",
+    summary: `Dashboards, data pipelines, business analytics, and intelligent decision systems. ${productSummary("predictive-analytics")}`,
     points: productCapabilities("predictive-analytics"),
-    related: { href: "/products#predictive-analytics", label: "AI Predictive Analytics" },
+    related: { href: "/products#predictive-analytics", label: "Predictive Analytics product" },
     interest: "machine-learning",
-  },
-  {
-    id: "ai-integration",
-    title: "AI Integration & Deployment",
-    summary: "Integration, handover, and support for the team that runs the system.",
-    points: [
-      "Models, applications, and connections to the equipment and software already on site.",
-      "Integrations with the systems the software must meet.",
-      "Deployment support.",
-      "Handover to the team that will run it, then support after the system is in use.",
-    ],
-    interest: "ai-development",
-  },
-  {
-    id: "ai-training",
-    title: "AI Training & Corporate Training",
-    summary: placeholderPages.training.description,
-    note: placeholderPages.training.note,
-    related: { href: "/training", label: "Training" },
-    interest: "training",
+    build: "data-analytics",
   },
 ];
 

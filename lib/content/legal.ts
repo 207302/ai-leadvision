@@ -83,7 +83,7 @@ export const termsPage: LegalPage = {
     {
       heading: "An inquiry is not a contract",
       paragraphs: [
-        "Request a Demo, Talk to an AI Expert, and Get a Project Consultation open a conversation. A project, a demo on your site, or a training engagement starts only when both sides agree in writing.",
+        "Explore Solutions and Talk to Our AI Team open a conversation. A project, a demo on your site, or a training engagement starts only when both sides agree in writing.",
         "Placeholders on the site — including [Office street address], [Company registration number], [Client Name], and unpublished statistics — are not claims.",
       ],
     },

@@ -1,35 +1,59 @@
-/** Technologies the owner has listed. Do not add items that are not in this file. */
+/**
+ * Technologies the owner has listed, grouped the way the redesign brief asks.
+ * Items already published (automotive protocols, boards, image processing, web applications)
+ * stay inside the closest cluster.
+ */
 
 export const technologyStack = {
-  eyebrow: "Technology stack",
-  title: "Technology stack",
+  eyebrow: "Technology",
+  title: "Technology",
   support:
-    "Languages, libraries, and methods used across AI, vision, robotics, software, and automotive work. Python and the vision libraries sit next to robotics hardware, web applications, and the automotive protocols a vehicle program expects.",
+    "The stack behind the products and the custom systems: models, vision, robots and embedded software, and the applications around them.",
   groups: [
     {
       id: "ai-ml",
-      title: "AI/ML",
-      items: ["Python", "PyTorch", "TensorFlow", "OpenCV", "YOLO"],
+      title: "AI & Machine Learning",
+      items: ["Python", "PyTorch", "TensorFlow", "YOLO", "ML", "Deep Learning", "Generative AI"],
     },
     {
       id: "computer-vision",
       title: "Computer Vision",
-      items: ["OCR", "Object Detection", "Image Processing", "Video Analytics"],
+      items: [
+        "OpenCV",
+        "OCR",
+        "Object Detection",
+        "Classification",
+        "Segmentation",
+        "Tracking",
+        "Video Analytics",
+        "Image Processing",
+      ],
     },
     {
-      id: "robotics",
-      title: "Robotics",
-      items: ["ROS2", "Raspberry Pi", "Arduino", "IoT", "Sensors"],
+      id: "robotics-embedded",
+      title: "Robotics & Embedded",
+      items: [
+        "ROS2",
+        "Sensors",
+        "Navigation",
+        "Edge AI",
+        "Control systems",
+        "Embedded C/C++",
+        "Raspberry Pi",
+        "Arduino",
+        "IoT",
+        "AUTOSAR",
+        "CAN",
+        "CAN FD",
+        "UDS",
+        "DoIP",
+        "Embedded Software Testing",
+      ],
     },
     {
-      id: "software",
-      title: "Software",
-      items: ["Python", "C/C++", "Web Applications", "APIs"],
-    },
-    {
-      id: "automotive",
-      title: "Automotive",
-      items: ["AUTOSAR", "CAN", "CAN FD", "UDS", "DoIP", "Embedded Software Testing"],
+      id: "enterprise-software",
+      title: "Enterprise & Software",
+      items: ["APIs", "Databases", "Dashboards", "Cloud", "Automation", "Custom applications", "Web Applications"],
     },
   ],
 } as const;

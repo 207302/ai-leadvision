@@ -31,11 +31,10 @@ export default function TestimonialsPage() {
             Customer name, designation, company, project or use case, and permission to publish stay as placeholders until confirmed.
           </p>
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
-            {customerTestimonials.map((item, index) => (
+            {customerTestimonials.map((item) => (
               <article key={item.id} className="flex flex-col rounded-xl border border-line bg-white">
                 <div className="flex flex-1 flex-col p-6">
-                <p className="font-mono text-[11px] text-accent">{String(index + 1).padStart(2, "0")}</p>
-                <blockquote className="mt-4 text-sm leading-7 text-ink">“{item.quote}”</blockquote>
+                <blockquote className="text-sm leading-7 text-ink">“{item.quote}”</blockquote>
                 <div className="mt-6 space-y-2 text-sm leading-6 text-muted">
                   <p className="text-ink">{item.name}</p>
                   <p>{item.designation}</p>

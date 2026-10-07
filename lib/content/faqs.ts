@@ -7,44 +7,43 @@ export type Faq = {
 
 export const faqs: Faq[] = [
   {
-    question: "What AI solutions does AI Lead Vision build?",
-    answer:
-      "Products and custom systems. The product set includes face-recognition attendance, a voice assistant, a chat assistant, computer vision and video analytics, machine-vision inspection, industrial automation, predictive analytics, and an educational robot. Custom work covers machine learning, robotics, and software engineering around a specific operation.",
-  },
-  {
     question: "Can AI Lead Vision develop a custom AI solution?",
     answer:
-      "Yes. Custom AI development starts when the operation does not fit a product. The team designs a system around the problem — the model, the software, and the way it connects to tools you already use.",
+      "Yes. When a ready product does not fit, the team designs a system around the operation: the model, the software, and the connection to tools you already use. That covers machine learning, computer vision, robotics, software, and automotive engineering.",
   },
   {
-    question: "What industries can your AI solutions support?",
+    question: "Can you integrate AI with existing software or cameras?",
     answer:
-      "The products are described for offices, education, factories, hospitals, retail, hospitality, banking, real estate, and industrial lines such as automotive, electronics, FMCG, food processing, pharmaceutical, and packaging. Fit depends on the problem and the systems already in place, not on an industry label.",
+      "Yes. Attendance is built to connect with HRMS and payroll. Voice and chat systems are built to connect with CRM, WhatsApp, phone, and support workflows. Vision can use existing or new cameras. Industrial systems are described with PLC, robot, and MES integration. The exact interface is scoped with the project.",
   },
   {
-    question: "Can your products integrate with existing business systems?",
+    question: "Do you support on-premise / edge AI deployment?",
     answer:
-      "Yes. Attendance is built to connect with HRMS and payroll. Voice and chat systems are built to connect with CRM, WhatsApp, phone, and support workflows. Industrial systems are described with PLC, robot, and MES integration. The exact interface is scoped with the project.",
+      "The attendance system is described as cloud or on-premise. TODO: confirm with client — a general edge-AI offer (sites, hardware, and support boundaries) is not fully specified.",
   },
   {
-    question: "Do you provide custom software development?",
+    question: "Can you build computer vision for manufacturing?",
     answer:
-      "Yes. Web applications, business platforms, custom operational software, and the integrations those systems need — including applications that carry chat, voice, vision, or analytics.",
+      "Yes. Machine-vision inspection covers surface defects, OCR, barcode checks, dimension measurement, counting, and missing-part or packaging inspection on a line.",
   },
   {
-    question: "How can I request a product demo?",
+    question: "Can you develop robotics solutions using ROS2?",
     answer:
-      `Use Request a Demo, or email ${siteConfig.emails.general}. On the contact form, choose Request a Demo and the product under Interested Solution. Name the kind of site it needs to run in, and a phone number.`,
+      "Yes. The educational robot is ROS2 compatible, and robotics work covers perception, control, sensors, and industrial automation. TODO: confirm with client — which ROS2 deployments are offered beyond that robot.",
   },
   {
-    question: "What information is needed to start an AI project?",
+    question: "Can you develop a PoC before full implementation?",
     answer:
-      "The problem to solve, who will use the system, the software or cameras it must connect to, and what data you already have. A finished dataset is not required to begin the conversation.",
+      "Work starts from the operation, then a product or a custom system scoped to it. TODO: confirm with client — whether a formal proof of concept is a standard first step, and how it is priced.",
   },
   {
-    question: "Do you also offer training and hiring support?",
+    question: "Do you provide support and maintenance?",
     answer:
-      "Yes, as a separate practice. AI Lead Vision trains working professionals in aviation and automotive domains, and recruits for software development and testing roles. For that work, email hr@aileadvision.com or choose Training under Requirement on the contact form.",
+      "Published work includes handover and support after a system is in use. TODO: confirm with client — support hours, response times, and what maintenance includes.",
+  },
+  {
+    question: "Do you provide corporate AI training?",
+    answer: `Yes, as a separate practice from the product line. Topics include AI and machine learning, computer vision, robotics, automotive software and testing, embedded systems, corporate training, and faculty development. Programme length is not published yet. Write to ${siteConfig.emails.hr}.`,
   },
 ];
 
