@@ -101,8 +101,6 @@ export const navigation = [
   { label: "Products", href: "/products" },
   { label: "Solutions", href: "/solutions" },
   { label: "Industries", href: "/industries" },
-  { label: "Projects", href: "/projects" },
-  { label: "Technology", href: "/technology" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ] as const;
@@ -111,7 +109,6 @@ export const navigation = [
 export const companyNavigation = [
   { label: "Training", href: "/training" },
   { label: "Careers", href: "/careers" },
-  { label: "Insights", href: "/insights" },
   { label: "FAQ", href: "/faq" },
   { label: "Testimonials", href: "/testimonials" },
 ] as const;

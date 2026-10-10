@@ -33,10 +33,6 @@ export default function ProductsPage() {
             <Link href="/solutions" className="font-medium text-ink">
               Solutions
             </Link>
-            . Published builds are also listed under{" "}
-            <Link href="/projects" className="font-medium text-ink">
-              Projects
-            </Link>
             .
           </p>
           <ul className="mt-10 grid gap-4 sm:grid-cols-2">

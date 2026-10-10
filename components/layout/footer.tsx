@@ -119,11 +119,6 @@ export function Footer() {
                 {siteConfig.whatsapp.display}
               </li>
             </ul>
-            <p className="mt-6 text-[11px] uppercase tracking-[0.16em] text-white/40">Registration</p>
-            <p className="mt-3 text-sm leading-6 text-white/75">
-              {siteConfig.legalName}
-              <span className="mt-1 block">{siteConfig.registration}</span>
-            </p>
           </div>
         </div>
       </div>

@@ -134,9 +134,6 @@ export default function AboutPage() {
             <Link href="/products" className="text-sm font-medium text-ink">
               Products
             </Link>
-            <Link href="/projects" className="text-sm font-medium text-ink">
-              Projects
-            </Link>
           </div>
         </Container>
       </section>

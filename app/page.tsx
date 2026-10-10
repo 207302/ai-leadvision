@@ -29,7 +29,7 @@ export default function HomePage() {
       <HomeSolutions />
       <HomeIndustries />
       <SelectedProjects />
-      <TechnologyStack showPageLink />
+      <TechnologyStack />
       <WhySection />
       <CompanyHighlight />
       <HomeContact />

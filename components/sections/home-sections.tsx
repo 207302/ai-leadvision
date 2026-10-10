@@ -118,10 +118,6 @@ export function SelectedProjects() {
               Client names and measured results stay unpublished until they are confirmed.
             </p>
           </div>
-          <Link href="/projects" className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-ink">
-            All projects
-            <ArrowUpRight size={16} aria-hidden="true" />
-          </Link>
         </Reveal>
         <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featuredProjects.map((project) => (
@@ -139,13 +135,6 @@ export function SelectedProjects() {
                     </li>
                   ))}
                 </ul>
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-ink"
-                >
-                  View Project
-                  <ArrowUpRight size={16} aria-hidden="true" />
-                </Link>
               </article>
             </li>
           ))}

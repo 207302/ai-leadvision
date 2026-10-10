@@ -133,54 +133,21 @@ body{display:grid;place-items:center;font-family:Archivo,system-ui,sans-serif}
 #cta b{display:block;font-family:Archivo;font-size:31px;color:var(--amber);letter-spacing:0;
        text-transform:none;font-variation-settings:"wdth" 100,"wght" 600;margin-top:10px}
 
-/* ── sound-consent cover (browsers block audio without a gesture) ───── */
-#cover{
-  position:absolute;inset:0;z-index:80;display:grid;place-items:center;
-  background:var(--sky);transition:opacity .45s
-}
-#cover.gone{opacity:0;pointer-events:none}
-#coverBtn{
-  display:grid;place-items:center;gap:26px;background:none;border:none;cursor:pointer;
-  color:var(--ink);font-family:Archivo,sans-serif
-}
-#coverBtn:focus-visible{outline:2px solid var(--amber);outline-offset:8px}
-#coverRing{
-  width:112px;height:112px;border-radius:50%;border:2px solid var(--amber);background:rgba(26,95,212,.08);
-  display:grid;place-items:center
-}
-#coverRing svg{width:34px;height:34px;fill:var(--amber);margin-left:5px}
-#coverTxt{font-size:16px;letter-spacing:.14em}
-#coverSub{font-size:12px;color:var(--dim);letter-spacing:.12em}
-
-/* transport — stays on screen; 44px targets so pause works on touch */
-#ctl{
-  position:fixed;left:8px;bottom:8px;z-index:100;
-  display:flex;flex-wrap:wrap;gap:8px;align-items:center;
-  max-width:calc(100% - 16px);opacity:1;pointer-events:auto;
-  padding:6px;border-radius:12px;
-  background:rgba(244,246,248,.94);border:1px solid #e3e7ee;
+#fit{cursor:pointer}
+#mute{
+  position:fixed;right:12px;bottom:12px;z-index:100;
+  display:none;place-items:center;
+  width:44px;height:44px;padding:0;border-radius:999px;cursor:pointer;
+  color:#121826;background:rgba(244,246,248,.94);border:1px solid #b7c3d4;
   box-shadow:0 10px 28px rgba(18,24,38,.16);
-}
-#ctl button{
-  font-family:"DM Mono",ui-monospace,monospace;font-size:13px;letter-spacing:.08em;
-  text-transform:uppercase;background:#fff;color:#121826;border:1px solid #b7c3d4;
-  min-height:44px;min-width:44px;padding:0 14px;border-radius:8px;cursor:pointer;
   touch-action:manipulation;-webkit-tap-highlight-color:transparent;
 }
-@media (hover:hover) and (pointer:fine){
-  #ctl button:hover{color:#1a5fd4;border-color:#1a5fd4}
-}
-#ctl button:focus-visible{outline:2px solid #1a5fd4;outline-offset:2px}
-#ctl button[aria-pressed="true"]{background:#1a5fd4;color:#fff;border-color:#144eaf}
-#ctl button:disabled{opacity:.42;cursor:default}
-@media (hover:hover) and (pointer:fine){
-  #ctl button:disabled:hover{color:#121826;border-color:#b7c3d4}
-}
-#ctl span{font-family:"DM Mono",ui-monospace,monospace;font-size:11px;color:#4e5b70;letter-spacing:.04em}
-@media (max-width:720px),(pointer:coarse){#ctl span{display:none}}
+body.is-paused #mute{display:grid}
+#mute:focus-visible{outline:2px solid #1a5fd4;outline-offset:2px}
+#mute svg{width:20px;height:20px;display:block}
 </style>
 </head>
-<body>
+<body class="is-paused">
 
 <div id="fit"><div id="stage">
 
@@ -252,22 +219,16 @@ body{display:grid;place-items:center;font-family:Archivo,system-ui,sans-serif}
     </div>
   </div></section>
 
-  <div id="cover">
-    <button id="coverBtn" type="button" aria-label="Play teaser with sound">
-      <span id="coverRing"><svg viewBox="0 0 24 24"><path d="M6 3.5v17l14-8.5z"/></svg></span>
-      <span id="coverTxt" class="mono">play with sound</span>
-      <span id="coverSub" class="mono">30 seconds &middot; voices on</span>
-    </button>
-  </div>
 
 </div></div>
 
-<div id="ctl">
-  <button id="pause" type="button" aria-pressed="false" aria-label="Pause demo" disabled>Pause</button>
-  <button id="replay" type="button">Replay</button>
-  <button id="mute" type="button" aria-pressed="false" aria-label="Mute demo">Mute</button>
-  <span id="hint">Space pause · R replay · M mute</span>
-</div>
+<button id="mute" type="button" aria-pressed="false" aria-label="Mute demo">
+  <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path fill="currentColor" stroke="none" d="M4 10v4h3.5L12 18V6L7.5 10H4z"/>
+    <path d="M16 9.5a3.5 3.5 0 0 1 0 5"/>
+    <path d="M18.2 7.2a6.5 6.5 0 0 1 0 9.6"/>
+  </svg>
+</button>
 
 <script>
 /* ══════════════════════════════════════════════════════════════════════
@@ -317,11 +278,11 @@ const $  = s => document.querySelector(s);
 function fit(){
   const s = Math.min(innerWidth/1920, innerHeight/1080);
   $('#stage').style.transform = `translate(-50%,-50%) scale(${s})`;
-  const ctl = $('#ctl');
-  if (!ctl) return;
+  const mute = $('#mute');
+  if (!mute) return;
   const stageW = 1920 * s, stageH = 1080 * s;
-  ctl.style.left = Math.max(8, (innerWidth - stageW) / 2 + 8) + 'px';
-  ctl.style.bottom = Math.max(8, (innerHeight - stageH) / 2 + 8) + 'px';
+  mute.style.right = Math.max(12, (innerWidth - stageW) / 2 + 12) + 'px';
+  mute.style.bottom = Math.max(12, (innerHeight - stageH) / 2 + 12) + 'px';
 }
 addEventListener('resize', fit); fit();
 
@@ -612,22 +573,20 @@ function play(){
   raf = requestAnimationFrame(loop);
 }
 
-$('#replay').addEventListener('click', play);
 addEventListener('keydown', e => { if (e.key === 'r' || e.key === 'R') play(); });
 
 function syncPause(){
-  const p=$('#pause'); if(!p) return;
-  p.disabled=!running;
-  p.textContent=paused?'Resume':'Pause';
-  p.setAttribute('aria-pressed', paused?'true':'false');
-  p.setAttribute('aria-label', paused?'Resume demo':'Pause demo');
-  document.body.classList.toggle('is-paused', paused);
+  document.body.classList.toggle('is-paused', !(running && !paused));
 }
 function syncMute(){
   const b=$('#mute'); if(!b) return;
-  b.textContent=muted?'Unmute':'Mute';
   b.setAttribute('aria-pressed', muted?'true':'false');
   b.setAttribute('aria-label', muted?'Unmute demo':'Mute demo');
+  const icon=b.querySelector('svg');
+  if(!icon) return;
+  icon.innerHTML = muted
+    ? '<path fill="currentColor" stroke="none" d="M4 10v4h3.5L12 18V6L7.5 10H4z"/><path d="M16 9l5 6M21 9l-5 6"/>'
+    : '<path fill="currentColor" stroke="none" d="M4 10v4h3.5L12 18V6L7.5 10H4z"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5"/><path d="M18.2 7.2a6.5 6.5 0 0 1 0 9.6"/>';
 }
 function holdAudio(){
   try{ if(typeof AC!=='undefined'&&AC&&AC.state==='running') AC.suspend(); }catch(e){}
@@ -655,12 +614,13 @@ function togglePause(){
   syncPause();
 }
 function wireTransport(){
-  $('#pause').addEventListener('click', function(e){ e.stopPropagation(); togglePause(); });
-  $('#mute').addEventListener('click', function(e){ e.stopPropagation(); setMute(!muted); });
+    $('#mute').addEventListener('click', function(e){ e.stopPropagation(); setMute(!muted); });
   addEventListener('keydown', function(e){
     if(e.key===' '||e.key==='p'||e.key==='P'){
       if(e.target&&e.target.closest&&e.target.closest('button')) return;
-      e.preventDefault(); togglePause();
+      e.preventDefault();
+      if(!running){ ctx(); play(); }
+      else togglePause();
     }
   });
   const stage=$('#stage');
@@ -675,7 +635,8 @@ function wireTransport(){
       const dx=e.clientX-ptr.x, dy=e.clientY-ptr.y; ptr=null;
       if(dx*dx+dy*dy>64) return;
       if(e.target.closest&&e.target.closest('button,a')) return;
-      togglePause();
+      if(!running){ ctx(); play(); }
+      else togglePause();
     });
     stage.addEventListener('pointercancel', function(){ ptr=null; });
   }
@@ -684,18 +645,7 @@ function wireTransport(){
 
 wireTransport();
 
-const cover = $('#cover');
-if (reduce){
-  cover.classList.add('gone');
-  frame(DUR);                                  // static final frame, no audio
-} else {
-  frame(0);                                    // hold first frame under cover
-  $('#coverBtn').addEventListener('click', () => {
-    ctx();                                     // unlock audio inside the gesture
-    cover.classList.add('gone');
-    setTimeout(play, 380);                     // let the fade finish first
-  }, { once:true });
-}
+if(reduce){frame(DUR)}else{frame(0)}
 </script>
 </body>
 </html>

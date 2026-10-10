@@ -34,10 +34,6 @@ export default function SolutionsPage() {
             <Link href="/products" className="font-medium text-ink">
               Products
             </Link>
-            . Published work is on{" "}
-            <Link href="/projects" className="font-medium text-ink">
-              Projects
-            </Link>
             . Industries are on{" "}
             <Link href="/industries" className="font-medium text-ink">
               Industries

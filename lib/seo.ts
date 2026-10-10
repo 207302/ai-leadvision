@@ -1,6 +1,5 @@
 import type { Metadata, MetadataRoute } from "next";
 import { insights } from "@/lib/content/insights";
-import { projects } from "@/lib/content/projects";
 import { siteConfig, socialProfiles } from "@/lib/content/site";
 
 /** Shown until Search Console HTML-tag verification is pasted into the environment. */
@@ -172,8 +171,6 @@ const routes: {
   { path: "/products/robotics", changeFrequency: "monthly", priority: 0.8 },
   { path: "/solutions", changeFrequency: "weekly", priority: 0.9 },
   { path: "/industries", changeFrequency: "monthly", priority: 0.8 },
-  { path: "/projects", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/technology", changeFrequency: "monthly", priority: 0.6 },
   { path: "/about", changeFrequency: "monthly", priority: 0.8 },
   { path: "/training", changeFrequency: "monthly", priority: 0.4 },
   { path: "/careers", changeFrequency: "monthly", priority: 0.5 },
@@ -194,13 +191,6 @@ export function sitemapEntries(): MetadataRoute.Sitemap {
     priority: route.priority,
   }));
 
-  const projectRoutes = projects.map((project) => ({
-    url: `${siteConfig.url}/projects/${project.slug}`,
-    lastModified: contentUpdated,
-    changeFrequency: "monthly" as const,
-    priority: 0.5,
-  }));
-
   const insightRoutes = insights.map((item) => ({
     url: `${siteConfig.url}/insights/${item.slug}`,
     lastModified: contentUpdated,
@@ -208,5 +198,5 @@ export function sitemapEntries(): MetadataRoute.Sitemap {
     priority: 0.4,
   }));
 
-  return [...staticRoutes, ...projectRoutes, ...insightRoutes];
+  return [...staticRoutes, ...insightRoutes];
 }

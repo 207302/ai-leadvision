@@ -31,13 +31,9 @@ export default function IndustriesPage() {
             <Link href="/solutions" className="font-medium text-ink">
               Solutions
             </Link>
-            ,{" "}
+            {" "}and{" "}
             <Link href="/products" className="font-medium text-ink">
               Products
-            </Link>
-            , and{" "}
-            <Link href="/projects" className="font-medium text-ink">
-              Projects
             </Link>
             .
           </p>
