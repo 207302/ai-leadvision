@@ -6,18 +6,29 @@ const message = "Hello AI Lead Vision, I would like to discuss a project.";
 const pill =
   "inline-flex max-w-[calc(100vw-2rem)] items-center gap-2.5 rounded-full py-3 pl-3.5 pr-4 text-sm font-medium text-white shadow-[0_10px_30px_rgba(16,22,34,0.22)] transition-colors";
 
-export function WhatsAppButton() {
-  const whatsappHref = `https://wa.me/${siteConfig.whatsapp.tel}?text=${encodeURIComponent(message)}`;
+export function WhatsAppButton({
+  phoneTel = siteConfig.call.tel,
+  whatsappTel = siteConfig.whatsapp.tel.replace(/\D/g, ""),
+}: {
+  phoneTel?: string | null;
+  whatsappTel?: string | null;
+}) {
+  const whatsappHref = whatsappTel
+    ? `https://wa.me/${whatsappTel}?text=${encodeURIComponent(message)}`
+    : null;
 
   return (
     <div className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-30 flex flex-col items-end gap-3 sm:right-6 sm:bottom-6">
+      {phoneTel && (
       <a
-        href={`tel:${siteConfig.call.tel}`}
+        href={`tel:${phoneTel}`}
         aria-label={siteConfig.call.label}
         className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-accent text-white shadow-[0_10px_30px_rgba(16,22,34,0.22)] transition-colors hover:bg-accent-strong md:hidden"
       >
         <Phone size={22} aria-hidden="true" />
       </a>
+      )}
+      {whatsappHref && (
       <a
         href={whatsappHref}
         target="_blank"
@@ -47,6 +58,7 @@ export function WhatsAppButton() {
         </svg>
         <span className="hidden whitespace-nowrap md:inline">{siteConfig.whatsapp.label}</span>
       </a>
+      )}
     </div>
   );
 }

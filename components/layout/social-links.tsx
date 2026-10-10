@@ -3,7 +3,12 @@ import type { LucideIcon } from "lucide-react";
 import { socialProfiles } from "@/lib/content/site";
 import { cn } from "@/lib/utils";
 
-const icons: Record<(typeof socialProfiles)[number]["label"], LucideIcon> = {
+export type SocialProfile = {
+  label: (typeof socialProfiles)[number]["label"];
+  href: string | null;
+};
+
+const icons: Record<SocialProfile["label"], LucideIcon> = {
   LinkedIn: Linkedin,
   YouTube: Youtube,
   Instagram: Instagram,
@@ -14,13 +19,25 @@ function isLive(href: string | null): href is string {
   return typeof href === "string" && href.startsWith("http");
 }
 
-export function SocialLinks({ tone = "dark" }: { tone?: "dark" | "light" }) {
-  const pending = socialProfiles.filter((item) => !isLive(item.href));
+export function SocialLinks({
+  tone = "dark",
+  profiles,
+  hideEmpty = false,
+}: {
+  tone?: "dark" | "light";
+  profiles?: readonly SocialProfile[];
+  hideEmpty?: boolean;
+}) {
+  const source = profiles ?? socialProfiles;
+  const visible = hideEmpty ? source.filter((item) => isLive(item.href)) : source;
+  const pending = hideEmpty ? [] : source.filter((item) => !isLive(item.href));
+
+  if (visible.length === 0) return null;
 
   return (
     <div>
       <ul className="flex items-center gap-2">
-        {socialProfiles.map((item) => {
+        {visible.map((item) => {
           const Icon = icons[item.label];
           const classes = cn(
             "inline-flex h-10 w-10 items-center justify-center rounded-md border transition-colors",

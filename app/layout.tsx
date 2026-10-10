@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
-import { Footer } from "@/components/layout/footer";
-import { Header } from "@/components/layout/header";
-import { PageTransition } from "@/components/layout/page-transition";
-import { SiteLoader } from "@/components/layout/site-loader";
-import { WhatsAppButton } from "@/components/layout/whatsapp-button";
-import { GoogleAnalytics } from "@/components/seo/google-analytics";
-import { JsonLd } from "@/components/seo/json-ld";
+import { SiteFrame } from "@/components/layout/site-frame";
 import { siteConfig } from "@/lib/content/site";
-import { searchConsolePlaceholder, siteJsonLd } from "@/lib/seo";
+import { searchConsolePlaceholder } from "@/lib/seo";
 import "./globals.css";
 
 const body = Plus_Jakarta_Sans({
@@ -59,21 +53,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   return (
     <html lang="en" className={`${body.variable} ${heading.variable}`}>
       <body className="min-h-screen bg-paper font-sans text-ink antialiased">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-white focus:px-3 focus:py-2"
-        >
-          Skip to content
-        </a>
-        <SiteLoader />
-        <Header />
-        <main id="main">
-          <PageTransition>{children}</PageTransition>
-        </main>
-        <Footer />
-        <WhatsAppButton />
-        <GoogleAnalytics />
-        <JsonLd data={siteJsonLd()} />
+        <SiteFrame>{children}</SiteFrame>
       </body>
     </html>
   );

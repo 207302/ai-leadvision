@@ -7,13 +7,23 @@ import {
   companyNavigation,
   footerNavigation,
   legalNavigation,
-  officeAddressLines,
   siteConfig,
 } from "@/lib/content/site";
 import { Logo } from "@/components/layout/logo";
-import { SocialLinks } from "@/components/layout/social-links";
+import { SocialLinks, type SocialProfile } from "@/components/layout/social-links";
+import { SubscribeForm } from "@/components/newsletter/subscribe-form";
+import { socialPlatforms, type SiteSettings } from "@/lib/settings/types";
 
-export function Footer() {
+const socialLabels = Object.fromEntries(socialPlatforms.map((item) => [item.key, item.label])) as Record<
+  (typeof socialPlatforms)[number]["key"],
+  SocialProfile["label"]
+>;
+
+export function Footer({ settings }: { settings: SiteSettings }) {
+  const profiles: SocialProfile[] = socialPlatforms.map((platform) => ({
+    label: socialLabels[platform.key],
+    href: settings.social[platform.key],
+  }));
   return (
     <footer className="bg-navy text-white">
       <div className="mx-auto grid max-w-[1160px] gap-12 px-5 py-16 sm:px-8 md:grid-cols-12">
@@ -23,8 +33,9 @@ export function Footer() {
             {companyIdentity()}. Engineering intelligence for real business environments: AI, computer vision, robotics, and automation.
           </p>
           <div className="mt-6">
-            <SocialLinks />
+            <SocialLinks profiles={profiles} hideEmpty />
           </div>
+          <SubscribeForm />
         </div>
 
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:col-span-8">
@@ -90,7 +101,7 @@ export function Footer() {
           <div className="col-span-2 sm:col-span-1">
             <p className="text-[11px] uppercase tracking-[0.16em] text-white/40">Bengaluru office</p>
             <address className="mt-4 space-y-1 text-sm not-italic leading-6 text-white/75">
-              {officeAddressLines().map((line) => (
+              {settings.addressLines.map((line) => (
                 <span key={line} className="block">
                   {line}
                 </span>
@@ -107,17 +118,19 @@ export function Footer() {
                   {siteConfig.emails.hr}
                 </a>
               </li>
-              {siteConfig.phones.map((phone) => (
+              {settings.phones.map((phone) => (
                 <li key={phone.tel}>
                   <a className="hover:text-white" href={`tel:${phone.tel}`}>
                     {phone.display}
                   </a>
                 </li>
               ))}
-              <li>
-                <span className="text-white/45">WhatsApp </span>
-                {siteConfig.whatsapp.display}
-              </li>
+              {settings.whatsapp.map((phone) => (
+                <li key={phone.tel}>
+                  <span className="text-white/45">WhatsApp </span>
+                  {phone.display}
+                </li>
+              ))}
             </ul>
           </div>
         </div>

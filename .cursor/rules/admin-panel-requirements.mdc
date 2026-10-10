@@ -1,0 +1,13 @@
+---
+description: Planned admin panel for newsletter subscribers and editable footer contacts
+alwaysApply: true
+---
+
+# Planned admin panel
+
+Implemented. Do not add visitor accounts or a public link to the admin panel.
+
+- Login: `/admin/login`. Session cookie from `AUTH_SECRET`. First admin comes from `ADMIN_EMAIL` and `ADMIN_PASSWORD` via `npm run db:seed`.
+- Footer editor: `/admin/settings`. Phones, WhatsApp numbers, address, and LinkedIn, YouTube, Instagram, and Facebook. Empty social URLs are not rendered. Emails stay in `lib/content/site.ts`.
+- Subscribers: `/admin/subscribers`. Public form is in the footer and posts to `POST /api/newsletter/subscribe`.
+- Postgres tables: `admins`, `site_settings`, `newsletter_subscribers`. The public footer reads `GET /api/site-settings`.
