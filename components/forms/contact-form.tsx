@@ -2,6 +2,7 @@
 
 import { FormEvent, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { GeneralEmailLink, linkPublicEmail } from "@/components/layout/general-email-link";
 import { getProduct } from "@/lib/content/products";
 import { inquiryBuilds, siteConfig } from "@/lib/content/site";
 import { parseInquiry, type InquiryErrors } from "@/lib/contact/parse";
@@ -84,10 +85,10 @@ export function ContactForm() {
       if (!response.ok || !result.ok) {
         setFormError(
           result.code === "DELIVERY_NOT_CONFIGURED"
-            ? `Email delivery is not connected on this server yet. Please write to ${siteConfig.emails.general} with the same details.`
+            ? `Email delivery is not connected on this server yet. Please write to ${siteConfig.emails.public} with the same details.`
             : result.code === "RATE_LIMITED"
-              ? `We have received several inquiries from this connection in the last hour. Please try again later or email ${siteConfig.emails.general} directly.`
-              : `The message could not be sent. Please email ${siteConfig.emails.general} directly.`,
+              ? `We have received several inquiries from this connection in the last hour. Please try again later or email ${siteConfig.emails.public} directly.`
+              : `The message could not be sent. Please email ${siteConfig.emails.public} directly.`,
         );
         setStatus("error");
         return;
@@ -97,7 +98,7 @@ export function ContactForm() {
       setStatus("success");
       form.reset();
     } catch {
-      setFormError(`The message could not be sent. Please email ${siteConfig.emails.general} directly.`);
+      setFormError(`The message could not be sent. Please email ${siteConfig.emails.public} directly.`);
       setStatus("error");
     }
   }
@@ -108,7 +109,7 @@ export function ContactForm() {
         <p className="text-[11px] uppercase tracking-[0.16em] text-accent">Inquiry received</p>
         <h2 className="mt-3 text-2xl text-ink">Thank you. We have your note.</h2>
         <p className="mt-3 text-sm leading-6 text-muted">
-          The team reads inquiries at {siteConfig.emails.general}. If your note is about training or hiring, use {siteConfig.emails.hr}.
+          The team reads inquiries at <GeneralEmailLink className="font-medium text-accent" />. If your note is about training or hiring, use {siteConfig.emails.hr}.
         </p>
       </div>
     );
@@ -123,7 +124,7 @@ export function ContactForm() {
 
       {formError && (
         <p role="alert" className="mb-6 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
-          {formError}
+          {linkPublicEmail(formError, "font-medium underline")}
         </p>
       )}
 

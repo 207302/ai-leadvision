@@ -1,4 +1,5 @@
 import type { LegalPage } from "@/lib/content/legal";
+import { linkPublicEmail } from "@/components/layout/general-email-link";
 import { PageHero } from "@/components/layout/page-hero";
 import { Container } from "@/components/ui/container";
 
@@ -17,7 +18,7 @@ export function LegalDocument({ page }: { page: LegalPage }) {
                 <div className="mt-3 space-y-3">
                   {section.paragraphs.map((paragraph) => (
                     <p key={paragraph} className="text-sm leading-7 text-muted">
-                      {paragraph}
+                      {linkPublicEmail(paragraph, "text-ink underline decoration-ink/25 underline-offset-2 hover:text-accent")}
                     </p>
                   ))}
                 </div>

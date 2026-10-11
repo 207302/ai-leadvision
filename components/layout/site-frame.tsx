@@ -10,6 +10,23 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { siteJsonLd } from "@/lib/seo";
 import { getSiteSettings } from "@/lib/settings/store";
 
+const closingCtaPrefixes = [
+  "/about",
+  "/faq",
+  "/industries",
+  "/insights",
+  "/products",
+  "/solutions",
+  "/testimonials",
+  "/training",
+];
+
+function pageHasClosingCta(pathname: string) {
+  const path = pathname.replace(/\/$/, "") || "/";
+  if (path === "/") return true;
+  return closingCtaPrefixes.some((prefix) => path === prefix || path.startsWith(`${prefix}/`));
+}
+
 export async function SiteFrame({ children }: { children: ReactNode }) {
   const pathname = (await headers()).get("x-pathname") ?? "";
   if (pathname.startsWith("/admin")) return children;
@@ -31,7 +48,7 @@ export async function SiteFrame({ children }: { children: ReactNode }) {
       <main id="main">
         <PageTransition>{children}</PageTransition>
       </main>
-      <Footer settings={settings} />
+      <Footer settings={settings} showNewsletter={!pageHasClosingCta(pathname)} />
       <WhatsAppButton phoneTel={phone} whatsappTel={whatsapp} />
       <GoogleAnalytics />
       <JsonLd data={siteJsonLd()} />

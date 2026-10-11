@@ -13,7 +13,7 @@ export const contactEmail = {
     genericGreeting: "Hello,",
     body: [
       `Thank you for contacting ${siteConfig.legalName}. We have received your inquiry and our team will get back to you.`,
-      `If you need to add anything, reply to this email or write to ${siteConfig.emails.general}.`,
+      `If you need to add anything, reply to this email or write to ${siteConfig.emails.public}.`,
     ],
     signOff: ["Regards,", siteConfig.legalName, siteConfig.url],
   },

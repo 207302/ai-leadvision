@@ -9,9 +9,11 @@ import {
   legalNavigation,
   siteConfig,
 } from "@/lib/content/site";
+import { GeneralEmailLink } from "@/components/layout/general-email-link";
 import { Logo } from "@/components/layout/logo";
 import { SocialLinks, type SocialProfile } from "@/components/layout/social-links";
 import { SubscribeForm } from "@/components/newsletter/subscribe-form";
+import { Container } from "@/components/ui/container";
 import { socialPlatforms, type SiteSettings } from "@/lib/settings/types";
 
 const socialLabels = Object.fromEntries(socialPlatforms.map((item) => [item.key, item.label])) as Record<
@@ -19,13 +21,26 @@ const socialLabels = Object.fromEntries(socialPlatforms.map((item) => [item.key,
   SocialProfile["label"]
 >;
 
-export function Footer({ settings }: { settings: SiteSettings }) {
+export function Footer({
+  settings,
+  showNewsletter = false,
+}: {
+  settings: SiteSettings;
+  showNewsletter?: boolean;
+}) {
   const profiles: SocialProfile[] = socialPlatforms.map((platform) => ({
     label: socialLabels[platform.key],
     href: settings.social[platform.key],
   }));
   return (
     <footer className="bg-navy text-white">
+      {showNewsletter && (
+        <div className="border-b border-white/10">
+          <Container className="py-16 sm:py-20">
+            <SubscribeForm />
+          </Container>
+        </div>
+      )}
       <div className="mx-auto grid max-w-[1160px] gap-12 px-5 py-16 sm:px-8 md:grid-cols-12">
         <div className="md:col-span-4">
           <Logo />
@@ -35,7 +50,6 @@ export function Footer({ settings }: { settings: SiteSettings }) {
           <div className="mt-6">
             <SocialLinks profiles={profiles} hideEmpty />
           </div>
-          <SubscribeForm />
         </div>
 
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:col-span-8">
@@ -109,9 +123,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
             </address>
             <ul className="mt-4 space-y-2.5 text-sm text-white/75">
               <li>
-                <a className="hover:text-white" href={`mailto:${siteConfig.emails.general}`}>
-                  {siteConfig.emails.general}
-                </a>
+                <GeneralEmailLink className="hover:text-white" />
               </li>
               <li>
                 <a className="hover:text-white" href={`mailto:${siteConfig.emails.hr}`}>

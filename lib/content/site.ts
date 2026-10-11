@@ -20,7 +20,10 @@ export const siteConfig = {
     country: "India",
   },
   emails: {
+    /** Inbox that receives mail. Shown addresses link here. */
     general: "aradhana@aileadvision.com",
+    /** Address printed on the site. */
+    public: "info@aileadvision.com",
     hr: "hr@aileadvision.com",
   },
   /**
@@ -73,7 +76,7 @@ export const siteConfig = {
     tel: "+91-8050243330",
   },
   whatsapp: {
-    label: "Chat with AI Lead Vision",
+    label: "Chat with us",
     display: "+91-8050243330",
     tel: "918050243330",
   },
@@ -87,6 +90,12 @@ export const siteConfig = {
       href: "/contact",
     },
   },
+} as const;
+
+export const newsletterCopy = {
+  label: "Newsletter",
+  body: "Product and project notes from AI Lead Vision.",
+  removal: "To be removed, email",
 } as const;
 
 export const socialProfiles = [

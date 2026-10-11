@@ -28,7 +28,7 @@ export const privacyPolicy: LegalPage = {
       heading: "Who we are",
       paragraphs: [
         "This website is operated by AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India. The street address is [Office street address] until the office line is confirmed. The company registration number is [Company registration number].",
-        `Questions about an inquiry can go to ${siteConfig.emails.general}.`,
+        `Questions about an inquiry can go to ${siteConfig.emails.public}.`,
       ],
     },
     {
@@ -48,7 +48,7 @@ export const privacyPolicy: LegalPage = {
     {
       heading: "WhatsApp",
       paragraphs: [
-        "Chat with AI Lead Vision opens WhatsApp with a short prefilled message. The WhatsApp number is +91-8050243330.",
+        "Chat with us opens WhatsApp with a short prefilled message. The WhatsApp number is +91-8050243330.",
       ],
     },
     {
@@ -60,7 +60,7 @@ export const privacyPolicy: LegalPage = {
     {
       heading: "Asking about your inquiry",
       paragraphs: [
-        `To ask what we hold from your form submission, or to ask us to correct it, email ${siteConfig.emails.general} from the work address you used.`,
+        `To ask what we hold from your form submission, or to ask us to correct it, email ${siteConfig.emails.public} from the work address you used.`,
       ],
     },
   ],
@@ -107,7 +107,7 @@ export const termsPage: LegalPage = {
     },
     {
       heading: "Contact",
-      paragraphs: [`Questions about these terms: ${siteConfig.emails.general}.`],
+      paragraphs: [`Questions about these terms: ${siteConfig.emails.public}.`],
     },
   ],
 };
@@ -136,7 +136,7 @@ export const cookiePolicy: LegalPage = {
     {
       heading: "WhatsApp",
       paragraphs: [
-        "Chat with AI Lead Vision leaves this website and opens WhatsApp. WhatsApp is a separate service and has its own policies. The number used here is +91-8050243330.",
+        "Chat with us leaves this website and opens WhatsApp. WhatsApp is a separate service and has its own policies. The number used here is +91-8050243330.",
       ],
     },
     {

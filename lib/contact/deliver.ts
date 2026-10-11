@@ -94,6 +94,7 @@ async function sendWithSmtp(
       replyTo: to,
       subject: contactEmail.confirmation.subject,
       text: confirmationText(inquiry),
+      html: confirmationHtml(inquiry),
     });
   } catch (error) {
     console.error("[contact] confirmation email failed", error);
@@ -129,6 +130,16 @@ function confirmationText(inquiry: Inquiry) {
   // The confirmation goes to an address anyone can type in, so never echo link-like text.
   const opening = /https?:|www\.|[@/\\]|\.[a-z]{2,}\b/i.test(name) ? genericGreeting : greeting(name);
   return [opening, "", ...body.flatMap((line) => [line, ""]), ...signOff].join("\n");
+}
+
+function confirmationHtml(inquiry: Inquiry) {
+  const label = siteConfig.emails.public;
+  const linked = `<a href="mailto:${siteConfig.emails.general}">${label}</a>`;
+  return escapeHtml(confirmationText(inquiry)).replaceAll(label, linked).replaceAll("\n", "<br>");
+}
+
+function escapeHtml(value: string) {
+  return value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
 }
 
 function singleLine(value: string) {

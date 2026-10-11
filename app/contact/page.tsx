@@ -4,13 +4,14 @@ import { ContactForm } from "@/components/forms/contact-form";
 import { PageHero } from "@/components/layout/page-hero";
 import { Container } from "@/components/ui/container";
 import { SocialLinks } from "@/components/layout/social-links";
+import { GeneralEmailLink } from "@/components/layout/general-email-link";
 import { officeAddressLines, siteConfig } from "@/lib/content/site";
 import { JsonLd } from "@/components/seo/json-ld";
 import { contactPageJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Contact",
-  description: `Contact AI Lead Vision Pvt Ltd in Bengaluru, India. Email ${siteConfig.emails.general} or send a project enquiry.`,
+  description: `Contact AI Lead Vision Pvt Ltd in Bengaluru, India. Email ${siteConfig.emails.public} or send a project enquiry.`,
   path: "/contact",
 });
 
@@ -44,9 +45,7 @@ export default async function ContactPage({
               <div>
                 <dt className="text-[11px] uppercase tracking-[0.16em] text-faint">Email</dt>
                 <dd className="mt-2">
-                  <a className="text-ink hover:text-accent" href={`mailto:${siteConfig.emails.general}`}>
-                    {siteConfig.emails.general}
-                  </a>
+                  <GeneralEmailLink className="text-ink hover:text-accent" />
                 </dd>
                 <dd className="mt-1">
                   <a className="text-ink hover:text-accent" href={`mailto:${siteConfig.emails.hr}`}>
