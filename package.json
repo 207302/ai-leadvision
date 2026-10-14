@@ -13,6 +13,7 @@
   "dependencies": {
     "@neon/config": "^1.8.6",
     "@neon/env": "^1.5.3",
+    "@neondatabase/serverless": "^1.2.0",
     "bcryptjs": "^3.0.3",
     "jose": "^6.2.12",
     "lucide-react": "^0.544.0",

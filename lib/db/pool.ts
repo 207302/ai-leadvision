@@ -1,33 +1,34 @@
-import { Pool, type PoolConfig } from "pg";
-import { parseIntoClientConfig } from "pg-connection-string";
+import { neon, type FullQueryResults } from "@neondatabase/serverless";
 
-const globalForPg = globalThis as typeof globalThis & { pgPool?: Pool };
+type Sql = ReturnType<typeof neon>;
 
-function poolConfig(): PoolConfig {
-  const connectionString = process.env.DATABASE_URL;
-  if (!connectionString) {
-    throw new Error("DATABASE_URL is not set.");
-  }
+const globalForSql = globalThis as typeof globalThis & { neonSql?: Sql };
 
-  // Neon rejects a plaintext connection with "connection is insecure".
-  // Hostinger can drop `sslmode=require` from the saved URL, and passing the
-  // URL through lets that parsed value override an explicit ssl option.
-  const url = new URL(connectionString);
+function connectionString() {
+  const raw = process.env.DATABASE_URL;
+  if (!raw) throw new Error("DATABASE_URL is not set.");
+  const url = new URL(raw.trim().replace(/^["']|["']$/g, ""));
   url.searchParams.delete("channel_binding");
-  url.searchParams.delete("sslmode");
-  url.searchParams.delete("uselibpqcompat");
+  return url.toString();
+}
 
-  return {
-    ...parseIntoClientConfig(url.toString()),
-    ssl: { rejectUnauthorized: false },
-    max: 5,
-  };
+function getSql() {
+  if (!globalForSql.neonSql) {
+    globalForSql.neonSql = neon(connectionString());
+  }
+  return globalForSql.neonSql;
 }
 
 export function getPool() {
-  if (!globalForPg.pgPool) {
-    globalForPg.pgPool = new Pool(poolConfig());
-  }
-
-  return globalForPg.pgPool;
+  return {
+    async query<T extends Record<string, unknown> = Record<string, unknown>>(
+      text: string,
+      values: readonly unknown[] = [],
+    ) {
+      const result = (await getSql().query(text, [...values], {
+        fullResults: true,
+      })) as FullQueryResults<false>;
+      return { rows: result.rows as T[], rowCount: result.rowCount };
+    },
+  };
 }
