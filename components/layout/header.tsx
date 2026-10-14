@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
+import { scrollToConsultation } from "@/lib/callback/scroll";
+import { practicalAiPage, practicalAiPath } from "@/lib/content/practical-ai";
 import { navigation, siteConfig } from "@/lib/content/site";
 import { trackEvent } from "@/lib/analytics";
 import { LeadCtas } from "@/components/layout/lead-ctas";
@@ -12,9 +14,16 @@ import { cn } from "@/lib/utils";
 
 export function Header() {
   const pathname = usePathname();
+  const consultationPage = pathname.replace(/\/$/, "") === practicalAiPath;
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [openPath, setOpenPath] = useState(pathname);
+
+  function bookConsultation(location: "header" | "header_mobile") {
+    trackEvent("cta_click", { cta_label: practicalAiPage.bookLabel, cta_location: location });
+    if (open) setOpen(false);
+    window.setTimeout(() => scrollToConsultation(), open ? 60 : 0);
+  }
 
   if (pathname !== openPath) {
     setOpenPath(pathname);
@@ -86,15 +95,26 @@ export function Header() {
         </nav>
 
         <div className="hidden shrink-0 xl:block">
-          <Link
-            href={siteConfig.cta.expert.href}
-            onClick={() =>
-              trackEvent("cta_click", { cta_label: siteConfig.cta.expert.label, cta_location: "header" })
-            }
-            className="inline-flex rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-strong"
-          >
-            {siteConfig.cta.expert.label}
-          </Link>
+          {consultationPage ? (
+            <button
+              type="button"
+              onClick={() => bookConsultation("header")}
+              className="inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-strong"
+            >
+              {practicalAiPage.bookLabel}
+              <ArrowRight size={16} aria-hidden="true" />
+            </button>
+          ) : (
+            <Link
+              href={siteConfig.cta.expert.href}
+              onClick={() =>
+                trackEvent("cta_click", { cta_label: siteConfig.cta.expert.label, cta_location: "header" })
+              }
+              className="inline-flex rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-strong"
+            >
+              {siteConfig.cta.expert.label}
+            </Link>
+          )}
         </div>
 
         <button
@@ -140,7 +160,19 @@ export function Header() {
               );
             })}
           </ul>
-          <LeadCtas layout="stack" className="mt-8 shrink-0" />
+          <div className="mt-8 shrink-0 space-y-3">
+            {consultationPage && (
+              <button
+                type="button"
+                onClick={() => bookConsultation("header_mobile")}
+                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-accent px-4 py-3 text-sm font-medium text-white"
+              >
+                {practicalAiPage.bookLabel}
+                <ArrowRight size={16} aria-hidden="true" />
+              </button>
+            )}
+            <LeadCtas layout="stack" />
+          </div>
         </nav>
       </div>
     </header>

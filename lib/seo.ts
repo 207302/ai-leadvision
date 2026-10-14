@@ -170,6 +170,7 @@ const routes: {
   { path: "/products/computer-vision", changeFrequency: "monthly", priority: 0.8 },
   { path: "/products/robotics", changeFrequency: "monthly", priority: 0.8 },
   { path: "/solutions", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/practical-ai-solutions", changeFrequency: "monthly", priority: 0.8 },
   { path: "/industries", changeFrequency: "monthly", priority: 0.8 },
   { path: "/about", changeFrequency: "monthly", priority: 0.8 },
   { path: "/training", changeFrequency: "monthly", priority: 0.4 },

@@ -7,6 +7,7 @@ import { useState, type ReactNode } from "react";
 const links = [
   { href: "/admin/settings", label: "Footer" },
   { href: "/admin/subscribers", label: "Subscribers" },
+  { href: "/admin/callback-requests", label: "Callback Requests" },
 ];
 
 export function AdminShell({ email, children }: { email: string; children: ReactNode }) {

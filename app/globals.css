@@ -398,6 +398,21 @@
   transform: translateY(-2px) scale(0.985);
 }
 
+@keyframes callback-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(26, 95, 212, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(26, 95, 212, 0.35);
+  }
+}
+
+input.callback-highlight {
+  border-color: #1a5fd4;
+  animation: callback-pulse 1s ease-in-out 2;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -415,7 +430,8 @@
   .frame-pulse,
   .frame-slide,
   .frame-fill,
-  .frame-cycle {
+  .frame-cycle,
+  input.callback-highlight {
     animation: none;
   }
 
