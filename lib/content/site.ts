@@ -107,6 +107,7 @@ export const socialProfiles = [
 
 export const navigation = [
   { label: "Home", href: "/" },
+  { label: "Marketing", href: "/practical-ai-solutions" },
   { label: "Products", href: "/products" },
   { label: "Solutions", href: "/solutions" },
   { label: "Industries", href: "/industries" },
