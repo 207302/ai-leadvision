@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
 import { SiteFrame } from "@/components/layout/site-frame";
+import { GoogleAds } from "@/components/seo/google-ads";
 import { siteConfig } from "@/lib/content/site";
 import { searchConsolePlaceholder } from "@/lib/seo";
 import "./globals.css";
@@ -52,6 +53,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en" className={`${body.variable} ${heading.variable}`}>
+      <head>
+        <GoogleAds />
+      </head>
       <body className="min-h-screen bg-paper font-sans text-ink antialiased">
         <SiteFrame>{children}</SiteFrame>
       </body>

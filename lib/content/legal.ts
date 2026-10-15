@@ -118,13 +118,13 @@ export const cookiePolicy: LegalPage = {
   title: "Cookie Policy",
   description:
     "What the website of AI Lead Vision Pvt Ltd, Bengaluru, Karnataka, India stores in your browser.",
-  updated,
+  updated: "15 October 2026",
   sections: [
     {
       heading: "What this site stores",
       paragraphs: [
-        "This website does not set advertising cookies. Google Analytics is not loaded until a measurement ID is configured, so no analytics cookies are set while that ID is still a placeholder.",
-        "If Analytics is turned on later, this page will name it. Until then, treat analytics and marketing cookies as none in use.",
+        "Every page loads a Google Ads tag, AW-18357447279, from googletagmanager.com. Google may set advertising cookies and receive the page address so ads can be measured.",
+        "Google Analytics is not loaded until a measurement ID is configured, so no Analytics cookies are set while that ID is still a placeholder.",
       ],
     },
     {
@@ -142,7 +142,7 @@ export const cookiePolicy: LegalPage = {
     {
       heading: "Your browser",
       paragraphs: [
-        "You can block or delete cookies in your browser settings. Because this site does not rely on a tracking cookie, the pages still load if cookies are blocked.",
+        "You can block or delete cookies in your browser settings. The pages still load if cookies are blocked.",
       ],
     },
   ],
